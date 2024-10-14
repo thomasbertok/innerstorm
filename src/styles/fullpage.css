@@ -1,0 +1,41 @@
+.full-page-controls {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+}
+
+.full-page-controls .slide-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.full-page-controls .slide-links li {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--primary);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.full-page-controls .slide-links li span {
+  display: none;
+}
+
+.full-page-controls .slide-links li.active-link {
+  background-color: var(--light);
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.full-page-controls .slide-links li:hover {
+  background-color: var(--light);
+}

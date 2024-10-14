@@ -1,0 +1,42 @@
+.logo-type {
+  width: 75vw;
+  max-width: 1200px;
+}
+
+.logo-type svg {
+  opacity: 0;
+  animation: fadeIn 2s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.logo-type svg path {
+  fill: transparent;
+  stroke: var(--logo-color);
+  stroke-width: 3;
+}
+
+#triangle-top,
+#triangle-bottom {
+  stroke: var(--logo-triangle-color);
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--logo-color);
+  filter: drop-shadow(0 0 0.25rem rgba(143, 163, 166, 0.5));
+  transition: 0.3s;
+}
+
+.icon:hover svg {
+  fill: var(--logo-triangle-color);
+  filter: drop-shadow(0 0 0.5rem rgba(143, 163, 166, 0.8));
+}
