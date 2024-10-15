@@ -3,16 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --light: #f2f2f2;
-  --dark: #242020;
-  --primary: #8fa3a6;
-
-  --logo-triangle-color: #f2f2f2;
-  --logo-color: #8fa3a6;
-
-  --bg-dark: #193441;
-  --bg-light: #3e606f;
-
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

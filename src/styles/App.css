@@ -1,4 +1,44 @@
+@import "./colors.css";
 @import "./index.css";
 @import "./screens.css";
 @import "./icons.css";
 @import "./fullpage.css";
+@import "./waveform.css";
+
+.glass-dark {
+  border-radius: 16px;
+  background-color: rgba(30, 20, 10, 0.33);
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.5), inset 0 2px 0px -1px rgba(100, 100, 100, 0.33);
+  backdrop-filter: blur(30px);
+}
+
+.glass-light {
+  border-radius: 16px;
+  background-color: rgba(200, 200, 200, 0.33);
+  border: 1px solid rgba(200, 200, 200, 0.25);
+  box-shadow: 0 0 20px -10px rgba(200, 200, 200, 0.9), inset 0 -1px 0px -1px rgba(100, 100, 100, 0.9);
+  border: 1px solid rgba(200, 200, 200, 0.25);
+  backdrop-filter: blur(20px);
+}
+
+.title-1 {
+  @apply text-8xl font-thin text-center mb-4;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: theme("colors.zinc.900");
+  border-radius: 1px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: theme("colors.zinc.400");
+  border-radius: 1px;
+}

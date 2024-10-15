@@ -1,13 +1,69 @@
-.waveform-wrapper {
+.waveform-container {
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  background-color: rgba(200, 200, 200, 0.33);
+  padding: 1rem;
+  border-radius: 24px;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 20px -10px rgba(200, 200, 200, 0.9), inset 0 -1px 0px -1px rgba(100, 100, 100, 0.9);
+  border: 1px solid rgba(200, 200, 200, 0.25);
 }
 
-.waveform-wrapper .info {
+.waveform-container {
+  background-color: rgba(30, 20, 10, 0.2);
+  border: 1px solid rgba(10, 10, 10, 0.25);
+  box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.9), inset 0 2px 0px -1px rgba(100, 100, 100, 0.33);
 }
 
-.waveform-wrapper .playButton {
+.waveform-track-time {
+  font-size: 0.75rem;
+  color: theme("colors.zinc.400");
 }
 
-.waveform-wrapper .wave {
+.waveform-track-time .waveform-position,
+.waveform-track-time .waveform-duration {
+  font-weight: 700;
+}
+
+.waveform-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.waveform-wrapper .track-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: theme("colors.zinc.200");
+}
+
+/* .waveform-container .waveform-hover {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  pointer-events: none;
+  mix-blend-mode: darken;
+  background: rgba(36, 32, 32, 0.5);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+} */
+
+.waveform-wrapper:hover .waveform-hover {
+  opacity: 1;
+}
+
+.waveform {
+  position: relative;
+}
+
+.waveform ::part(hover-label) {
+  padding: 0.125rem 0.5rem;
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-50%);
+  background: #fff !important; */
 }

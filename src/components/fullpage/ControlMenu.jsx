@@ -11,7 +11,6 @@ export const ControlMenu = (props) => {
 
     for (let i = 0; i < slidesCount; i++) {
       const linkProps = {
-        key: i,
         onClick: () => scrollToSlide(i),
         ...(currentSlideIndex === i && { className: "active-link" }),
       };

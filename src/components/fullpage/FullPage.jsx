@@ -105,21 +105,25 @@ export default class FullPage extends React.Component {
   };
 
   onScroll = (evt) => {
-    evt.preventDefault();
     if (this._isScrollPending) {
       return;
     }
 
-    const scrollDown = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
-    let { activeSlide } = this.state;
-
-    if (scrollDown) {
-      activeSlide++;
+    if (!evt.target.classList.contains("screen")) {
+      console.log("no scroll");
     } else {
-      activeSlide--;
-    }
+      evt.preventDefault();
+      const scrollDown = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
+      let { activeSlide } = this.state;
 
-    this.scrollToSlide(activeSlide);
+      if (scrollDown) {
+        activeSlide++;
+      } else {
+        activeSlide--;
+      }
+
+      this.scrollToSlide(activeSlide);
+    }
   };
 
   getSlidesCount = () => this.state.slidesCount;
@@ -213,6 +217,6 @@ FullPage.defaultProps = {
   beforeChange: () => {},
   controls: false,
   controlsProps: {},
-  duration: 500,
+  duration: 400,
   initialSlide: 0,
 };
