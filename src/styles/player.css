@@ -1,0 +1,105 @@
+.player-grid > * {
+  /* background: #000; */
+}
+
+.grid-cover {
+  grid-area: cover;
+  /* grid-area: 1 / 1 / 2 / 2; */
+  min-width: 0;
+  min-height: 0;
+}
+.grid-title {
+  grid-area: title;
+  /* grid-area: 2 / 1 / 3 / 2; */
+}
+.grid-waveform {
+  grid-area: waveform;
+  /* grid-area: 3 / 1 / 4 / 2; */
+}
+.grid-controls {
+  grid-area: controls;
+  /* grid-area: 4 / 1 / 4 / 2; */
+}
+.grid-playlist {
+  grid-area: playlist;
+  /* grid-area: 1 / 2 / 5 / 3; */
+}
+
+/* MOBILE */
+@media screen and (orientation: portrait) and (max-width: 799px) {
+  .player-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 100px 1fr 80px 70px;
+    grid-template-areas:
+      "cover"
+      "title"
+      "playlist"
+      "waveform"
+      "controls";
+    grid-column-gap: 0rem;
+    grid-row-gap: 0.5rem;
+    max-width: 100vw;
+    height: 96svh;
+  }
+
+  .grid-cover .cover {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    object-fit: contain;
+    position: relative;
+    z-index: 100;
+    /* padding: 0 5vw 1vh 5vw; */
+  }
+
+  .grid-cover .cover img {
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px -15px rgba(10, 10, 10, 0.75);
+  }
+}
+
+/* TABLET+DESKTOP */
+@media screen and (min-width: 800px) {
+  .player-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 70px 60px 70px;
+    grid-template-areas:
+      "cover playlist"
+      "title playlist"
+      "waveform playlist"
+      "controls playlist";
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    max-width: 75vw;
+    max-height: min(60vh, 750px);
+  }
+
+  .grid-cover .cover {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    object-fit: contain;
+    position: relative;
+    z-index: 100;
+    /* padding: 0 5vw 1vh 5vw; */
+  }
+
+  .grid-cover .cover img {
+    width: auto;
+    height: auto;
+    max-width: 33vw;
+    max-height: 33vh;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px -15px rgba(10, 10, 10, 0.75);
+  }
+}

@@ -1,7 +1,12 @@
+import { useContext } from "react";
+import { useAppContext } from "@/context/AppContext";
+
 import { Youtube, SoundCloud, Facebook, Instagram, Music } from "@/assets/icons";
 import LogoType from "@/components/LogoType";
 
-const Home = ({ setActivePage }) => {
+const Home = () => {
+  const { setActivePage } = useAppContext();
+
   const handlePageClick = (ev, index) => {
     ev.preventDefault();
     setActivePage(index);

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Streaming with Wavesurfer</title>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <style>
+      /* Basic styling for the audio player */
+      #waveform {
+        width: 100%;
+        height: 330px;
+        background-color: #444;
+      }
+      button {
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="waveform"></div>
+    <button id="playPauseBtn">Play</button>
+
+    <script>
+      const filename = "nightingale";
+
+      // URL of the PHP script for streaming the audio file
+      const audioFile = `/stream.php?file=music/${filename}.mp3`; // Change this to your PHP script path
+
+      // Initialize Wavesurfer
+      const wavesurfer = WaveSurfer.create({
+        container: "#waveform",
+        waveColor: "#009BA3", // Customize as needed
+        progressColor: "#EF4444", // Customize as needed
+        backend: "MediaElement", // Use MediaElement backend for streaming support
+        normalize: true,
+        barWidth: 4,
+        barRadius: 2,
+        barGap: 1,
+        height: 320,
+        responsive: true,
+      });
+
+      // Play/pause functionality
+      const playPauseBtn = document.getElementById("playPauseBtn");
+
+      playPauseBtn.addEventListener("click", () => {
+        wavesurfer.playPause();
+        playPauseBtn.textContent = wavesurfer.isPlaying() ? "Pause" : "Play";
+      });
+
+      fetch(`music/${filename}.json`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.json();
+        })
+        .then((peaks) => {
+          console.log("loaded peaks! " + filename + " sample_rate: " + peaks.sample_rate);
+          wavesurfer.load(audioFile, peaks.data);
+        })
+        .catch((e) => {
+          console.error("error", e);
+        });
+
+      // Update button text when playback ends
+      wavesurfer.on("finish", () => {
+        playPauseBtn.textContent = "Play";
+      });
+
+      wavesurfer.on("loading", (percent) => {
+        console.log("Loading: ", percent);
+        document.getElementById("progress").value = percents;
+      });
+
+      wavesurfer.on("error", (error) => {
+        console.log("Error: ", error);
+      });
+    </script>
+  </body>
+</html>

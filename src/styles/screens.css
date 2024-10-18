@@ -40,8 +40,31 @@
 }
 
 .screen-3 {
-  background-image: url("bg/b3.webp");
+  background-image: url("bg/poly.jpg");
 }
 .screen-3:before {
-  backdrop-filter: saturate(2) blur(0px);
+  /* backdrop-filter: saturate(2) blur(0px); */
+}
+
+.screen .screen-logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 10rem;
+  z-index: 1;
+  opacity: 0;
+  animation: fallDown 1s ease-in-out forwards;
+  animation-delay: 1s;
+  cursor: pointer;
+}
+
+@keyframes fallDown {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 20px;
+    opacity: 0.33;
+  }
 }

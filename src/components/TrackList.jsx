@@ -35,9 +35,7 @@ export const TrackList = () => {
       ) : (
         <ul className="flex flex-col gap-8">
           {tracks.map((track) => (
-            <li key={track.id}>
-              <WaveSurf trackData={track} />
-            </li>
+            <li key={track.id}>{/* <WaveSurf trackData={track} /> */}</li>
           ))}
         </ul>
       )}

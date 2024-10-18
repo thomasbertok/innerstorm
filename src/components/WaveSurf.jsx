@@ -3,46 +3,48 @@ import WaveSurfer from "wavesurfer.js";
 import Hover from "wavesurfer.js/dist/plugins/hover.esm.js";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { GrPlayFill, GrPauseFill } from "react-icons/gr";
-
 import { formatTime } from "@/utils";
-const ctx = document.createElement("canvas").getContext("2d");
-const waveGradient = ctx.createLinearGradient(0, 0, 0, 150);
-waveGradient.addColorStop(0, "rgba(220, 220, 230)");
-waveGradient.addColorStop(0.33, "rgb(220, 220, 220)");
-waveGradient.addColorStop(1, "rgb(160, 160, 180)");
+import { waveSurferOptions, hoverOptions } from "@/styles/WaveSurfer/options";
 
-const progressGradient = ctx.createLinearGradient(0, 0, 0, 150);
-progressGradient.addColorStop(0, "rgba(220, 220, 230, 0.5)");
-progressGradient.addColorStop(0.5, "rgba(220, 220, 220, 0.5)");
-progressGradient.addColorStop(1, "rgba(160, 160, 180, 0.5)");
+// const ctx = document.createElement("canvas").getContext("2d");
+// const waveGradient = ctx.createLinearGradient(0, 0, 0, 150);
+// waveGradient.addColorStop(0, "rgba(220, 220, 230)");
+// waveGradient.addColorStop(0.33, "rgb(220, 220, 220)");
+// waveGradient.addColorStop(1, "rgb(160, 160, 180)");
 
-const waveSurferOptions = {
-  backgroundColor: "transparent",
-  barAlign: "center",
-  barHeight: 1,
-  barGap: 1,
-  barRadius: 0,
-  barWidth: 2,
-  cursorColor: "transparent",
-  cursorWidth: 1,
-  height: "auto",
-  normalize: false,
-  progressColor: progressGradient,
-  responsive: true,
-  waveColor: waveGradient,
-  width: "100%",
-};
+// const progressGradient = ctx.createLinearGradient(0, 0, 0, 150);
+// progressGradient.addColorStop(0, "rgba(220, 220, 230, 0.5)");
+// progressGradient.addColorStop(0.5, "rgba(220, 220, 220, 0.5)");
+// progressGradient.addColorStop(1, "rgba(160, 160, 180, 0.5)");
 
-const hoverOptions = {
-  labelBackground: "rgba(255, 255, 255, .9)",
-  labelColor: "#333",
-  labelSize: "12px",
-  lineColor: "rgba(255, 255, 255, 1)",
-  lineWidth: 1,
-};
+// const waveSurferOptions = {
+//   backgroundColor: "transparent",
+//   barAlign: "center",
+//   barHeight: 1,
+//   barGap: 1,
+//   barRadius: 0,
+//   barWidth: 2,
+//   cursorColor: "transparent",
+//   cursorWidth: 1,
+//   height: "auto",
+//   normalize: false,
+//   progressColor: progressGradient,
+//   responsive: true,
+//   waveColor: waveGradient,
+//   width: "100%",
+// };
+
+// const hoverOptions = {
+//   labelBackground: "rgba(255, 255, 255, .9)",
+//   labelColor: "#333",
+//   labelSize: "12px",
+//   lineColor: "rgba(255, 255, 255, 1)",
+//   lineWidth: 1,
+// };
 
 const WaveSurf = ({ trackData }) => {
   if (!trackData) return null;
+
   const [wavesurfer, setWavesurfer] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

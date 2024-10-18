@@ -4,7 +4,9 @@
 @import "./icons.css";
 @import "./fullpage.css";
 @import "./waveform.css";
+@import "./player.css";
 
+.dark .glass,
 .glass-dark {
   border-radius: 16px;
   background-color: rgba(30, 20, 10, 0.33);
@@ -13,6 +15,7 @@
   backdrop-filter: blur(30px);
 }
 
+.light .glass,
 .glass-light {
   border-radius: 16px;
   background-color: rgba(200, 200, 200, 0.33);
@@ -41,4 +44,12 @@
 ::-webkit-scrollbar-thumb {
   background: theme("colors.zinc.400");
   border-radius: 1px;
+}
+
+.screen-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
