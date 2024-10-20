@@ -31,19 +31,19 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: theme("colors.zinc.900");
-  border-radius: 1px;
+  background: transparent;
+  border-radius: 2px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: theme("colors.zinc.400");
-  border-radius: 1px;
+  background: theme("colors.zinc.700");
+  border-radius: 4px;
 }
 
 .screen-container {
@@ -52,4 +52,29 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.volume-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  z-index: 1000;
+  background-color: rgba(200, 200, 200, 0.75);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(10px);
+}
+
+.volume-range {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  vertical-align: middle;
 }

@@ -6,7 +6,7 @@ const Player = () => {
   return (
     <div className="screen screen-3 relative z-10">
       <Logo className="screen-logo" />
-      <div className="glass screen-container p-4 md:p-10">
+      <div className="glass screen-container p-4 md:p-10 md:pr-5">
         <div className="player-grid">
           <AudioPlayer />
           <AudioPlaylist />

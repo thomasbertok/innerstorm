@@ -13,7 +13,7 @@ const Home = () => {
   };
   return (
     <div className="screen screen-1 page-home flex flex-col items-center gap-20">
-      <div className="logo">
+      <div className="">
         <LogoType fileName="icon-logo.svg" />
       </div>
 

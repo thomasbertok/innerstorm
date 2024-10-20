@@ -6,7 +6,7 @@ const LogoType = ({ fileName }) => {
 
   return (
     <ReactVivus
-      id="logo"
+      id="logo-type"
       className="logo-type"
       option={{
         file: fileName,

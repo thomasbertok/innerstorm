@@ -9,7 +9,7 @@ export const AppContextProvider = ({ children }) => {
   /**
    * get the active page index
    */
-  const isActive = (index) => {
+  const isActivePage = (index) => {
     return activePage === index;
   };
 
@@ -21,7 +21,7 @@ export const AppContextProvider = ({ children }) => {
   };
 
   /**
-   * tracks
+   * TRACKS
    */
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, updateCurrentTrack] = useState(null);
@@ -29,6 +29,9 @@ export const AppContextProvider = ({ children }) => {
   const [loadingPlaylist, setLoadingPlaylist] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTrackCover, setCurrentTrackCover] = useState(null);
+
+  const [isShuffled, setIsShuffled] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(0);
 
   const play = () => {
     console.log("play");
@@ -40,33 +43,58 @@ export const AppContextProvider = ({ children }) => {
     setIsPlaying(false);
   };
 
-  const togglePlay = () => setIsPlaying(!isPlaying);
+  // const togglePlay = () => setIsPlaying(!isPlaying);
 
+  /**
+   * Set the given track as the current track
+   * Set index of current track
+   * Set cover
+   */
   const setCurrentTrack = (track) => {
-    updateCurrentTrack(track);
-    setCurrentTrackIndex(track.id);
-    setCurrentTrackCover(`${import.meta.env.VITE_COVERS_PATH}${track.cover}`);
+    console.log("setCurrentTrack:", track);
+    if (track) {
+      updateCurrentTrack(track);
+      setCurrentTrackIndex(playlist.indexOf(track));
+      setCurrentTrackCover(`${import.meta.env.VITE_COVERS_PATH}${track.cover}`);
+    } else {
+      updateCurrentTrack(null);
+      setCurrentTrackIndex(0);
+      setCurrentTrackCover(null);
+    }
   };
 
-  const setNextTrackIndex = () => {
-    setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % playlist.length);
-  };
-
-  const setPreviousTrackIndex = () => {
-    setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + playlist.length) % playlist.length);
-  };
-
+  /**
+   * Set the given track as the current track
+   * Play the track
+   */
   const playTrack = (track) => {
     setCurrentTrack(track);
     play();
     console.log(">>> Playing Track:", track.name);
   };
 
+  /**
+   * Check if the given track.id is currently playing
+   */
   const trackIsPlaying = (id) => {
     if (currentTrack && isPlaying) {
       return currentTrack.id === id;
     }
     return false;
+  };
+
+  /**
+   * SORT PLAYLIST ALPHABETICALLY
+   */
+  const sortPlaylist = (data, by, ordering) => {
+    if (!data) return [];
+
+    // TODO: sort by date descending
+    if (by === "name" && ordering === "asc") {
+      return data.sort((a, b) => a.slug.localeCompare(b.slug));
+    } else {
+      return data;
+    }
   };
 
   /**
@@ -80,7 +108,7 @@ export const AppContextProvider = ({ children }) => {
       const response = await fetch(`${import.meta.env.VITE_FILES_URL}db.json`);
       if (!response.ok) throw new Error("Failed to fetch playlist");
       const data = await response.json();
-      setPlaylist(data);
+      setPlaylist(sortPlaylist(data));
       console.log(">>> Playlist fetched:", data);
     } catch (error) {
       console.error("!!! Error fetching playlist:", error.message);
@@ -88,6 +116,90 @@ export const AppContextProvider = ({ children }) => {
     } finally {
       setLoadingPlaylist(false);
     }
+  };
+
+  /**
+   * auto set next track when current track ends
+   */
+  const setNextTrack = () => {
+    let wasPlaying = isPlaying;
+    let nextTrack = currentTrack;
+    pause();
+
+    if (isShuffled) {
+      nextTrack = playlist[Math.floor(Math.random() * playlist.length)];
+    } else {
+      switch (isRepeat) {
+        case 2: // repeat all | circle playlist
+          nextTrack = (currentTrackIndex + 1) % playlist.length;
+          break;
+        default: // repeat off | go to next track if not last
+          if (currentTrackIndex < playlist.length - 1) {
+            nextTrack = playlist[currentTrackIndex + 1];
+          } else {
+            // last track, no repeat is on
+            wasPlaying = false;
+          }
+          break;
+      }
+    }
+
+    // set current track to the new one
+    setCurrentTrack(nextTrack);
+    setIsPlaying(nextTrack !== null && wasPlaying);
+  };
+
+  /**
+   * onClickNextTrack
+   */
+  const clickNextTrack = () => {
+    let nextTrack = currentTrack;
+    const wasPlaying = isPlaying;
+    pause();
+    if (isShuffled) {
+      nextTrack = playlist[Math.floor(Math.random() * playlist.length)];
+    } else {
+      if (isRepeat === 2) {
+        // circle playlist
+        nextTrack = playlist[(currentTrackIndex + 1) % playlist.length];
+      } else {
+        // go to next track if not last
+        if (currentTrackIndex < playlist.length - 1) {
+          nextTrack = playlist[currentTrackIndex + 1];
+        }
+      }
+    }
+
+    // set current track to the new one
+    setCurrentTrack(nextTrack);
+    setIsPlaying(nextTrack !== null && wasPlaying);
+  };
+
+  /**
+   * onClickPrevTrack
+   */
+  const clickPrevTrack = () => {
+    let prevTrack = currentTrack;
+    const wasPlaying = isPlaying;
+    pause();
+
+    if (isShuffled) {
+      prevTrack = playlist[Math.floor(Math.random() * playlist.length)];
+    } else {
+      if (isRepeat === 2) {
+        // circle playlist
+        prevTrack = playlist[(currentTrackIndex - 1 + playlist.length) % playlist.length];
+      } else {
+        // go to previous track if not first
+        if (currentTrackIndex > 0) {
+          prevTrack = playlist[currentTrackIndex - 1];
+        }
+      }
+    }
+
+    // set current track to the new one
+    setCurrentTrack(prevTrack);
+    setIsPlaying(prevTrack !== null && wasPlaying);
   };
 
   /**
@@ -100,11 +212,12 @@ export const AppContextProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        loadingPlaylist,
         activePage,
+        colorScheme,
+        loadingPlaylist,
         currentTrack,
         currentTrackCover,
-        isActive,
+        isActivePage,
         setActivePage,
         play,
         isPlaying,
@@ -112,14 +225,17 @@ export const AppContextProvider = ({ children }) => {
         setCurrentTrack,
         setIsPlaying,
         playlist,
-        togglePlay,
         setPlaylist,
-        setNextTrackIndex,
-        setPreviousTrackIndex,
+        setNextTrack,
         playTrack,
         trackIsPlaying,
         toggleColorScheme,
-        colorScheme,
+        isShuffled,
+        setIsShuffled,
+        isRepeat,
+        setIsRepeat,
+        clickNextTrack,
+        clickPrevTrack,
       }}>
       {children}
     </AppContext.Provider>
