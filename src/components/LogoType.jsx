@@ -1,7 +1,8 @@
-import { useMemo, useState, useRef } from "react";
+import { useMemo } from "react";
 import ReactVivus from "react-vivus";
+const filePath = `${import.meta.env.VITE_PUBLIC_URL}/assets/logo-type.svg`;
 
-const LogoType = ({ fileName }) => {
+const LogoType = () => {
   const random = useMemo(() => Math.random(), []);
 
   return (
@@ -9,7 +10,7 @@ const LogoType = ({ fileName }) => {
       id="logo-type"
       className="logo-type"
       option={{
-        file: fileName,
+        file: filePath,
         type: random > 0.5 ? "delayed" : "oneByOne",
         start: "inViewport",
         duration: random * 200 + 100,

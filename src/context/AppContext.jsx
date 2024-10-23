@@ -20,7 +20,7 @@ export const AppContextProvider = ({ children }) => {
     setColorScheme(colorScheme === "light" ? "dark" : "light");
   };
 
-  /**
+  /** ********************************************************
    * TRACKS
    */
   const [isPlaying, setIsPlaying] = useState(false);
@@ -29,6 +29,7 @@ export const AppContextProvider = ({ children }) => {
   const [loadingPlaylist, setLoadingPlaylist] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTrackCover, setCurrentTrackCover] = useState(null);
+  const [volume, setVolume] = useState(0.5);
 
   const [isShuffled, setIsShuffled] = useState(false);
   const [isRepeat, setIsRepeat] = useState(0);
@@ -86,11 +87,11 @@ export const AppContextProvider = ({ children }) => {
   /**
    * SORT PLAYLIST ALPHABETICALLY
    */
-  const sortPlaylist = (data, by, ordering) => {
+  const sortPlaylist = (data, sortBy = "name", ordering = "asc") => {
     if (!data) return [];
 
     // TODO: sort by date descending
-    if (by === "name" && ordering === "asc") {
+    if (sortBy === "name" && ordering === "asc") {
       return data.sort((a, b) => a.slug.localeCompare(b.slug));
     } else {
       return data;
@@ -109,10 +110,10 @@ export const AppContextProvider = ({ children }) => {
       if (!response.ok) throw new Error("Failed to fetch playlist");
       const data = await response.json();
       setPlaylist(sortPlaylist(data));
-      console.log(">>> Playlist fetched:", data);
+      console.log(">>> Success:", data.length, "tracks loaded");
     } catch (error) {
       console.error("!!! Error fetching playlist:", error.message);
-      throw new Error("Error fetching playlist:", error);
+      //throw new Error("Error fetching playlist:", error);
     } finally {
       setLoadingPlaylist(false);
     }
@@ -203,6 +204,36 @@ export const AppContextProvider = ({ children }) => {
   };
 
   /**
+   * TODO: check if this way is better
+   * a more elegant wy that seaparates finding the next index from setting the track
+   * but it does not cover the autoNext part, only the clicking
+   * ChatGPT
+   */
+
+  /*
+  const getNextTrackIndex = () => {
+    if (isShuffled) return Math.floor(Math.random() * playlist.length);
+    if (isRepeat === 2) return (currentTrackIndex + 1) % playlist.length;
+    return currentTrackIndex < playlist.length - 1 ? currentTrackIndex + 1 : -1;
+  };
+
+  const getPreviousTrackIndex = () => {
+    if (isShuffled) return Math.floor(Math.random() * playlist.length);
+    if (isRepeat === 2) return (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    return currentTrackIndex > 0 ? currentTrackIndex - 1 : -1;
+  };
+
+  const changeTrack = (trackIndex) => {
+    const track = playlist[trackIndex] || null;
+    updateCurrentTrack(track, trackIndex);
+    setIsPlaying(track !== null);
+  };
+
+  const clickNextTrack = () => changeTrack(getNextTrackIndex());
+  const clickPrevTrack = () => changeTrack(getPreviousTrackIndex());
+  */
+
+  /**
    * Load playlist on mount
    */
   useEffect(() => {
@@ -236,6 +267,8 @@ export const AppContextProvider = ({ children }) => {
         setIsRepeat,
         clickNextTrack,
         clickPrevTrack,
+        volume,
+        setVolume,
       }}>
       {children}
     </AppContext.Provider>

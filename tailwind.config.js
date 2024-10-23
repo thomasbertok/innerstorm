@@ -4,7 +4,7 @@ export default {
   darkMode: "selector",
   theme: {
     fontFamily: {
-      sans: ["Roboto", "Inter", "sans-serif"],
+      sans: ["Raleway", "Noto Sans", "Roboto", "Inter", "sans-serif"],
       mono: ["Source Code Pro", "Consolas", "monospace"],
     },
     extend: {},

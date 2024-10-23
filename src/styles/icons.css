@@ -1,6 +1,7 @@
 .logo-type {
-  width: 75vw;
-  max-width: 1200px;
+  width: 80vw;
+  max-width: 1000px;
+  z-index: 100;
 }
 
 .logo-type svg {
@@ -18,25 +19,68 @@
 }
 
 .logo-type svg path {
-  fill: transparent;
-  stroke: var(--logo-color);
-  stroke-width: 3;
+  stroke: theme("colors.slate.400");
+  stroke-width: 5;
+}
+
+@media screen and (min-width: 500px) {
+  .logo-type svg path {
+    stroke-width: 4;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .logo-type svg path {
+    stroke-width: 3;
+  }
 }
 
 #triangle-top,
 #triangle-bottom {
-  stroke: var(--logo-triangle-color);
+  stroke: theme("colors.slate.300");
 }
 
 .icon svg {
   width: 100%;
   height: 100%;
-  fill: var(--logo-color);
+  fill: theme("colors.slate.400");
   filter: drop-shadow(0 0 0.25rem rgba(143, 163, 166, 0.5));
   transition: 0.3s;
 }
 
 .icon:hover svg {
-  fill: var(--logo-triangle-color);
-  filter: drop-shadow(0 0 0.5rem rgba(143, 163, 166, 0.8));
+  fill: theme("colors.slate.300");
+  filter: drop-shadow(0 0 0.5rem rgba(150, 150, 150, 0.8));
+}
+
+.homepage-social-links {
+  animation: fade-in 1s ease-in forwards;
+  animation-delay: 2.5s;
+  width: 70vw;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.homepage-social-links .icon {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homepage-social-links .icon-big {
+  flex: 1.75;
 }

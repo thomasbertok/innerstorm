@@ -4,5 +4,4 @@ import Youtube from "@/assets/icons/icon-youtube.svg";
 import Facebook from "@/assets/icons/icon-facebook.svg";
 import Instagram from "@/assets/icons/icon-instagram.svg";
 import Music from "@/assets/icons/icon-music.svg";
-
 export { Logo, SoundCloud, Youtube, Facebook, Instagram, Music };

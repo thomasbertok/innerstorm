@@ -1,41 +1,113 @@
+/*
+  fullpage.js
+  slides' wrapper
+*/
+
+.full-page {
+  position: relative;
+  z-index: 1;
+  transition: all 0.1s ease;
+}
+
+/* 
+  full page slides
+*/
+.full-page-slide {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: 100%;
+  height: 100svh;
+}
+
+/* 
+  full page controls: 
+  page bullets 
+*/
+
+/* TODO: 
+  make slide links narrow, maybe vertical lines instead of circles, 
+  without the hover effect with the names
+*/
+
 .full-page-controls {
   position: fixed;
   z-index: 1000;
-  right: 0;
+  right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 3rem;
-}
-
-.full-page-controls .slide-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-}
-
-.full-page-controls .slide-links li {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: var(--primary);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.full-page-controls .slide-links li span {
   display: none;
 }
 
+.full-page-controls .slide-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.full-page-controls .slide-links li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: theme("colors.zinc.400");
+  border-radius: 0.75rem;
+  width: 1rem;
+  height: 1rem;
+  transition: all 0.1s ease;
+  position: relative;
+  z-index: 100;
+}
+
+/* hover effect for section links 
+   section names appear on hover */
+.full-page-controls .slide-links li span {
+  display: block;
+  color: theme("colors.zinc.900");
+  font-size: 0.75rem;
+  font-weight: 700;
+  overflow: hidden;
+  height: 1rem;
+  right: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  z-index: 100;
+  background-color: theme("colors.zinc.200");
+  box-shadow: 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.1);
+  padding: 0 1rem 0 0.5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 .full-page-controls .slide-links li.active-link {
-  background-color: var(--light);
   width: 1.25rem;
   height: 1.25rem;
+  background-color: theme("colors.zinc.300");
+}
+
+.full-page-controls .slide-links li.active-link span {
+  height: 1.25rem;
+  line-height: 1.25rem;
 }
 
 .full-page-controls .slide-links li:hover {
-  background-color: var(--light);
+  background-color: theme("colors.zinc.200");
+  box-shadow: 0 0 0.5rem 0.25rem rgba(220, 220, 220, 0.25);
+}
+
+.full-page-controls .slide-links li:hover span {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media screen and (min-width: 560px) {
+  .full-page-controls {
+    display: block;
+  }
 }

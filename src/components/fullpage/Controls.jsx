@@ -1,95 +1,97 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 export default class Controls extends React.Component {
-  
   renderSlideLinkButtons(currentSlideIndex) {
     const { slidesCount, scrollToSlide, slidesNames } = this.props;
     const slideLinks = [];
-    
+
     for (let i = 0; i < slidesCount; i++) {
       const buttonProps = {
         disabled: currentSlideIndex === i,
         key: i,
         onClick: () => scrollToSlide(i),
       };
-      slideLinks.push(<button type="button" {...buttonProps}>{slidesNames[i]}</button>);
+      slideLinks.push(
+        <button type="button" {...buttonProps}>
+          {slidesNames[i]}
+        </button>
+      );
     }
-    
+
     return slideLinks;
   }
 
-
   renderSlideLinks(currentSlideIndex) {
-    const { slidesCount, scrollToSlide, slidesNames } = this.props;    
+    const { slidesCount, scrollToSlide, slidesNames } = this.props;
     const sideLinks = [];
     for (let i = 0; i < slidesCount; i++) {
-        const linkProps = {
-            key: i,
-            onClick: () => scrollToSlide(i),
-            ...(currentSlideIndex === i) && { className: "active-link" },
-        };
+      const linkProps = {
+        key: i,
+        onClick: () => scrollToSlide(i),
+        ...(currentSlideIndex === i && { className: "active-link" }),
+      };
 
-        sideLinks.push(<li {...linkProps}><span>{slidesNames[i]}</span></li>);
+      sideLinks.push(
+        <li {...linkProps}>
+          <span>{slidesNames[i]}</span>
+        </li>
+      );
     }
-    return sideLinks
+    return sideLinks;
   }
-
 
   renderMenuLinks(currentSlideIndex) {
     const { slidesCount, scrollToSlide, slidesNames } = this.props;
-    const menuLinks = []
+    const menuLinks = [];
 
     for (let i = 0; i < slidesCount; i++) {
       const linkProps = {
         key: i,
         onClick: () => scrollToSlide(i),
-        ...(currentSlideIndex === i) && { className: "active-link" },
+        ...(currentSlideIndex === i && { className: "active-link" }),
       };
-    
-      menuLinks.push(<li {...linkProps}><span className='nav-item'>{slidesNames[i]}</span></li>);
+
+      menuLinks.push(
+        <li {...linkProps}>
+          <span className="nav-item">{slidesNames[i]}</span>
+        </li>
+      );
     }
 
-    return menuLinks
+    return menuLinks;
   }
 
   toggleMenu() {
     //const { setOpen } = this.props;
-
-    console.log(props);
-
+    // console.log(props);
     //setOpen(!this.props.open);
   }
 
-
   render() {
-
-    const {
-      getCurrentSlideIndex, className, open, setOpen
-    } = this.props;
+    const { getCurrentSlideIndex, className, open, setOpen } = this.props;
 
     //console.log('control props ', this.props);
 
     const currentSlideIndex = getCurrentSlideIndex();
-    
+
     return (
       <>
         <div className={className}>
-            <ul className='slide-links'>
-                {this.renderSlideLinks(currentSlideIndex)}
-            </ul>
+          <ul className="slide-links">{this.renderSlideLinks(currentSlideIndex)}</ul>
         </div>
-        
-        <div>
-            <div className={`main-nav-toggle cursor-pointer ${open ? 'open': ''}`} id="nav-toggle" onClick={this.toggleMenu}>
-                <span></span>
-            </div>
 
-            <nav className={`main-navigation ${open ? "main-menu-open" : "hidden"}`}>
-                <ul>
-                    {this.renderMenuLinks(currentSlideIndex)}
-                </ul>
-            </nav>
+        <div>
+          <div
+            className={`main-nav-toggle cursor-pointer ${open ? "open" : ""}`}
+            id="nav-toggle"
+            onClick={this.toggleMenu}>
+            <span></span>
+          </div>
+
+          <nav className={`main-navigation ${open ? "main-menu-open" : "hidden"}`}>
+            <ul>{this.renderMenuLinks(currentSlideIndex)}</ul>
+          </nav>
         </div>
       </>
     );
@@ -109,6 +111,6 @@ Controls.propTypes = {
 };
 
 Controls.defaultProps = {
-  className: 'full-page-controls',
+  className: "full-page-controls",
   style: {},
 };

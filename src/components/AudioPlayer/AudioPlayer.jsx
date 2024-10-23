@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState, useRef, useMemo, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import WaveSurfer from "wavesurfer.js";
 import Hover from "wavesurfer.js/dist/plugins/hover.esm.js";
 import { waveSurferOptions, hoverOptions } from "@/styles/WaveSurfer/options";
-import { GrChapterNext, GrChapterPrevious } from "react-icons/gr";
 import { TbArrowsShuffle, TbRepeat, TbRepeatOnce, TbRepeatOff } from "react-icons/tb";
-import { CiPause1, CiPlay1 } from "react-icons/ci";
 import { useAppContext } from "@/context/AppContext";
 import { formatTime } from "@/utils";
 
@@ -31,12 +29,15 @@ const AudioPlayer = () => {
     setIsShuffled,
     clickPrevTrack,
     clickNextTrack,
+    volume,
+    setVolume,
   } = useAppContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [wavesurfer, setWavesurfer] = useState(null);
   const [trackPosition, setTrackPosition] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
+  const [isVolumeVisible, setIsVolumeVisible] = useState(false);
 
   const waveformRef = useRef(null);
 
@@ -59,7 +60,7 @@ const AudioPlayer = () => {
     ws.setVolume(0.5);
     // set wavesurfer state
     setWavesurfer(ws);
-    console.log(">>> wavesurfer instance created.", ws);
+    console.log(">>> wavesurfer instance created.");
     return () => ws.destroy();
   }, []);
 
@@ -121,26 +122,22 @@ const AudioPlayer = () => {
   return (
     <>
       <div className="grid-cover flex items-center justify-center">
-        <div className="cover">
-          {!currentTrack && (
-            <div className="text-3xl font-light text-zinc-100 dark:text-zinc-300">No track selected</div>
-          )}
-          {currentTrack && (
-            <img
-              className=""
-              src={currentTrackCover}
-              alt={currentTrack.name}
-              onError={(e) => {
-                e.target.onError = null;
-                e.target.src = "music/cover/default.jpg";
-              }}
-              loading="lazy"
-            />
-          )}
-        </div>
+        {!currentTrack && <div className="text-3xl font-light text-zinc-100 dark:text-zinc-300">No track selected</div>}
+        {currentTrack && (
+          <img
+            className="no-scroll"
+            src={currentTrackCover}
+            alt={currentTrack.name}
+            onError={(e) => {
+              e.target.onError = null;
+              e.target.src = "music/cover/default.jpg";
+            }}
+            loading="lazy"
+          />
+        )}
       </div>
 
-      <div className="grid-title">
+      <div className="grid-title no-scroll">
         {isLoading && <div className="loading flex items-center justify-center">Loading...</div>}
         {currentTrack && (
           <div className="flex items-center justify-center flex-col gap-1">
@@ -152,11 +149,11 @@ const AudioPlayer = () => {
         )}
       </div>
 
-      <div className="grid-waveform flex flex-col items-center justify-center">
+      <div className="grid-waveform flex flex-col items-center justify-center no-scroll">
         <div className="waveform" ref={waveformRef}></div>
       </div>
 
-      <div className="grid-controls flex items-center justify-between gap-4">
+      <div className="grid-controls flex items-center justify-between gap-4 no-scroll">
         <div className="time time-current font-mono text-zinc-300 dark:text-zinc-400 flex-1 text-right">
           {trackPosition !== 0 ? trackPosition : ""}
         </div>
@@ -175,18 +172,19 @@ const AudioPlayer = () => {
             <TbPlayerSkipBackFilled
               size={24}
               onClick={clickPrevTrack}
+              className="text-zinc-300 hover:text-zinc-100 dark:text-zinc-400 hover:dark:text-zinc-100"
               disabled={playlist && currentTrack === playlist[0] && isRepeat !== 2}
             />
           </button>
 
           {/* PLAY/PAUSE */}
           <button
-            className="group button border-2 rounded-full w-12 h-12 flex items-center justify-center hover:bg-zinc-100/70 hover:border-transparent transition-colors"
+            className="group button border-2 border-zinc-300 dark:border-zinc-400 rounded-full w-12 h-12 flex items-center justify-center hover:bg-zinc-100/80 hover:border-transparent transition-colors"
             onClick={handlePlayButtonClick}>
             {isPlaying ? (
-              <TbPlayerPauseFilled size={24} className="text-zinc-100 group-hover:text-zinc-600" />
+              <TbPlayerPauseFilled size={24} className="text-zinc-300 dark:text-zinc-400 group-hover:text-zinc-600" />
             ) : (
-              <TbPlayerPlayFilled size={24} className="text-zinc-100 group-hover:text-zinc-600" />
+              <TbPlayerPlayFilled size={24} className="text-zinc-300 dark:text-zinc-400 group-hover:text-zinc-600" />
             )}
           </button>
 
@@ -195,7 +193,10 @@ const AudioPlayer = () => {
             className="disabled:text-zinc-400"
             onClick={clickNextTrack}
             disabled={playlist && currentTrack === playlist[playlist.length - 1] && isRepeat !== 2}>
-            <TbPlayerSkipForwardFilled size={24} />
+            <TbPlayerSkipForwardFilled
+              size={24}
+              className="text-zinc-300 hover:text-zinc-100 dark:text-zinc-400 hover:dark:text-zinc-100"
+            />
           </button>
 
           {/* REPEAT */}
@@ -212,12 +213,22 @@ const AudioPlayer = () => {
 
         <div className="time time-total font-mono text-zinc-300 dark:text-zinc-400 flex-1 flex justify-between items-center">
           <span>{trackDuration !== 0 ? trackDuration : ""}</span>
-          <span className="cursor-pointer relative">
+          {/* <span className="cursor-pointer relative" onClick={() => setIsVolumeVisible(!isVolumeVisible)}>
             <TbVolume size={20} className="text-zinc-400 hover:text-zinc-100" />
-            <div className="volume-container">
-              <input className="volume-range" type="range" min={0} max={1} step={0.01} value={0.5} />
+            <div className={`volume-container ${isVolumeVisible ? "flex" : "hidden"}`}>
+              <input
+                className="volume-range"
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                onChange={(newValue) => {
+                  setVolume(newValue);
+                }}
+              />
             </div>
-          </span>
+          </span> */}
         </div>
       </div>
     </>

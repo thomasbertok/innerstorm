@@ -1,32 +1,37 @@
 @import "./colors.css";
 @import "./index.css";
-@import "./screens.css";
+@import "./sections.css";
 @import "./icons.css";
 @import "./fullpage.css";
-@import "./waveform.css";
 @import "./player.css";
+@import "./waveform.css";
 
-.dark .glass,
-.glass-dark {
-  border-radius: 16px;
-  background-color: rgba(30, 20, 10, 0.33);
-  border: 1px solid rgba(30, 30, 30, 0.1);
-  box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.5), inset 0 2px 0px -1px rgba(100, 100, 100, 0.33);
-  backdrop-filter: blur(30px);
+@media screen and (min-width: 800px) {
+  .dark .glass,
+  .glass-dark {
+    border-radius: 16px;
+    background-color: rgba(30, 20, 10, 0.33);
+    border: 1px solid rgba(30, 30, 30, 0.1);
+    box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.5), inset 0 2px 0px -1px rgba(100, 100, 100, 0.33);
+    backdrop-filter: blur(30px);
+  }
+
+  .light .glass,
+  .glass-light {
+    border-radius: 16px;
+    background-color: rgba(200, 200, 200, 0.33);
+    border: 1px solid rgba(200, 200, 200, 0.25);
+    box-shadow: 0 0 20px -10px rgba(200, 200, 200, 0.9), inset 0 -1px 0px -1px rgba(100, 100, 100, 0.9);
+    border: 1px solid rgba(200, 200, 200, 0.25);
+    backdrop-filter: blur(20px);
+  }
 }
-
-.light .glass,
-.glass-light {
-  border-radius: 16px;
-  background-color: rgba(200, 200, 200, 0.33);
-  border: 1px solid rgba(200, 200, 200, 0.25);
-  box-shadow: 0 0 20px -10px rgba(200, 200, 200, 0.9), inset 0 -1px 0px -1px rgba(100, 100, 100, 0.9);
-  border: 1px solid rgba(200, 200, 200, 0.25);
-  backdrop-filter: blur(20px);
-}
-
 .title-1 {
   @apply text-8xl font-thin text-center mb-4;
+}
+
+p {
+  @apply mb-4;
 }
 
 /* width */
@@ -46,35 +51,31 @@
   border-radius: 4px;
 }
 
-.screen-container {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.tooltip:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
 }
 
-.volume-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-
+.tooltip .tooltip-content {
   position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-
   z-index: 1000;
-  background-color: rgba(200, 200, 200, 0.75);
-  padding: 1rem;
-  border-radius: 0.75rem;
-  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  left: 50%;
+  top: 110%;
+  transform: translateX(-50%);
+  text-align: center;
+  transition: all 0.25s ease;
+  transition-delay: 0.125s;
+  user-select: none;
+  color: theme("colors.zinc.300");
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+  max-width: 300px;
+  opacity: 0;
+  visibility: hidden;
 }
 
-.volume-range {
-  writing-mode: vertical-lr;
-  direction: rtl;
-  vertical-align: middle;
+.section-home {
+  gap: clamp(1rem, 5vw, 3rem);
 }

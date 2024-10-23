@@ -92,14 +92,16 @@ export default class FullPage extends React.Component {
     //   return;
     // }
 
-    evt.preventDefault();
-    const touchEnd = evt.changedTouches[0].clientY;
+    if (this.canScroll(evt)) {
+      evt.preventDefault();
+      const touchEnd = evt.changedTouches[0].clientY;
 
-    if (!this._isScrollPending && !this._isScrolledAlready) {
-      if (this._touchStart > touchEnd + this._touchSensitivity) {
-        this.scrollToSlide(this.state.activeSlide + 1);
-      } else if (this._touchStart < touchEnd - this._touchSensitivity) {
-        this.scrollToSlide(this.state.activeSlide - 1);
+      if (!this._isScrollPending && !this._isScrolledAlready) {
+        if (this._touchStart > touchEnd + this._touchSensitivity) {
+          this.scrollToSlide(this.state.activeSlide + 1);
+        } else if (this._touchStart < touchEnd - this._touchSensitivity) {
+          this.scrollToSlide(this.state.activeSlide - 1);
+        }
       }
     }
   };
@@ -109,9 +111,7 @@ export default class FullPage extends React.Component {
       return;
     }
 
-    if (!evt.target.classList.contains("screen")) {
-      console.log("no scroll");
-    } else {
+    if (this.canScroll(evt)) {
       evt.preventDefault();
       const scrollDown = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
       let { activeSlide } = this.state;
@@ -165,6 +165,10 @@ export default class FullPage extends React.Component {
         this.props.afterChange({ from: currentSlide, to: slide });
       });
     }
+  };
+
+  canScroll = (event) => {
+    return event.target.closest(".no-scroll") === null;
   };
 
   renderControls() {
