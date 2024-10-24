@@ -97,7 +97,7 @@ const AudioPlayer = () => {
 
     if (wavesurfer && currentTrack) {
       // load track into wavesurfer
-      wavesurfer.load(`${import.meta.env.VITE_API_URL}${currentTrack.url}`, currentTrack.peaks.data);
+      wavesurfer.load(`${import.meta.env.VITE_API_URL}${currentTrack.filename}`, currentTrack.peaks);
 
       setIsLoading(false);
       if (isPlaying) wavesurfer.play();
@@ -127,7 +127,7 @@ const AudioPlayer = () => {
           <img
             className="no-scroll"
             src={currentTrackCover}
-            alt={currentTrack.name}
+            alt={currentTrack.title}
             onError={(e) => {
               e.target.onError = null;
               e.target.src = "music/cover/default.jpg";
@@ -139,11 +139,13 @@ const AudioPlayer = () => {
 
       <div className="grid-title no-scroll">
         {isLoading && <div className="loading flex items-center justify-center">Loading...</div>}
-        {currentTrack && (
+        {!isLoading && currentTrack && (
           <div className="flex items-center justify-center flex-col gap-1">
-            <div className="text-3xl font-light text-zinc-100 dark:text-zinc-300">{currentTrack.name}</div>
+            <div className="track-title text-3xl font-light text-zinc-100 dark:text-zinc-300">{currentTrack.title}</div>
             <div className="text-sm font-medium text-zinc-400 dark:text-zinc-400 hover:text-zinc-300">
-              {currentTrack.style.map((style) => `#${style} `)}
+              {/* {currentTrack.style.map((style) => `#${style} `)} */}
+              {currentTrack.genre}
+              {currentTrack.year !== "Unknown" && ` / ${currentTrack.year}`}
             </div>
           </div>
         )}
@@ -154,7 +156,7 @@ const AudioPlayer = () => {
       </div>
 
       <div className="grid-controls flex items-center justify-between gap-4 no-scroll">
-        <div className="time time-current font-mono text-zinc-300 dark:text-zinc-400 flex-1 text-right">
+        <div className="time time-current text-zinc-300 dark:text-zinc-400 flex-1 text-right">
           {trackPosition !== 0 ? trackPosition : ""}
         </div>
 
@@ -211,7 +213,7 @@ const AudioPlayer = () => {
           </button>
         </div>
 
-        <div className="time time-total font-mono text-zinc-300 dark:text-zinc-400 flex-1 flex justify-between items-center">
+        <div className="time time-total text-zinc-300 dark:text-zinc-400 flex-1 flex justify-between items-center">
           <span>{trackDuration !== 0 ? trackDuration : ""}</span>
           {/* <span className="cursor-pointer relative" onClick={() => setIsVolumeVisible(!isVolumeVisible)}>
             <TbVolume size={20} className="text-zinc-400 hover:text-zinc-100" />

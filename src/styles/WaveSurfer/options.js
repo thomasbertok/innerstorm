@@ -1,6 +1,6 @@
 const ctx = document.createElement("canvas").getContext("2d");
 const waveGradient = ctx.createLinearGradient(0, 0, 0, 150);
-waveGradient.addColorStop(0, "rgba(200, 200, 200)");
+waveGradient.addColorStop(0, "rgba(200, 200, 190)");
 waveGradient.addColorStop(0.33, "rgb(220, 220, 220)");
 waveGradient.addColorStop(1, "rgb(200, 200, 200)");
 
@@ -25,8 +25,8 @@ export const waveSurferOptions = {
   height: "auto",
   normalize: false,
   progressColor: progressGradient,
-  responsive: true,
   waveColor: waveGradient,
+  responsive: true,
   width: "100%",
 };
 

@@ -52,11 +52,11 @@ export const AppContextProvider = ({ children }) => {
    * Set cover
    */
   const setCurrentTrack = (track) => {
-    console.log("setCurrentTrack:", track);
+    console.log(">>> Set Current Track:", track);
     if (track) {
       updateCurrentTrack(track);
       setCurrentTrackIndex(playlist.indexOf(track));
-      setCurrentTrackCover(`${import.meta.env.VITE_COVERS_PATH}${track.cover}`);
+      setCurrentTrackCover(`${import.meta.env.VITE_COVERS_PATH}${track.slug}.jpg`);
     } else {
       updateCurrentTrack(null);
       setCurrentTrackIndex(0);
@@ -71,7 +71,7 @@ export const AppContextProvider = ({ children }) => {
   const playTrack = (track) => {
     setCurrentTrack(track);
     play();
-    console.log(">>> Playing Track:", track.name);
+    console.log(">>> Playing Track:", track.title);
   };
 
   /**
@@ -91,7 +91,7 @@ export const AppContextProvider = ({ children }) => {
     if (!data) return [];
 
     // TODO: sort by date descending
-    if (sortBy === "name" && ordering === "asc") {
+    if (sortBy === "title" && ordering === "asc") {
       return data.sort((a, b) => a.slug.localeCompare(b.slug));
     } else {
       return data;
@@ -106,7 +106,7 @@ export const AppContextProvider = ({ children }) => {
     setLoadingPlaylist(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_FILES_URL}db.json`);
+      const response = await fetch(`${import.meta.env.VITE_FILES_URL}${import.meta.env.VITE_PLAYLIST_JSON}`);
       if (!response.ok) throw new Error("Failed to fetch playlist");
       const data = await response.json();
       setPlaylist(sortPlaylist(data));

@@ -12,11 +12,11 @@ const FullPageContainer = () => {
   return (
     <main className={`app ${colorScheme}`}>
       <FullPage controls duration={400} activePage={activePage} setActivePage={setActivePage}>
-        <Slide title="Home" activestate={isActivePage(0)}>
-          <Home />
-        </Slide>
         <Slide title="Tracks" activestate={isActivePage(1)}>
           <Player />
+        </Slide>
+        <Slide title="Home" activestate={isActivePage(0)}>
+          <Home />
         </Slide>
         {/* <Slide title="Content" activestate={isActivePage(2)}>
           <TextContent />
