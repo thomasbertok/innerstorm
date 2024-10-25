@@ -35,8 +35,8 @@
     width: 100%;
     width: 100vw;
     max-width: 480px;
-    max-height: 99svh;
-    height: 99svh;
+    max-height: calc(100svh - 42px);
+
     padding: 10px;
   }
 
@@ -129,7 +129,7 @@
 
 .time {
   font-family: "Noto Sans", sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   font-weight: 500;
 }
 

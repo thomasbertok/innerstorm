@@ -47,6 +47,7 @@ export const ControlMenu = (props) => {
 
   const toggleMenu = () => {
     setOpen(!open);
+    console.log("open", open);
   };
 
   const menuClick = (itemNuber) => {
@@ -62,15 +63,15 @@ export const ControlMenu = (props) => {
         <ul className="slide-links">{renderSlideLinks(currentSlideIndex)}</ul>
       </div>
 
-      {/* <div>
+      <div>
         <div className={`main-nav-toggle cursor-pointer ${open ? "open" : ""}`} id="nav-toggle" onClick={toggleMenu}>
           <span></span>
         </div>
 
-        <nav className={`main-navigation ${open ? "main-menu-open" : "hidden"}`}>
+        <nav className={`main-navigation no-scroll ${open ? "main-menu-open" : "hidden"}`}>
           <ul>{renderMenuLinks(currentSlideIndex)}</ul>
         </nav>
-      </div> */}
+      </div>
     </>
   );
 };

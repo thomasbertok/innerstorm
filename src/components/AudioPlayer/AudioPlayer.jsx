@@ -34,6 +34,7 @@ const AudioPlayer = () => {
   } = useAppContext();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [wavesurfer, setWavesurfer] = useState(null);
   const [trackPosition, setTrackPosition] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
@@ -90,15 +91,15 @@ const AudioPlayer = () => {
    */
   useEffect(() => {
     setIsLoading(true);
-    // setTrackPosition(0);
-    // setTrackDuration(0);
+    setIsError(false);
+    //setTrackPosition(0);
+    //setTrackDuration(0);
     // console.log(">>> currentTrack", currentTrack);
     // console.log(">>> COVER", currentTrackCover);
 
     if (wavesurfer && currentTrack) {
       // load track into wavesurfer
       wavesurfer.load(`${import.meta.env.VITE_API_URL}${currentTrack.filename}`, currentTrack.peaks);
-
       setIsLoading(false);
       if (isPlaying) wavesurfer.play();
 
@@ -116,6 +117,11 @@ const AudioPlayer = () => {
       wavesurfer.on("audioprocess", () => {
         setTrackPosition(formatTime(wavesurfer.getCurrentTime()));
       });
+
+      wavesurfer.on("error", (error) => {
+        setIsError(true);
+        console.error("!!! Track Load Error: ", error);
+      });
     }
   }, [currentTrack]);
 
@@ -125,7 +131,7 @@ const AudioPlayer = () => {
         {!currentTrack && <div className="text-3xl font-light text-zinc-100 dark:text-zinc-300">No track selected</div>}
         {currentTrack && (
           <img
-            className="no-scroll"
+            className=""
             src={currentTrackCover}
             alt={currentTrack.title}
             onError={(e) => {
@@ -139,7 +145,7 @@ const AudioPlayer = () => {
 
       <div className="grid-title no-scroll">
         {isLoading && <div className="loading flex items-center justify-center">Loading...</div>}
-        {!isLoading && currentTrack && (
+        {!isLoading && !isError && currentTrack && (
           <div className="flex items-center justify-center flex-col gap-1">
             <div className="track-title text-3xl font-light text-zinc-100 dark:text-zinc-300">{currentTrack.title}</div>
             <div className="text-sm font-medium text-zinc-400 dark:text-zinc-400 hover:text-zinc-300">
@@ -152,7 +158,12 @@ const AudioPlayer = () => {
       </div>
 
       <div className="grid-waveform flex flex-col items-center justify-center no-scroll">
-        <div className="waveform" ref={waveformRef}></div>
+        {isError && (
+          <div className="error flex items-center justify-center h-full">Error loading track. Please try again.</div>
+        )}
+        <div
+          className={`waveform ${!isError && !isLoading && currentTrack ? "visible" : "hidden"} `}
+          ref={waveformRef}></div>
       </div>
 
       <div className="grid-controls flex items-center justify-between gap-4 no-scroll">

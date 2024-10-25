@@ -1,11 +1,11 @@
 import { AppContextProvider } from "@/context/AppContext";
-import FullPageContainer from "@/components/FullPageContainer";
+import Sections from "@/sections/Sections";
 import "@/styles/App.css";
 
 function App() {
   return (
     <AppContextProvider>
-      <FullPageContainer />
+      <Sections />
     </AppContextProvider>
   );
 }

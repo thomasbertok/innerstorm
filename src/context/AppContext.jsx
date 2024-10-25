@@ -5,6 +5,7 @@ const AppContext = createContext();
 export const AppContextProvider = ({ children }) => {
   const [activePage, setActivePage] = useState(0);
   const [colorScheme, setColorScheme] = useState("light");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   /**
    * get the active page index
@@ -245,6 +246,8 @@ export const AppContextProvider = ({ children }) => {
       value={{
         activePage,
         colorScheme,
+        menuOpen,
+        setMenuOpen,
         loadingPlaylist,
         currentTrack,
         currentTrackCover,
