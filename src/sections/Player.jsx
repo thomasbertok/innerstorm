@@ -8,7 +8,7 @@ const Player = () => {
     <Section sectionName="section-2" withLogo wallpaper={Polygons}>
       <div className="glass">
         <div className="player-grid">
-          <AudioPlayer />
+          {/* <AudioPlayer /> */}
           <AudioPlaylist />
         </div>
       </div>

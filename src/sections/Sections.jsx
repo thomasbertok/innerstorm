@@ -3,8 +3,10 @@ import Slide from "@/components/fullpage/Slide";
 import { useAppContext } from "@/context/AppContext";
 
 import Home from "@/sections/Home";
-import Player from "@/sections/Player";
+import Tracks from "@/sections/Tracks";
 import About from "@/sections/About";
+
+import MainPlayer from "@/components/MainPlayer";
 
 const Sections = () => {
   const { colorScheme, activePage, setActivePage, isActivePage, menuOpen, setMenuOpen } = useAppContext();
@@ -18,16 +20,18 @@ const Sections = () => {
         setActivePage={setActivePage}
         open={menuOpen}
         setOpen={setMenuOpen}>
+        <Slide title="Tracks" activestate={isActivePage(1)}>
+          <Tracks />
+        </Slide>
         <Slide title="Home" activestate={isActivePage(0)}>
           <Home />
-        </Slide>
-        <Slide title="Tracks" activestate={isActivePage(1)}>
-          <Player />
         </Slide>
         <Slide title="About" activestate={isActivePage(2)}>
           <About />
         </Slide>
       </FullPage>
+
+      <MainPlayer />
     </main>
   );
 };

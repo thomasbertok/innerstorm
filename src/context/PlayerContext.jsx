@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useKeyboard from "@/hooks/useKeyboard";
 
 const PlayerContext = createContext();
 
@@ -132,6 +133,9 @@ export const PlayerContextProvider = ({ children }) => {
     let nextTrack = currentTrack;
     const wasPlaying = isPlaying;
     pause();
+    if (!currentTrack) return;
+    if (!playlist) return;
+
     if (isShuffled) {
       nextTrack = playlist[Math.floor(Math.random() * playlist.length)];
     } else {
@@ -158,6 +162,8 @@ export const PlayerContextProvider = ({ children }) => {
     let prevTrack = currentTrack;
     const wasPlaying = isPlaying;
     pause();
+    if (!currentTrack) return;
+    if (!playlist) return;
 
     if (isShuffled) {
       prevTrack = playlist[Math.floor(Math.random() * playlist.length)];

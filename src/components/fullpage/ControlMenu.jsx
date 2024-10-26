@@ -30,7 +30,6 @@ export const ControlMenu = (props) => {
 
     for (let i = 0; i < slidesCount; i++) {
       const linkProps = {
-        key: i,
         onClick: () => menuClick(i),
         ...(currentSlideIndex === i && { className: "active-link" }),
       };
@@ -47,7 +46,7 @@ export const ControlMenu = (props) => {
 
   const toggleMenu = () => {
     setOpen(!open);
-    console.log("open", open);
+    // console.log("open", open);
   };
 
   const menuClick = (itemNuber) => {

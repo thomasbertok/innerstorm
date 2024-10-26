@@ -1,0 +1,122 @@
+.playlist {
+}
+
+.playlist-track {
+  display: grid;
+  grid-template-areas: "cover index title artist genre year length";
+  grid-template-columns: 48px 2rem 2fr 1fr 1fr 4rem 4rem;
+
+  gap: 0.5rem;
+  padding: 0.25rem;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.25);
+  cursor: pointer;
+}
+
+.playlist-track:hover {
+  border-radius: 0.25rem;
+  background-color: rgba(200, 200, 200, 0.25);
+}
+
+.playlist-track > * {
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+
+.playlist-track .playlist-track-cover {
+  grid-row: 1 / 1;
+  width: 48px;
+  /* grid-area: cover; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playlist-track .playlist-track-cover img {
+  border-radius: 0.25rem;
+}
+
+.playlist-track .playlist-track-index {
+  grid-area: index;
+  justify-content: center;
+  font-weight: 300;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.playlist-track .playlist-track-title {
+  grid-area: title;
+}
+
+.playlist-track .playlist-track-artist {
+  grid-area: artist;
+}
+
+.playlist-track .playlist-track-genre {
+  grid-area: genre;
+}
+
+.playlist-track .playlist-track-year {
+  grid-area: year;
+  justify-content: end;
+}
+
+.playlist-track .playlist-track-length {
+  grid-area: length;
+  justify-content: end;
+  font-weight: 300;
+  opacity: 0.75;
+  font-family: "Noto Sans", sans-serif;
+}
+
+/*
+FLEX
+*/
+
+/* .playlist-track {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.33rem;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.25);
+  cursor: pointer;
+}
+.playlist-track:last-child {
+  border-bottom: none;
+}
+
+.playlist-track > * {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.playlist-track .playlist-track-cover {
+  height: 48px;
+  width: 48px;
+}
+
+.playlist-track .playlist-track-index {
+  font-weight: 300;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  font-family: "Noto Sans", sans-serif;
+  width: 48px;
+}
+
+.playlist-track .playlist-track-title {
+  flex: 1;
+}
+
+.playlist-track .playlist-track-year {
+  width: 4rem;
+  text-align: right;
+}
+
+.playlist-track .playlist-track-length {
+  justify-content: end;
+  font-weight: 300;
+  opacity: 0.75;
+  font-family: "Noto Sans", sans-serif;
+} */
