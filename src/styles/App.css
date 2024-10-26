@@ -6,6 +6,10 @@
 @import "./player.css";
 @import "./waveform.css";
 
+.glass {
+  backdrop-filter: blur(0px);
+}
+
 @media screen and (min-width: 800px) {
   .dark .glass,
   .glass-dark {
@@ -26,8 +30,36 @@
     backdrop-filter: blur(20px);
   }
 }
-.title-1 {
-  @apply text-8xl font-thin text-center mb-4;
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 200;
+}
+
+h1 {
+  font-size: 3.815rem;
+}
+
+h2 {
+  font-size: 3.052rem;
+}
+
+h3 {
+  font-size: 2.441rem;
+}
+
+h4 {
+  font-size: 1.953rem;
+}
+
+h5 {
+  font-size: 1.563rem;
+}
+
+h6 {
+  font-size: 1.25rem;
 }
 
 p {
@@ -51,13 +83,9 @@ p {
   border-radius: 4px;
 }
 
-.tooltip:hover .tooltip-content {
-  visibility: visible;
-  opacity: 1;
-}
-
 .tooltip .tooltip-content {
   position: absolute;
+  z-index: 1000;
   z-index: 1000;
   border-radius: 12px;
   left: 50%;
@@ -69,13 +97,22 @@ p {
   user-select: none;
   color: theme("colors.zinc.300");
   padding: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 300;
   max-width: 300px;
   opacity: 0;
   visibility: hidden;
 }
 
+.tooltip:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
 .section-home {
   gap: clamp(1rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

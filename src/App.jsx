@@ -1,11 +1,14 @@
 import { AppContextProvider } from "@/context/AppContext";
-import FullPageContainer from "@/components/FullPageContainer";
+import { PlayerContextProvider } from "./context/PlayerContext";
+import Sections from "@/sections/Sections";
 import "@/styles/App.css";
 
 function App() {
   return (
     <AppContextProvider>
-      <FullPageContainer />
+      <PlayerContextProvider>
+        <Sections />
+      </PlayerContextProvider>
     </AppContextProvider>
   );
 }

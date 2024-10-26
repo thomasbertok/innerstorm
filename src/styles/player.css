@@ -35,8 +35,8 @@
     width: 100%;
     width: 100vw;
     max-width: 480px;
-    max-height: 99svh;
-    height: 99svh;
+    max-height: calc(100svh - 42px);
+
     padding: 10px;
   }
 
@@ -116,12 +116,34 @@
   }
   .grid-playlist {
     overflow: hidden;
-    @apply rounded-bl-xl rounded-tr-xl pr-3;
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    background-color: rgba(80, 80, 80, 0.2);
     mask-image: linear-gradient(180deg, #000 90%, transparent);
   }
   .playlist-list {
     @apply pt-10 pb-7;
   }
+}
+
+.time {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 0.75em;
+  font-weight: 500;
+}
+
+.time-total,
+.time-current {
+  font-size: 1rem;
+}
+
+.track-title {
+  text-align: center;
+  text-wrap: balance;
+}
+
+.grid-playlist {
 }
 
 .volume-container {
