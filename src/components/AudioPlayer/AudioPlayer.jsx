@@ -2,17 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import WaveSurfer from "wavesurfer.js";
 import Hover from "wavesurfer.js/dist/plugins/hover.esm.js";
 import { waveSurferOptions, hoverOptions } from "@/styles/WaveSurfer/options";
-import { TbArrowsShuffle, TbRepeat, TbRepeatOnce, TbRepeatOff } from "react-icons/tb";
-import { useAppContext } from "@/context/AppContext";
+import { usePlayerContext } from "@/context/PlayerContext";
 import { formatTime } from "@/utils";
-
-import {
-  TbPlayerSkipForwardFilled,
-  TbPlayerSkipBackFilled,
-  TbPlayerPlayFilled,
-  TbPlayerPauseFilled,
-  TbVolume,
-} from "react-icons/tb";
+import { Play, Pause, ChevronFirst, ChevronLast, Shuffle, Repeat, Repeat1 } from "lucide-react";
 
 const AudioPlayer = () => {
   const {
@@ -31,7 +23,7 @@ const AudioPlayer = () => {
     clickNextTrack,
     volume,
     setVolume,
-  } = useAppContext();
+  } = usePlayerContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -84,6 +76,13 @@ const AudioPlayer = () => {
       setCurrentTrack(playlist[0]);
     }
   }, [playlist, currentTrack]);
+
+  useEffect(() => {
+    if (wavesurfer) {
+      if (isPlaying) wavesurfer.play();
+      else wavesurfer.pause();
+    }
+  }, [isPlaying]);
 
   /**
    * set track duration
@@ -177,13 +176,13 @@ const AudioPlayer = () => {
             onClick={() => {
               setIsShuffled(!isShuffled);
             }}>
-            <TbArrowsShuffle size={24} className={isShuffled ? "text-zinc-100" : "text-zinc-400"} />
+            <Shuffle size={20} className={isShuffled ? "text-zinc-100" : "text-zinc-400"} />
           </button>
 
           {/* PREVIOUS */}
           <button className="">
-            <TbPlayerSkipBackFilled
-              size={24}
+            <ChevronFirst
+              size={28}
               onClick={clickPrevTrack}
               className="text-zinc-300 hover:text-zinc-100 dark:text-zinc-400 hover:dark:text-zinc-100"
               disabled={playlist && currentTrack === playlist[0] && isRepeat !== 2}
@@ -195,31 +194,32 @@ const AudioPlayer = () => {
             className="group button border-2 border-zinc-300 dark:border-zinc-400 rounded-full w-12 h-12 flex items-center justify-center hover:bg-zinc-100/80 hover:border-transparent transition-colors"
             onClick={handlePlayButtonClick}>
             {isPlaying ? (
-              <TbPlayerPauseFilled size={24} className="text-zinc-300 dark:text-zinc-400 group-hover:text-zinc-600" />
+              <Pause size={24} className="text-zinc-300 dark:text-zinc-400 group-hover:text-zinc-600" />
             ) : (
-              <TbPlayerPlayFilled size={24} className="text-zinc-300 dark:text-zinc-400 group-hover:text-zinc-600" />
+              <Play
+                size={24}
+                className="transform translate-x-[1px] text-zinc-300 dark:text-zinc-400 group-hover:text-zinc-600"
+              />
             )}
           </button>
 
           {/* NEXT */}
-          <button
-            className="disabled:text-zinc-400"
-            onClick={clickNextTrack}
-            disabled={playlist && currentTrack === playlist[playlist.length - 1] && isRepeat !== 2}>
-            <TbPlayerSkipForwardFilled
-              size={24}
+          <button className="disabled:text-zinc-400" onClick={clickNextTrack}>
+            <ChevronLast
+              size={28}
               className="text-zinc-300 hover:text-zinc-100 dark:text-zinc-400 hover:dark:text-zinc-100"
+              disabled={playlist && currentTrack === playlist[playlist.length - 1] && isRepeat !== 2}
             />
           </button>
 
           {/* REPEAT */}
           <button className="" onClick={() => setIsRepeat((isRepeat + 1) % 3)}>
             {isRepeat === 0 ? (
-              <TbRepeatOff size={22} className="text-zinc-400 hover:text-zinc-100" />
+              <Repeat size={22} className="text-zinc-400 hover:text-zinc-100" />
             ) : isRepeat === 1 ? (
-              <TbRepeatOnce size={22} />
+              <Repeat1 size={22} />
             ) : (
-              <TbRepeat size={22} />
+              <Repeat size={22} className="text-zinc-300" />
             )}
           </button>
         </div>
