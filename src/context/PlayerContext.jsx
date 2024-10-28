@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useKeyboard from "@/hooks/useKeyboard";
 
 const PlayerContext = createContext();
 
 export const PlayerContextProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, updateCurrentTrack] = useState(null);
-  const [playlist, setPlaylist] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
+  const [activePlaylistName, setActivePlaylistName] = useState(null);
   const [loadingPlaylist, setLoadingPlaylist] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [currentTrackCover, setCurrentTrackCover] = useState(null);
@@ -13,15 +15,15 @@ export const PlayerContextProvider = ({ children }) => {
   const [isShuffled, setIsShuffled] = useState(false);
   const [isRepeat, setIsRepeat] = useState(0);
 
-  const play = () => {
-    console.log("▶ play");
-    setIsPlaying(true);
-  };
+  //   const play = () => {
+  //     console.log("▶ play");
+  //     setIsPlaying(true);
+  //   };
 
-  const pause = () => {
-    console.log("⏸️  pause");
-    setIsPlaying(false);
-  };
+  //   const pause = () => {
+  //     console.log("⏸️  pause");
+  //     setIsPlaying(false);
+  //   };
 
   /**
    * Set the given track as the current track
@@ -32,7 +34,7 @@ export const PlayerContextProvider = ({ children }) => {
     console.log(">>> Set Current Track:", track);
     if (track) {
       updateCurrentTrack(track);
-      setCurrentTrackIndex(playlist.indexOf(track));
+      setCurrentTrackIndex(playlists[activePlaylistName].indexOf(track));
       setCurrentTrackCover(`${import.meta.env.VITE_COVERS_PATH}${track.slug}.jpg`);
     } else {
       updateCurrentTrack(null);
@@ -47,8 +49,13 @@ export const PlayerContextProvider = ({ children }) => {
    */
   const playTrack = (track) => {
     setCurrentTrack(track);
-    play();
+    setIsPlaying(true);
     console.log("▶ Playing Track:", track.title);
+  };
+
+  const pauseTrack = () => {
+    setIsPlaying(false);
+    console.log("⏸️  Pausing Track");
   };
 
   /**
@@ -77,16 +84,19 @@ export const PlayerContextProvider = ({ children }) => {
   /**
    * Load playlist from db.json
    */
-  const getPlaylist = async () => {
-    console.log(">>> Fetching playlist...");
+
+  const getPlaylists = async () => {
+    console.log(">>> Fetching playlists...");
     setLoadingPlaylist(true);
 
     try {
       const response = await fetch(`${import.meta.env.VITE_FILES_URL}${import.meta.env.VITE_PLAYLIST_JSON}`);
       if (!response.ok) throw new Error("Failed to fetch playlist");
       const data = await response.json();
-      setPlaylist(sortPlaylist(data));
-      console.log(">>> Success:", data.length, "tracks loaded");
+      setPlaylists(data);
+      setActivePlaylistName(Object.keys(data)[0]);
+      setCurrentTrack(data[Object.keys(data)[0]][0]);
+      console.log(">>> Success:", data);
     } catch (error) {
       console.error("!!! Error fetching playlist:", error.message);
     } finally {
@@ -100,18 +110,20 @@ export const PlayerContextProvider = ({ children }) => {
   const setNextTrack = () => {
     let wasPlaying = isPlaying;
     let nextTrack = currentTrack;
-    pause();
+    const currentPlaylist = playlists[activePlaylistName];
+    //pause();
+    setIsPlaying(false);
 
     if (isShuffled) {
-      nextTrack = playlist[Math.floor(Math.random() * playlist.length)];
+      nextTrack = currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
     } else {
       switch (isRepeat) {
         case 2: // repeat all | circle playlist
-          nextTrack = (currentTrackIndex + 1) % playlist.length;
+          nextTrack = (currentTrackIndex + 1) % currentPlaylist.length;
           break;
         default: // repeat off | go to next track if not last
-          if (currentTrackIndex < playlist.length - 1) {
-            nextTrack = playlist[currentTrackIndex + 1];
+          if (currentTrackIndex < currentPlaylist.length - 1) {
+            nextTrack = currentPlaylist[currentTrackIndex + 1];
           } else {
             // last track, no repeat is on
             wasPlaying = false;
@@ -131,17 +143,23 @@ export const PlayerContextProvider = ({ children }) => {
   const clickNextTrack = () => {
     let nextTrack = currentTrack;
     const wasPlaying = isPlaying;
-    pause();
+    const currentPlaylist = playlists[activePlaylistName];
+    // pause();
+    setIsPlaying(false);
+
+    if (!currentTrack) return;
+    if (!currentPlaylist) return;
+
     if (isShuffled) {
-      nextTrack = playlist[Math.floor(Math.random() * playlist.length)];
+      nextTrack = currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
     } else {
       if (isRepeat === 2) {
         // circle playlist
-        nextTrack = playlist[(currentTrackIndex + 1) % playlist.length];
+        nextTrack = currentPlaylist[(currentTrackIndex + 1) % currentPlaylist.length];
       } else {
         // go to next track if not last
-        if (currentTrackIndex < playlist.length - 1) {
-          nextTrack = playlist[currentTrackIndex + 1];
+        if (currentTrackIndex < currentPlaylist.length - 1) {
+          nextTrack = currentPlaylist[currentTrackIndex + 1];
         }
       }
     }
@@ -157,18 +175,23 @@ export const PlayerContextProvider = ({ children }) => {
   const clickPrevTrack = () => {
     let prevTrack = currentTrack;
     const wasPlaying = isPlaying;
-    pause();
+    const currentPlaylist = playlists[activePlaylistName];
+    // pause();
+    setIsPlaying(false);
+
+    if (!currentTrack) return;
+    if (!currentPlaylist) return;
 
     if (isShuffled) {
-      prevTrack = playlist[Math.floor(Math.random() * playlist.length)];
+      prevTrack = currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
     } else {
       if (isRepeat === 2) {
         // circle playlist
-        prevTrack = playlist[(currentTrackIndex - 1 + playlist.length) % playlist.length];
+        prevTrack = currentPlaylist[(currentTrackIndex - 1 + currentPlaylist.length) % currentPlaylist.length];
       } else {
         // go to previous track if not first
         if (currentTrackIndex > 0) {
-          prevTrack = playlist[currentTrackIndex - 1];
+          prevTrack = currentPlaylist[currentTrackIndex - 1];
         }
       }
     }
@@ -213,23 +236,24 @@ export const PlayerContextProvider = ({ children }) => {
    * TODO: load playlist on first "activePage"
    */
   useEffect(() => {
-    getPlaylist();
+    getPlaylists();
   }, []);
 
   return (
     <PlayerContext.Provider
       value={{
-        play,
-        pause,
+        // play,
+        // pause,
         currentTrack,
         setCurrentTrack,
         currentTrackCover,
-        playlist,
-        setPlaylist,
+        playlists,
+        setPlaylists,
         setIsPlaying,
         loadingPlaylist,
         isPlaying,
         playTrack,
+        pauseTrack,
         trackIsPlaying,
         isShuffled,
         setIsShuffled,

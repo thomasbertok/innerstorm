@@ -1,0 +1,136 @@
+.playlist-track {
+  display: flex;
+  justify-content: start;
+  padding: clamp(0.25rem, 1.5vw, 0.5rem);
+  border-bottom: 1px solid rgba(200, 200, 200, 0.25);
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.playlist-track:last-child {
+  border-bottom: none;
+}
+
+.playlist-track.track-is-playing,
+.playlist-track:hover {
+  border-radius: 0.25rem;
+  background-color: rgba(200, 200, 200, 0.25);
+}
+
+.playlist-track.track-is-playing {
+  background-color: rgba(200, 200, 200, 0.33);
+}
+
+.playlist-track.track-is-playing,
+/* oh boy! */
+/* https://tobiasahlin.com/blog/previous-sibling-css-has/ */
+.playlist-track:has(+ .track-is-playing),
+.playlist-track:has(+ .playlist-track:hover) {
+  border-bottom-color: transparent;
+}
+
+.playlist-track > * {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  display: flex;
+  align-items: center;
+}
+
+.playlist-track .playlist-track-cover {
+  width: 48px;
+  grid-area: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 0.3rem;
+  transition: all 0.25s ease;
+}
+
+.playlist-track .playlist-track-cover .button {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: theme("colors.zinc.900");
+  visibility: hidden;
+}
+
+.playlist-track .playlist-track-cover:hover {
+}
+
+.playlist-track.track-is-playing .playlist-track-cover .button,
+.playlist-track .playlist-track-cover:hover .button {
+  visibility: visible;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.playlist-track.track-is-playing .playlist-track-cover img,
+.playlist-track .playlist-track-cover:hover img {
+  filter: blur(8px);
+  transform: scale(1.5);
+}
+
+.playlist-track .playlist-track-index {
+  grid-area: index;
+  justify-content: center;
+  font-weight: 300;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  font-family: "Noto Sans", sans-serif;
+  width: 2rem;
+}
+
+.playlist-track .playlist-track-title {
+  grid-area: title;
+  font-weight: 600;
+  flex: 2;
+}
+
+.playlist-track .playlist-track-artist {
+}
+
+.playlist-track .playlist-track-genre {
+  flex: 1;
+  color: theme("colors.zinc.300");
+}
+
+.playlist-track .playlist-track-year {
+  text-align: right;
+  justify-content: end;
+}
+
+.playlist-track .playlist-track-length {
+  grid-area: length;
+  justify-content: end;
+  font-weight: 400;
+  color: theme("colors.zinc.300");
+  font-family: "Noto Sans", sans-serif;
+}
+
+/* MOBILE */
+@media screen and (max-width: 799px) {
+  .playlist {
+    padding: 12px;
+    padding-top: 20px;
+  }
+  .playlist .playlist-track-genre {
+    display: none;
+  }
+}
+
+/* DESKTOP */
+@media screen and (min-width: 800px) {
+  .playlist {
+    container-type: inline-size;
+  }
+}
+
+@container (max-width: 500px) {
+  .playlist-track-genre {
+    display: none;
+  }
+}

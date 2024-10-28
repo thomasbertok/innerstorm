@@ -1,3 +1,7 @@
+:root {
+  --breakpoint: "800px";
+}
+
 /*
   fullpage.js
   slides' wrapper
@@ -61,8 +65,8 @@
   cursor: pointer;
   background-color: theme("colors.zinc.400");
   border-radius: 0.75rem;
-  width: 1rem;
-  height: 1rem;
+  width: 0.75rem;
+  height: 0.75rem;
   transition: all 0.1s ease;
   position: relative;
   z-index: 100;
@@ -76,7 +80,7 @@
   font-size: 0.75rem;
   font-weight: 700;
   overflow: hidden;
-  height: 1rem;
+  height: 0.75rem;
   right: 50%;
   top: 50%;
   transform: translateY(-50%);
@@ -91,22 +95,25 @@
   transition: opacity 0.5s ease;
 }
 .full-page-controls .slide-links li.active-link {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1rem;
+  height: 1rem;
   background-color: theme("colors.zinc.300");
 }
 
 .full-page-controls .slide-links li.active-link span {
-  height: 1.25rem;
-  line-height: 1.25rem;
+  height: 1rem;
+  line-height: 1rem;
 }
 
 .full-page-controls .slide-links li:hover {
   background-color: theme("colors.zinc.200");
   box-shadow: 0 0 0.5rem 0.25rem rgba(220, 220, 220, 0.25);
+  transform: scale(1.25);
 }
 
 .full-page-controls .slide-links li:hover span {
+  transform: translateY(-50%);
+  font-size: 0.66rem;
   visibility: visible;
   opacity: 1;
 }
@@ -120,8 +127,8 @@
   right: 1rem;
   top: 1rem;
   transition: all 0.1s ease;
-  width: 32px;
-  height: 30px;
+  width: 24px;
+  height: 21px;
 }
 
 .main-nav-toggle span,
@@ -129,7 +136,7 @@
 .main-nav-toggle::after {
   content: "";
   position: absolute;
-  width: 32px;
+  width: 100%;
   height: 3px;
   background-color: theme("colors.zinc.400");
   display: block;
@@ -166,6 +173,7 @@
   transform-origin: right top;
 }
 
+/* mobile main menu */
 .main-navigation {
   display: none;
 }
