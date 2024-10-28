@@ -12,7 +12,7 @@ const Sections = () => {
   const { colorScheme, activePage, setActivePage, isActivePage, menuOpen, setMenuOpen } = useAppContext();
 
   return (
-    <main className={`app ${colorScheme}`}>
+    <main className={`app ${colorScheme} active-slide-${activePage}`}>
       <FullPage
         controls
         duration={400}
@@ -20,16 +20,16 @@ const Sections = () => {
         setActivePage={setActivePage}
         open={menuOpen}
         setOpen={setMenuOpen}>
-        <Slide title="Tracks" activestate={isActivePage(1)}>
-          <Tracks />
-        </Slide>
-        <Slide title="Mixes" activestate={isActivePage(0)}>
-          <Mixes />
-        </Slide>
         <Slide title="Home" activestate={isActivePage(0)}>
           <Home />
         </Slide>
-        <Slide title="About" activestate={isActivePage(2)}>
+        <Slide title="Tracks" activestate={isActivePage(1)}>
+          <Tracks />
+        </Slide>
+        <Slide title="Mixes" activestate={isActivePage(2)}>
+          <Mixes />
+        </Slide>
+        <Slide title="About" activestate={isActivePage(3)}>
           <About />
         </Slide>
       </FullPage>

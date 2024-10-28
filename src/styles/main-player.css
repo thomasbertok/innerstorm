@@ -96,6 +96,11 @@
     grid-template-areas: "cover info controls waveSurfer duration volume";
     grid-column-gap: 1rem;
     grid-row-gap: 0;
+    transition: bottom 0.33s ease-in-out;
+  }
+
+  .active-slide-0 .main-player {
+    bottom: -100px;
   }
 
   /* Player Info: Cover + Titles */
@@ -155,7 +160,6 @@
   .player-volume-range {
     writing-mode: vertical-lr;
     direction: rtl;
-    appearance: slider-vertical;
     width: 0.5rem;
     vertical-align: bottom;
     -webkit-appearance: none;

@@ -28,6 +28,9 @@ h2,
 h3,
 h4 {
   font-weight: 200;
+  background: -webkit-linear-gradient(theme(colors.zinc.100), theme(colors.zinc.300));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 h1 {
