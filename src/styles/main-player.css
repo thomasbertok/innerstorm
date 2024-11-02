@@ -55,6 +55,11 @@
 
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    transition: bottom 0.33s ease-in-out;
+  }
+
+  .active-slide-0 .main-player {
+    bottom: -130px;
   }
 
   .player-duration,

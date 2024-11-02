@@ -51,7 +51,7 @@ const PlayerWaveSurfer = () => {
     ws.setVolume(0.5);
     // set wavesurfer state
     setWavesurfer(ws);
-    console.log(">>> wavesurfer instance created.");
+    // console.log(">>> wavesurfer instance created.");
     return () => ws.destroy();
   }, []);
 

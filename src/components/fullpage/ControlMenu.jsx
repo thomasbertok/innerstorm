@@ -1,12 +1,13 @@
-import React from "react";
-
-export const ControlMenu = (props) => {
-  const { className, getCurrentSlideIndex, open, setOpen } = props;
-  const currentSlideIndex = getCurrentSlideIndex();
-
+export const ControlMenu = ({
+  className,
+  currentSlideIndex,
+  open,
+  setOpen,
+  slidesCount,
+  scrollToSlide,
+  slidesNames,
+}) => {
   const renderSlideLinks = (currentSlideIndex) => {
-    const { slidesCount, scrollToSlide, slidesNames } = props;
-
     const sideLinks = [];
 
     for (let i = 0; i < slidesCount; i++) {
@@ -25,7 +26,6 @@ export const ControlMenu = (props) => {
   };
 
   const renderMenuLinks = (currentSlideIndex) => {
-    const { slidesCount, scrollToSlide, slidesNames } = props;
     const menuLinks = [];
 
     for (let i = 0; i < slidesCount; i++) {
@@ -46,13 +46,12 @@ export const ControlMenu = (props) => {
 
   const toggleMenu = () => {
     setOpen(!open);
-    // console.log("open", open);
   };
 
-  const menuClick = (itemNuber) => {
+  const menuClick = (itemNumber) => {
     setOpen(false);
     setTimeout(() => {
-      props.scrollToSlide(itemNuber);
+      scrollToSlide(itemNumber);
     }, 200);
   };
 

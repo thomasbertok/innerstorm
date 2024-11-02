@@ -1,11 +1,11 @@
-import easeInOutCubic from './ease-in-out-cubic';
+import { easeInOutCubic, easeOutCubic, easeInCubic } from "./ease";
 
 export default function animatedScrollTo(scrollTo, duration, callback) {
   const scrollFrom = window.scrollY || window.pageYOffset || 0;
   const scrollDiff = scrollTo - scrollFrom;
   let currentTime = 0;
   const increment = 20;
-  
+
   (function animateScroll() {
     currentTime += increment;
     const newScrollPos = easeInOutCubic(currentTime, scrollFrom, scrollDiff, duration);
@@ -17,5 +17,5 @@ export default function animatedScrollTo(scrollTo, duration, callback) {
     }
 
     setTimeout(animateScroll, increment);
-  }());
+  })();
 }

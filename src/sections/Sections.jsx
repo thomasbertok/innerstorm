@@ -1,5 +1,5 @@
-import FullPage from "@/components/fullpage/FullPage";
-import Slide from "@/components/fullpage/Slide";
+import FullPage from "@/components/FullPage/FullPage";
+import Slide from "@/components/FullPage/Slide";
 import { useAppContext } from "@/context/AppContext";
 
 import Home from "@/sections/Home";
@@ -15,11 +15,12 @@ const Sections = () => {
     <main className={`app ${colorScheme} active-slide-${activePage}`}>
       <FullPage
         controls
-        duration={400}
+        duration={350}
         activePage={activePage}
         setActivePage={setActivePage}
         open={menuOpen}
-        setOpen={setMenuOpen}>
+        setOpen={setMenuOpen}
+        noScrollClass=".no-scroll">
         <Slide title="Home" activestate={isActivePage(0)}>
           <Home />
         </Slide>

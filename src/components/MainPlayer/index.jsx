@@ -5,7 +5,7 @@ import PlayerWaveSurfer from "./PlayerWaveSurfer";
 
 const MainPlayer = () => {
   return (
-    <div className="main-player glass w-9/12 player-hidden">
+    <div className="main-player glass w-9/12">
       <PlayerInfo />
       <PlayerControls />
       <PlayerWaveSurfer />

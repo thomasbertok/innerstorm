@@ -163,13 +163,13 @@
 
 .main-nav-toggle.open::before,
 .main-nav-toggle:hover::before {
-  transform: rotate(-45deg) translate(-5px, -2px);
+  transform: rotate(-45deg) translate(-4px, -2px);
   transform-origin: right top;
 }
 
 .main-nav-toggle.open::after,
 .main-nav-toggle:hover::after {
-  transform: rotate(45deg) translate(-3px, 0px);
+  transform: rotate(45deg) translate(-1px, 2px);
   transform-origin: right top;
 }
 

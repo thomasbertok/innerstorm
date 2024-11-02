@@ -31,7 +31,7 @@ export const PlayerContextProvider = ({ children }) => {
    * Set cover
    */
   const setCurrentTrack = (track) => {
-    console.log(">>> Set Current Track:", track);
+    // console.log(">>> Set Current Track:", track);
     if (track) {
       updateCurrentTrack(track);
       setCurrentTrackIndex(playlists[activePlaylistName].indexOf(track));
@@ -86,7 +86,7 @@ export const PlayerContextProvider = ({ children }) => {
    */
 
   const getPlaylists = async () => {
-    console.log(">>> Fetching playlists...");
+    // console.log(">>> Fetching playlists...");
     setLoadingPlaylist(true);
 
     try {
@@ -96,7 +96,7 @@ export const PlayerContextProvider = ({ children }) => {
       setPlaylists(data);
       setActivePlaylistName(Object.keys(data)[0]);
       setCurrentTrack(data[Object.keys(data)[0]][0]);
-      console.log(">>> Success:", data);
+      // console.log(">>> Success:", data);
     } catch (error) {
       console.error("!!! Error fetching playlist:", error.message);
     } finally {
