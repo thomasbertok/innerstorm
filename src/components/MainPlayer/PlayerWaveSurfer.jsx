@@ -51,9 +51,25 @@ const PlayerWaveSurfer = () => {
     ws.setVolume(0.5);
     // set wavesurfer state
     setWavesurfer(ws);
-    // console.log(">>> wavesurfer instance created.");
-    return () => ws.destroy();
+    // add key event listener
+    document.addEventListener("keyup", onKeyUp);
+    return () => {
+      ws.destroy();
+      document.removeEventListener("keyup", onKeyUp);
+    };
   }, []);
+
+  const onKeyUp = (event) => {
+    // if (event.key === " ") {
+    //   setIsPlaying(!isPlaying);
+    // }
+    // if (event.key === "ArrowLeft") {
+    //   clickPrevTrack();
+    // }
+    // if (event.key === "ArrowRight") {
+    //   clickNextTrack();
+    // }
+  };
 
   /**
    * when playlist is ready

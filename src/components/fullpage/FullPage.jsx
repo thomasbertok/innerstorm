@@ -80,6 +80,7 @@ const FullPage = ({
       document.addEventListener("touchstart", handleTouchStart);
     } else {
       document.addEventListener("wheel", handleScroll, { passive: false });
+      document.addEventListener("keydown", handleKeyUp, { passive: false });
     }
 
     return () => {
@@ -88,8 +89,9 @@ const FullPage = ({
         document.removeEventListener("touchmove", handleTouchMove, { passive: false });
       } else {
         document.removeEventListener("wheel", handleScroll);
+        document.removeEventListener("keydown", handleKeyUp);
       }
-      window.removeEventListener("resize", handleResize, { passive: false });
+      window.removeEventListener("resize", handleResize);
     };
   }, [activePage, activeSlide]);
 
@@ -103,6 +105,15 @@ const FullPage = ({
     updateSlidePositions();
     // update active slide
     scrollToSlide(activePage);
+  };
+
+  // on key up
+  const handleKeyUp = (event) => {
+    if (event.key === "ArrowDown") {
+      scrollToSlide(activeSlide + 1);
+    } else if (event.key === "ArrowUp") {
+      scrollToSlide(activeSlide - 1);
+    }
   };
 
   // on touch start
