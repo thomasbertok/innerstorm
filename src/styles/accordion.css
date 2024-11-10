@@ -1,0 +1,43 @@
+@media screen and (max-width: 1024px) {
+  .accordion {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.33s ease-in-out;
+  }
+
+  .accordion.open {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion-content {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .accordion-content.open {
+    height: auto;
+  }
+
+  .accordion-button {
+    cursor: pointer;
+    cursor: pointer;
+    transform: rotate(0deg);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    background-color: theme("colors.zinc.300");
+    color: theme("colors.zinc.800");
+    border-radius: 50%;
+    transition: transform 0.5s ease-out;
+    margin: 1rem auto;
+  }
+
+  .accordion-button.open {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease-out;
+  }
+}

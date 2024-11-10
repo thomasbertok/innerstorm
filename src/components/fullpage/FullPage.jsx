@@ -58,14 +58,21 @@ const FullPage = ({
   // setup and update slide coordinates
   const updateSlidePositions = useCallback(() => {
     slidePositions.current = [];
+    let slideHeight = window.innerHeight;
+
+    // const sectionHeight = document.querySelector(`.section`)[0].offsetHeight;
+    // console.log(sectionHeight);
+    // slidePositions.current[i] = sectionHeight * i;
+    let smallViewHeight = window.innerHeight;
+    console.log(">> svh >>", smallViewHeight);
+
     for (let i = 0; i < slideCount; i++) {
-      slidePositions.current[i] = window.innerHeight * i;
+      slidePositions.current[i] = slideHeight * i;
     }
   }, [slideCount]);
 
   useEffect(() => {
     updateSlidePositions();
-    // updateSlidePosition(initialSlide);
     scrollToSlide(activePage);
     isMobile.current = isMobileDevice();
   }, []);

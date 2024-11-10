@@ -1,12 +1,12 @@
 import Section from "@/components/Section";
 import Playlist from "@/components/Playlist";
-import Polygons from "@/assets/backgrounds/flare.jpg";
+import Polygons from "@/assets/backgrounds/tom3_1.jpg";
 
 const Mixes = () => {
   return (
     <Section sectionName="section-2 section-mixes" withLogo wallpaper={Polygons} className="">
       <div className="flex md:gap-6 xl:gap-20 flex-col xl:flex-row items-center xl:justify-center w-full md:w-9/12 p-4 md:p-0 md:pb-32 xl:pb-32 h-full ">
-        <div className="w-full xl:w-1/3 2xl:w-1/2">
+        <div className="sidebar w-full xl:w-1/3 2xl:w-1/2 flex flex-col xl:gap-10">
           <h1 className="">Mixes</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque aliquam quod exercitationem. Iste ratione

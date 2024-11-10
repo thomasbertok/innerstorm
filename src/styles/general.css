@@ -6,7 +6,7 @@
   .dark .glass,
   .glass-dark {
     border-radius: 16px;
-    background-color: rgba(30, 20, 10, 0.33);
+    background-color: rgba(30, 30, 20, 0.33);
     border: 1px solid rgba(30, 30, 30, 0.1);
     box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.5), inset 0 2px 0px -1px rgba(100, 100, 100, 0.33);
     backdrop-filter: blur(30px);
@@ -28,13 +28,14 @@ h2,
 h3,
 h4 {
   font-weight: 200;
-  background: -webkit-linear-gradient(theme(colors.zinc.100), theme(colors.zinc.300));
+  background: -webkit-linear-gradient(theme("colors.zinc.100"), theme("colors.zinc.400"));
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 h1 {
   font-size: clamp(2rem, 5vw + 1rem, 3.815rem);
+  line-height: 1em;
 }
 
 h2 {

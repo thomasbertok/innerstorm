@@ -6,6 +6,7 @@ export const AppContextProvider = ({ children }) => {
   const [activePage, setActivePage] = useState(0);
   const [colorScheme, setColorScheme] = useState("light");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAccordionOpen, setAccordionOpen] = useState(false);
 
   /**
    * get the index of the active page
@@ -29,6 +30,8 @@ export const AppContextProvider = ({ children }) => {
         colorScheme,
         setColorScheme,
         toggleColorScheme,
+        isAccordionOpen,
+        setAccordionOpen,
       }}>
       {children}
     </AppContext.Provider>

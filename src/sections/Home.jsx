@@ -1,8 +1,8 @@
-import Polygons from "@/assets/backgrounds/poly.jpg";
 import Section from "@/components/Section";
 import { useAppContext } from "@/context/AppContext";
 import { Youtube, SoundCloud, Facebook, Instagram, Music } from "@/assets/icons";
 import LogoType from "@/components/LogoType";
+import Polygons from "@/assets/backgrounds/poly.jpg";
 
 const Home = () => {
   const { setActivePage } = useAppContext();
@@ -13,7 +13,7 @@ const Home = () => {
   };
 
   return (
-    <Section sectionName="section-1" wallpaper={Polygons}>
+    <Section sectionName="section-1 section-home" wallpaper={Polygons}>
       <div className="section-content section-home">
         <LogoType />
         <div className="homepage-social-links flex gap-6 items-center no-scroll">

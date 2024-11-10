@@ -238,4 +238,45 @@
   .main-nav-toggle {
     display: none;
   }
+
+  .main-navigation {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    right: 1rem;
+    top: 1rem;
+    transition: inset 0.1s ease;
+  }
+
+  .active-slide-0 .main-navigation {
+    top: -10rem;
+  }
+
+  .main-navigation ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0rem;
+  }
+
+  .main-navigation ul .nav-item {
+    display: block;
+    padding: 0.5rem;
+    text-wrap: nowrap;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: lowercase;
+    background-color: transparent;
+    transition: background-color 0.1s ease;
+    color: theme("colors.zinc.400");
+  }
+
+  .main-navigation ul li:hover .nav-item,
+  .main-navigation ul .active-link .nav-item {
+    background-color: theme("colors.zinc.900");
+    color: theme("colors.zinc.300");
+    border-radius: 0.5rem;
+  }
 }

@@ -1,0 +1,129 @@
+.calendar-playlist {
+  position: relative;
+  height: fit-content;
+  display: grid;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+}
+
+.calendar-playlist:hover .calendar-month:not(:hover) {
+  z-index: 1;
+}
+
+.calendar-month {
+  height: auto;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+  transition: all 0.33s ease;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  container: calendar-month / inline-size;
+}
+
+.calendar-month .month-card {
+  width: 100%;
+  overflow: hidden;
+  transition: padding 0.5s ease;
+}
+
+.calendar-month .month-card img {
+  transition: all 0.2s ease;
+}
+
+.calendar-month .month-card .titles {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.125rem;
+  visibility: hidden;
+  mix-blend-mode: color-dodge;
+}
+
+.calendar-month .month-card .title {
+  color: theme("colors.zinc.600");
+  font-size: 2rem;
+  line-height: 1.25em;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+}
+
+.calendar-month .month-card .genre {
+  color: theme("colors.zinc.700");
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.calendar-month .month-card .icons {
+  position: absolute;
+  z-index: 20;
+  inset: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  display: none;
+}
+
+.calendar-month:hover .month-card {
+  padding: 0;
+  transition: all 0.1s ease;
+}
+
+.calendar-month:hover .month-card img {
+  transform: scale(1.5);
+  filter: blur(20px);
+}
+
+.calendar-month:hover .month-card .titles {
+  visibility: visible;
+}
+
+.calendar-month:hover .month-card .icons {
+  display: flex;
+}
+
+calendar-month.selected {
+  z-index: 10;
+  padding: 0;
+}
+
+.calendar-month.selected .month-card img {
+  transform: scale(1.5);
+  filter: blur(20px);
+}
+
+.calendar-month.selected .month-card .titles {
+  visibility: visible;
+}
+
+.calendar-month:hover:has(~ .calendar-month),
+.calendar-month.selected:has(~ .calendar-month) {
+  z-index: 10;
+}
+
+.calendar-month.selected:not(:hover) .icons {
+  display: flex;
+}
+
+@container calendar-month (max-width: 280px) {
+  .calendar-month .month-card .title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+}
+@container calendar-month (max-width: 200px) {
+  .calendar-month .month-card .title {
+    font-size: 1.25rem;
+    letter-spacing: 0;
+  }
+}

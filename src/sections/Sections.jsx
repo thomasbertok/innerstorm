@@ -29,10 +29,10 @@ const Sections = () => {
         <Slide title="Tracks" activestate={isActivePage(1)}>
           <Tracks />
         </Slide>
-        <Slide title="Mixes" activestate={isActivePage(2)}>
+        <Slide title="DJ Mixes" activestate={isActivePage(2)}>
           <Mixes />
         </Slide>
-        <Slide title="Mixes" activestate={isActivePage(3)}>
+        <Slide title="Calendar Mixes" activestate={isActivePage(3)}>
           <CalendarMixes />
         </Slide>
         <Slide title="About" activestate={isActivePage(4)}>
