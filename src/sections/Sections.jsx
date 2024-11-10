@@ -5,7 +5,9 @@ import { useAppContext } from "@/context/AppContext";
 import Home from "@/sections/Home";
 import Tracks from "@/sections/Tracks";
 import Mixes from "@/sections/Mixes";
+import CalendarMixes from "@/sections/Calendar";
 import About from "@/sections/About";
+
 import MainPlayer from "@/components/MainPlayer";
 
 const Sections = () => {
@@ -30,7 +32,10 @@ const Sections = () => {
         <Slide title="Mixes" activestate={isActivePage(2)}>
           <Mixes />
         </Slide>
-        <Slide title="About" activestate={isActivePage(3)}>
+        <Slide title="Mixes" activestate={isActivePage(3)}>
+          <CalendarMixes />
+        </Slide>
+        <Slide title="About" activestate={isActivePage(4)}>
           <About />
         </Slide>
       </FullPage>
