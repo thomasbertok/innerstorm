@@ -5,6 +5,8 @@ export const PlayerContextProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, updateCurrentTrack] = useState(null);
   const [currentTrackCover, setCurrentTrackCover] = useState(null);
+  // show the cover in a lightbox when clicking on it in main player
+  const [showCover, setShowCover] = useState(false);
 
   // set volume to 50%
   const [volume, setVolume] = useState(0.5);
@@ -188,6 +190,8 @@ export const PlayerContextProvider = ({ children }) => {
         clickPrevTrack,
         volume,
         setVolume,
+        showCover,
+        setShowCover,
       }}>
       {children}
     </PlayerContext.Provider>

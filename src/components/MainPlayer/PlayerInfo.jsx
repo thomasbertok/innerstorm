@@ -1,24 +1,12 @@
 import React from "react";
+import PlayerCover from "./PlayerCover";
 import { usePlayerContext } from "@/context/PlayerContext";
 
 const PlayerInfo = () => {
   const { currentTrack, currentTrackCover } = usePlayerContext();
   return (
     <>
-      <div className="player-cover">
-        {currentTrack && (
-          <img
-            className="rounded-lg w-16 h-16"
-            src={currentTrackCover}
-            alt=""
-            onError={(e) => {
-              e.target.onError = null;
-              e.target.src = "music/cover/default.jpg";
-            }}
-            loading="lazy"
-          />
-        )}
-      </div>
+      <div className="player-cover">{currentTrack && <PlayerCover cover={currentTrackCover} />}</div>
 
       <div className="player-titles flex flex-col gap-0">
         {currentTrack && (

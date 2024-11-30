@@ -48,7 +48,7 @@ p:last-child {
 
 .theme-switcher {
   position: fixed;
-  z-index: 1000;
+  z-index: 100;
   right: 1.25rem;
   top: 2rem;
   transition: top 0.5s ease;

@@ -10,6 +10,7 @@ import About from "@/sections/About";
 
 import MainPlayer from "@/components/MainPlayer";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import CoverImageModal from "@/components/CoverImageModal";
 
 const Sections = () => {
   const { colorScheme, activePage, setActivePage, isActivePage, menuOpen, setMenuOpen } = useAppContext();
@@ -42,8 +43,8 @@ const Sections = () => {
       </FullPage>
 
       <ThemeSwitcher />
-
       <MainPlayer />
+      <CoverImageModal />
     </main>
   );
 };
