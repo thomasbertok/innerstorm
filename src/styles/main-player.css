@@ -92,10 +92,10 @@
 /* DESKTOP */
 @media screen and (min-width: 800px) {
   .main-player {
-    bottom: 2vh;
+    bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
-    height: 100px;
+    height: 80px;
     grid-template-columns: 80px 1fr 130px 4fr 40px 48px;
     grid-template-rows: 1fr;
     grid-template-areas: "cover info controls waveSurfer duration volume";
@@ -104,6 +104,7 @@
     transition: bottom 0.33s ease-in-out;
   }
 
+  .main-player.out-of-screen,
   .active-slide-0 .main-player {
     bottom: -100px;
   }
@@ -125,7 +126,7 @@
 
   .player-cover img {
     margin-left: 1rem;
-    background-color: #00000024;
+    background-color: #00000066;
   }
 
   .player-controls {

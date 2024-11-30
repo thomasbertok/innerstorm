@@ -25,6 +25,7 @@ import Slide from "./Slide";
 const FullPage = ({
   children,
   duration = 400,
+  desktopOnly = true,
   controls,
   open,
   setOpen,
@@ -60,21 +61,21 @@ const FullPage = ({
     slidePositions.current = [];
     let slideHeight = window.innerHeight;
 
-    // const sectionHeight = document.querySelector(`.section`)[0].offsetHeight;
-    // console.log(sectionHeight);
-    // slidePositions.current[i] = sectionHeight * i;
-    let smallViewHeight = window.innerHeight;
-    console.log(">> svh >>", smallViewHeight);
-
     for (let i = 0; i < slideCount; i++) {
       slidePositions.current[i] = slideHeight * i;
     }
   }, [slideCount]);
 
   useEffect(() => {
+    isMobile.current = isMobileDevice();
+    if (desktopOnly && isMobile.current) {
+      document.body.classList.remove("fullpage");
+      return;
+    } else {
+      document.body.classList.add("fullpage");
+    }
     updateSlidePositions();
     scrollToSlide(activePage);
-    isMobile.current = isMobileDevice();
   }, []);
 
   // first load
@@ -82,7 +83,7 @@ const FullPage = ({
     scrollToSlide(activePage);
     window.addEventListener("resize", debounce(handleResize, 100), { passive: false });
 
-    if (isMobile.current) {
+    if (isMobile.current && !desktopOnly) {
       document.addEventListener("touchmove", handleTouchMove, { passive: false });
       document.addEventListener("touchstart", handleTouchStart);
     } else {
@@ -91,7 +92,7 @@ const FullPage = ({
     }
 
     return () => {
-      if (isMobile.current) {
+      if (isMobile.current && !desktopOnly) {
         document.removeEventListener("touchstart", handleTouchStart);
         document.removeEventListener("touchmove", handleTouchMove, { passive: false });
       } else {
@@ -108,6 +109,9 @@ const FullPage = ({
 
   // on resize
   const handleResize = () => {
+    if (desktopOnly) {
+      return;
+    }
     // update slide positions
     updateSlidePositions();
     // update active slide
@@ -126,12 +130,13 @@ const FullPage = ({
   // on touch start
   const handleTouchStart = (event) => {
     // isScrolling.current = true;
+    if (!isMobile.current) return;
     touchStart.current = event.touches[0].clientY;
   };
 
   // on mobile touch move event
   const handleTouchMove = (event) => {
-    if (canScroll(event)) {
+    if (canScroll(event) && isMobile.current) {
       event.preventDefault();
       const touchEnd = event.touches[0].clientY;
       if (!isScrolling.current) {
@@ -149,8 +154,9 @@ const FullPage = ({
 
   // on scroll event handler
   const handleScroll = (evt) => {
-    if (isScrolling.current) return;
+    if (isMobile.current) return;
 
+    if (isScrolling.current) return;
     if (canScroll(evt)) {
       evt.preventDefault();
       const scrollDelta = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;

@@ -4,8 +4,8 @@ export default {
   darkMode: "selector",
   theme: {
     fontFamily: {
-      //sans: ["Poppins],
-      sans: ["Raleway", "Noto Sans", "Roboto", "Inter", "sans-serif"],
+      // sans: ["Poppins"],
+      sans: ["Raleway", "Noto Sans", "Inter", "sans-serif"],
       mono: ["Source Code Pro", "Consolas", "monospace"],
     },
     screens: {

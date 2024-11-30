@@ -8,9 +8,9 @@ const PlayerInfo = () => {
       <div className="player-cover">
         {currentTrack && (
           <img
-            className="rounded-lg w-20"
+            className="rounded-lg w-16 h-16"
             src={currentTrackCover}
-            alt={currentTrack.title}
+            alt=""
             onError={(e) => {
               e.target.onError = null;
               e.target.src = "music/cover/default.jpg";

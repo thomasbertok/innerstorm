@@ -1,15 +1,26 @@
 import { formatTime } from "@/utils";
 import { usePlayerContext } from "@/context/PlayerContext";
 import { Play, Pause } from "lucide-react";
+import TrackCover from "./TrackCover";
 
-const Track = ({ trackData, index, playlistName, columns }) => {
-  const { currentTrack, playTrack, pauseTrack, trackIsPlaying, setIsPlaying } = usePlayerContext();
+/**
+ * One track component in the playlist
+ *
+ * trackData: track object
+ * index: track's index in the playlist, ordered by playlist order
+ * playlist: playlist of the track, so we can update the current playlist
+ * columns: columns to display
+ */
 
+const Track = ({ trackData, index, playlist, columns }) => {
+  const { playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
+
+  /**
+   * if the clicked track is playing, pause it,
+   * else play the track, and bring the playlist with it to update
+   */
   const handlePlaypauseTrack = (track) => {
-    console.log("currentTrack", currentTrack);
-    if (currentTrack) {
-      trackIsPlaying(track.id) ? pauseTrack() : playTrack(track);
-    }
+    trackIsPlaying(track.id) ? pauseTrack() : playTrack(playlist, track);
   };
 
   return (
@@ -21,16 +32,7 @@ const Track = ({ trackData, index, playlistName, columns }) => {
           <button className="button flex items-center justify-center">
             {trackIsPlaying(trackData.id) ? <Pause /> : <Play />}
           </button>
-
-          <img
-            src={`${import.meta.env.VITE_COVERS_PATH}${trackData.slug}.jpg`}
-            alt={trackData.title}
-            onError={(e) => {
-              e.target.onError = null;
-              e.target.src = "music/cover/default.jpg";
-            }}
-            loading="lazy"
-          />
+          <TrackCover trackData={trackData} />
         </div>
       )}
       <div className="playlist-track-index">{index}</div>

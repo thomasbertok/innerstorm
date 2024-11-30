@@ -1,9 +1,9 @@
 .calendar-playlist {
   position: relative;
-  height: fit-content;
   display: grid;
   grid-column-gap: 0;
   grid-row-gap: 0;
+  height: fit-content;
 }
 
 .calendar-playlist:hover .calendar-month:not(:hover) {
@@ -60,7 +60,7 @@
 
 .calendar-month .month-card .genre {
   color: theme("colors.zinc.700");
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 

@@ -2,13 +2,10 @@ import { Play, Pause } from "lucide-react";
 import { usePlayerContext } from "@/context/PlayerContext";
 
 const CalendarTrack = ({ track }) => {
-  const { currentTrack, playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
+  const { playlist, playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
 
   const handlePlayPauseTrack = (track) => {
-    console.log("currentTrack", currentTrack);
-    if (currentTrack) {
-      trackIsPlaying(track.id) ? pauseTrack() : playTrack(track);
-    }
+    trackIsPlaying(track.id) ? pauseTrack() : playTrack(playlist, track);
   };
 
   return (
@@ -16,7 +13,7 @@ const CalendarTrack = ({ track }) => {
       id={`month-${track.id}`}
       className={`calendar-month ${trackIsPlaying(track.id) ? "selected" : ""}`}
       onClick={() => handlePlayPauseTrack(track)}>
-      <div className="month-card flex items-center gap-2 flex-col glass md:p-1">
+      <div className="month-card flex items-center gap-2 flex-col glass">
         <div className="rounded-xl overflow-hidden">
           <img src={`${import.meta.env.VITE_COVERS_PATH}${track.slug}.jpg`} alt={track.title} />
         </div>

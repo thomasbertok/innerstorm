@@ -91,11 +91,14 @@
 }
 
 .playlist-track .playlist-track-artist {
+  font-weight: 500;
 }
 
 .playlist-track .playlist-track-genre {
   flex: 1;
-  color: theme("colors.zinc.300");
+  color: theme("colors.zinc.500");
+  font-size: 0.875em;
+  font-weight: 600;
 }
 
 .playlist-track .playlist-track-year {

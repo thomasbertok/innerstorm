@@ -1,13 +1,6 @@
-import { useAppContext } from "@/context/AppContext";
-
 const Logo = ({ className }) => {
-  const { toggleColorScheme } = useAppContext();
-  const handleLogoClick = () => {
-    toggleColorScheme();
-  };
-
   return (
-    <div className={className} onClick={handleLogoClick}>
+    <div className={className}>
       <svg
         width="100%"
         height="100%"

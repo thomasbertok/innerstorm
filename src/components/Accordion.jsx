@@ -1,11 +1,10 @@
-import { useAppContext } from "@/context/AppContext";
 import { ArrowDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const TRIGGER_WIDTH = 1024;
 
-const Accordion = ({ children }) => {
-  const { isAccordionOpen, setAccordionOpen } = useAppContext();
+const Accordion = ({ children, className }) => {
+  const [isAccordionOpen, setAccordionOpen] = useState();
   const [accordionOn, setAccordionOn] = useState(window.innerWidth < TRIGGER_WIDTH);
 
   const onResize = () => {
@@ -21,10 +20,10 @@ const Accordion = ({ children }) => {
 
   const toggleAccordion = () => {
     setAccordionOpen(!isAccordionOpen);
-    console.log("toggleAccordion", isAccordionOpen);
   };
+
   return (
-    <div className={`accordion ${isAccordionOpen ? "open" : ""}`}>
+    <div className={`accordion ${className} ${isAccordionOpen ? "open" : ""}`}>
       <div className="accordion-content">{children}</div>
 
       {accordionOn && (

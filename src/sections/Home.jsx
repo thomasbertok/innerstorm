@@ -50,6 +50,9 @@ const Home = () => {
             <Instagram />
           </a>
         </div>
+        <button className="scroll-down btn flex items-center" onClick={(ev) => handlePageClick(ev, 1)}>
+          <img src="assets/scroll.gif" alt="" className="scroll-down-gif" />
+        </button>
       </div>
     </Section>
   );

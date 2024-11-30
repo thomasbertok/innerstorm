@@ -9,6 +9,7 @@ import CalendarMixes from "@/sections/Calendar";
 import About from "@/sections/About";
 
 import MainPlayer from "@/components/MainPlayer";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const Sections = () => {
   const { colorScheme, activePage, setActivePage, isActivePage, menuOpen, setMenuOpen } = useAppContext();
@@ -39,6 +40,8 @@ const Sections = () => {
           <About />
         </Slide>
       </FullPage>
+
+      <ThemeSwitcher />
 
       <MainPlayer />
     </main>

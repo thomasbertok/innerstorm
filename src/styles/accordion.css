@@ -3,6 +3,7 @@
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.33s ease-in-out;
+    margin-top: 1rem;
   }
 
   .accordion.open {
@@ -14,8 +15,14 @@
     overflow: hidden;
   }
 
-  .accordion-content.open {
-    height: auto;
+  .accordion-content > * {
+    margin-bottom: 1rem;
+  }
+
+  .accordion.open .accordion-content {
+    /* height: auto; */
+    /* full height on mobile??? */
+    /* height: calc(100svh - 320px); */
   }
 
   .accordion-button {
@@ -33,7 +40,7 @@
     color: theme("colors.zinc.800");
     border-radius: 50%;
     transition: transform 0.5s ease-out;
-    margin: 1rem auto;
+    margin: 0 auto;
   }
 
   .accordion-button.open {

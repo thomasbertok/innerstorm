@@ -1,12 +1,3 @@
-:root {
-  --breakpoint: "800px";
-}
-
-/*
-  fullpage.js
-  slides' wrapper
-*/
-
 .full-page {
   position: relative;
   z-index: 1;
@@ -21,33 +12,43 @@
   z-index: 1;
   overflow: hidden;
   width: 100%;
-  height: 100svh;
+  height: auto;
+  /* height: 100svh; */
   /* transition: all 0.5s ease; */
 }
 
-/* .full-page-slide.inactive {
+/* !!!!!!!!!!!!!!!!!!!!!!! */
+.full-page-slide {
+  position: fixed;
+  z-index: 1;
+  transition: all 0.5s ease;
+}
+.full-page-slide.active {
+  z-index: 10;
+  transform: scale(100%);
+  opacity: 1;
+}
+
+.full-page-slide.inactive {
   opacity: 0;
-} */
+  transform: scale(33%);
+  filter: brightness(0.5) blur(30px);
+}
 
 /* 
   full page controls: 
   page bullets 
 */
-
-/* TODO: 
-  make slide links narrow, maybe vertical lines instead of circles, 
-  without the hover effect with the names
-*/
-
 .full-page-controls {
   position: fixed;
   z-index: 1000;
-  right: 0.75rem;
+  left: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
   display: none;
 }
 
+/* SLIDE LINKS BULLETS */
 .full-page-controls .slide-links {
   display: flex;
   flex-direction: column;
@@ -81,7 +82,7 @@
   font-weight: 700;
   overflow: hidden;
   height: 0.75rem;
-  right: 50%;
+  left: 50%;
   top: 50%;
   transform: translateY(-50%);
   position: absolute;
@@ -89,7 +90,7 @@
   background-color: theme("colors.zinc.200");
   box-shadow: 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.1);
   padding: 0 1rem 0 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -97,12 +98,13 @@
 .full-page-controls .slide-links li.active-link {
   width: 1rem;
   height: 1rem;
+  line-height: 0.9rem;
   background-color: theme("colors.zinc.300");
 }
 
 .full-page-controls .slide-links li.active-link span {
   height: 1rem;
-  line-height: 1rem;
+  line-height: 0.9rem;
 }
 
 .full-page-controls .slide-links li:hover {
@@ -118,7 +120,7 @@
   opacity: 1;
 }
 
-/* MAIN NAV */
+/* MAIN NAV TOGGLE */
 .main-nav-toggle {
   display: block;
   cursor: pointer;
@@ -173,7 +175,7 @@
   transform-origin: right top;
 }
 
-/* mobile main menu */
+/* MOBILE NAV */
 .main-navigation {
   display: none;
 }
@@ -219,9 +221,6 @@
   min-height: 40px;
 }
 
-.main-navigation ul li.active-link {
-}
-
 .main-navigation ul li span {
   color: theme("colors.zinc.300");
   font-weight: 600;
@@ -231,6 +230,7 @@
   display: block;
 }
 
+/* DESKTOP */
 @media screen and (min-width: 800px) {
   .full-page-controls {
     display: block;
@@ -243,7 +243,7 @@
     display: flex;
     position: fixed;
     z-index: 1000;
-    right: 1rem;
+    right: 2.5rem;
     top: 1rem;
     transition: inset 0.1s ease;
   }

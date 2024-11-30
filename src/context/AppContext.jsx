@@ -15,8 +15,8 @@ export const AppContextProvider = ({ children }) => {
     return activePage === index;
   };
 
-  const toggleColorScheme = (value) => {
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+  const toggleColorScheme = () => {
+    setColorScheme(colorScheme === "dark" ? "light" : "dark");
   };
 
   return (

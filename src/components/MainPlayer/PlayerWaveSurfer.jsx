@@ -140,9 +140,7 @@ const PlayerWaveSurfer = () => {
   return (
     <>
       <div className="player-waveSurfer items-center justify-between flex gap-4 py-4">
-        {isError && (
-          <div className="error flex items-center justify-center h-full">Error loading track. Please try again.</div>
-        )}
+        {isError && <div className="error flex items-center justify-center h-full">Error loading track.</div>}
         <div
           className={`waveform ${!isError && !isLoading && currentTrack ? "visible" : "hidden"} `}
           ref={waveformRef}></div>
