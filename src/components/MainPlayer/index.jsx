@@ -7,7 +7,7 @@ import { usePlayerContext } from "@/context/PlayerContext";
 const MainPlayer = () => {
   const { currentTrack } = usePlayerContext();
   return (
-    <div className={`main-player glass w-9/12 ${!currentTrack && "out-of-screen"}`}>
+    <div className={`main-player glass md:w-9/12 ${!currentTrack ? "out-of-screen" : ""}`}>
       <PlayerInfo />
       <PlayerControls />
       <PlayerWaveSurfer />

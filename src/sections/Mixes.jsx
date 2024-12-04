@@ -6,11 +6,11 @@ import Background from "@/assets/backgrounds/tom3_1.jpg";
 const Mixes = () => {
   return (
     <Section sectionName="section-2 section-mixes" withLogo wallpaper={Background} className="">
-      <div className="flex md:gap-6 xl:gap-20 flex-col xl:flex-row items-center xl:justify-center w-full md:w-9/12 p-4 md:p-0 md:pb-32 xl:pb-32 h-full ">
-        <div className="sidebar w-full xl:w-1/3 2xl:w-1/2 flex flex-col xl:gap-10">
+      <div className="flex md:gap-6 xl:gap-20 flex-col xl:flex-row items-center xl:justify-center w-full max-h-full md:w-9/12">
+        <div className="sidebar w-full xl:w-1/3 2xl:w-1/2 flex flex-col xl:gap-10 p-4">
           <h1 className="title">mixes</h1>
           <Accordion>
-            <div className="flex flex-col xl:max-w-2xl text-lg">
+            <div className="flex flex-col xl:max-w-2xl lg:text-lg">
               <p>
                 Here are some of the mixes I've created. I really like seamless mixing, going around the Camelot wheel
                 while crafting together a canvas of sounds. Two of my favourite styles are breaks and liquid dnb.
@@ -46,7 +46,7 @@ const Mixes = () => {
           </Accordion>
         </div>
         <div className="w-full h-full xl:w-2/3 2xl:w-1/2 glass no-scroll overflow-hidden md:max-h-[70vh] fade-top">
-          <Playlist name="mixes" columns={["cover", "title", "genre", "length"]} />
+          <Playlist name="mixes" columns={["cover", "title", "genre", "length"]} orderBy={["title", "asc"]} />
         </div>
       </div>
     </Section>

@@ -49,34 +49,27 @@
   backdrop-filter: blur(20px);
 }
 
-.cover-image-modal img {
-  width: auto;
-  height: auto;
-  max-width: 80vw;
-  max-height: 80vh;
-}
-
 /* MOBILE */
 @media screen and (max-width: 799px) and (orientation: portrait) {
   .main-player {
     bottom: 0;
     width: 100%;
     grid-template-columns: 3fr;
-    grid-template-rows: 32px 50px 50px;
+    grid-template-rows: 32px 40px 50px;
     grid-template-areas:
       "titles titles  titles"
       "waveSurfer waveSurfer waveSurfer "
       "controls controls controls";
 
     grid-column-gap: 0rem;
-    grid-row-gap: 0rem;
+    grid-row-gap: 5px;
 
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     transition: bottom 0.33s ease-in-out;
   }
 
-  .active-slide-0 .main-player {
+  .main-player.out-of-screen {
     bottom: -130px;
   }
 
@@ -102,8 +95,9 @@
     align-items: start;
     justify-content: center;
   }
+
   .player-waveSurfer .waveform {
-    height: 100px;
+    height: 80px;
   }
 }
 

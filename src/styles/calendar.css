@@ -1,9 +1,10 @@
 .calendar-playlist {
   position: relative;
   display: grid;
-  grid-column-gap: 0;
-  grid-row-gap: 0;
-  height: fit-content;
+  width: 100%;
+  gap: 0;
+  max-height: 100%;
+  align-content: center;
 }
 
 .calendar-playlist:hover .calendar-month:not(:hover) {
@@ -11,7 +12,6 @@
 }
 
 .calendar-month {
-  height: auto;
   cursor: pointer;
   padding: 0.5rem;
   display: flex;
@@ -29,6 +29,7 @@
 
 .calendar-month .month-card {
   width: 100%;
+  aspect-ratio: 1;
   overflow: hidden;
   transition: padding 0.5s ease;
 }

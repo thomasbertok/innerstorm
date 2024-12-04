@@ -4,6 +4,7 @@ import Hover from "wavesurfer.js/dist/plugins/hover.esm.js";
 import { waveSurferOptions, hoverOptions } from "@/styles/WaveSurfer/options";
 import { usePlayerContext } from "@/context/PlayerContext";
 import { formatTime } from "@/utils";
+import { CircleAlert } from "lucide-react";
 
 const PlayerWaveSurfer = () => {
   const {
@@ -51,6 +52,12 @@ const PlayerWaveSurfer = () => {
     ws.setVolume(0.5);
     // set wavesurfer state
     setWavesurfer(ws);
+
+    // show progress while loading sound
+    ws.on("loading", function (X, evt) {
+      console.log("Loading: ", X);
+    });
+
     // add key event listener
     document.addEventListener("keyup", onKeyUp);
     return () => {
@@ -76,11 +83,11 @@ const PlayerWaveSurfer = () => {
    * set current track to first track in playlist
    * if current track is null
    */
-  useEffect(() => {
-    if (playlist && currentTrack === null) {
-      setCurrentTrack(playlist[0]);
-    }
-  }, [playlist, currentTrack]);
+  // useEffect(() => {
+  //   if (playlist && currentTrack === null) {
+  //     setCurrentTrack(playlist[0]);
+  //   }
+  // }, [playlist, currentTrack]);
 
   /**
    * update wavesurfer play/pause
@@ -97,21 +104,21 @@ const PlayerWaveSurfer = () => {
    * update track position
    */
   useEffect(() => {
-    setIsLoading(true);
-    setIsError(false);
-
     if (wavesurfer && currentTrack) {
+      setIsLoading(true);
+      setIsError(false);
       // load track into wavesurfer
       wavesurfer.load(`${import.meta.env.VITE_API_URL}${currentTrack.filename}`, currentTrack.peaks);
-      setIsLoading(false);
       if (isPlaying) wavesurfer.play();
 
       // set track duration when wavesurfer is ready
       wavesurfer.on("ready", () => {
+        setIsLoading(false);
+        wavesurfer.setTime(0);
         setTrackDuration(formatTime(wavesurfer.getDuration()));
       });
 
-      // play next track when current track ends
+      // set next track when current track ends
       wavesurfer.on("finish", () => {
         setNextTrack();
       });
@@ -123,7 +130,9 @@ const PlayerWaveSurfer = () => {
 
       wavesurfer.on("error", (error) => {
         setIsError(true);
-        console.error("!!! Track Load Error: ", error);
+        setIsLoading(false);
+        console.error("!!! Wavesurfer Track Load Error");
+        setIsPlaying(false);
       });
     }
   }, [currentTrack]);
@@ -140,7 +149,13 @@ const PlayerWaveSurfer = () => {
   return (
     <>
       <div className="player-waveSurfer items-center justify-between flex gap-4 py-4">
-        {isError && <div className="error flex items-center justify-center h-full">Error loading track.</div>}
+        {isLoading && <div className="loading flex items-center justify-center h-full">Loading track...</div>}
+
+        {isError && (
+          <div className="error flex items-center justify-center h-full">
+            <CircleAlert className="mr-2" size={20} /> Error loading track.
+          </div>
+        )}
         <div
           className={`waveform ${!isError && !isLoading && currentTrack ? "visible" : "hidden"} `}
           ref={waveformRef}></div>

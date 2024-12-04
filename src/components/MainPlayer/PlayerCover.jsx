@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { usePlayerContext } from "@/context/PlayerContext";
 
 const PlayerCover = ({ cover }) => {
-  const { showCover, setShowCover } = usePlayerContext();
+  const { setShowCover } = usePlayerContext();
 
   return (
     <img

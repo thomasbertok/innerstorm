@@ -12,7 +12,7 @@ const PlayerInfo = () => {
         {currentTrack && (
           <>
             <div className="player-title  text-zinc-200 font-extrabold text-nowrap">{currentTrack?.title}</div>
-            <div className="player-artist text-zinc-300 md:text-sm font-medium text-nowrap">{currentTrack?.artist}</div>
+            {/* <div className="player-artist text-zinc-300 md:text-sm font-medium text-nowrap">{currentTrack?.artist}</div> */}
             <div className="player-genre text-zinc-400 text-sm font-light text-nowrap">
               {currentTrack?.genre} {currentTrack?.year !== "Unknown" && ` / ${currentTrack.year}`}
             </div>

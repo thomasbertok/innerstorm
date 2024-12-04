@@ -1,5 +1,19 @@
-// converts seconds int to mm:ss
-export const formatTime = (seconds) => [seconds / 60, seconds % 60].map((v) => `0${Math.floor(v)}`.slice(-2)).join(":");
+// converts seconds int to hh:mm:ss
+export function formatTime(seconds) {
+  seconds = Math.round(seconds);
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  const formattedMins = String(mins).padStart(2, "0");
+  const formattedSecs = String(secs).padStart(2, "0");
+
+  if (hrs > 0) {
+    return `${hrs}:${formattedMins}:${formattedSecs}`;
+  } else {
+    return `${mins}:${formattedSecs}`;
+  }
+}
 
 // debounce | wait time for finishing a function
 // from https://davidwalsh.name/javascript-debounce-function

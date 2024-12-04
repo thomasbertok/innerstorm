@@ -2,10 +2,10 @@ import Track from "./Track";
 import { useEffect, useState } from "react";
 import { getPlaylist } from "@/utils";
 
-const Playlist = ({ name, columns }) => {
+const Playlist = ({ name, columns, orderBy = ["title", "asc"] }) => {
   const [playlist, setPlaylist] = useState(null);
   useEffect(() => {
-    getPlaylist(name, "date", "desc")
+    getPlaylist(name, orderBy[0], orderBy[1])
       .then((data) => {
         setPlaylist(data);
       })
@@ -13,7 +13,7 @@ const Playlist = ({ name, columns }) => {
   }, []);
 
   return (
-    <div className="overflow-y-auto h-full xl:p-4">
+    <div className="overflow-y-auto h-full md:p-4">
       <div className={`playlist`}>
         {playlist &&
           playlist.length > 0 &&
