@@ -9,7 +9,7 @@ import CalendarMixes from "@/sections/Calendar";
 import About from "@/sections/About";
 
 import MainPlayer from "@/components/MainPlayer";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+// import ThemeSwitcher from "@/components/ThemeSwitcher";
 import CoverImageModal from "@/components/CoverImageModal";
 
 const Sections = () => {
@@ -42,7 +42,7 @@ const Sections = () => {
         </Slide>
       </FullPage>
 
-      <ThemeSwitcher />
+      {/* <ThemeSwitcher /> */}
       <MainPlayer />
       <CoverImageModal />
     </main>

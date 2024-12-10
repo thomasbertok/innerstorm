@@ -18,11 +18,11 @@ const Home = () => {
         <LogoType />
         <div className="homepage-social-links flex gap-6 items-center no-scroll">
           <a href="https://soundcloud.com/innerstorm" target="_blank" className="icon tooltip soundcloud icon-small">
-            <div className="tooltip-content">Have a listen on my Soundcloud!</div>
+            <div className="tooltip-content">Soundcloud</div>
             <SoundCloud />
           </a>
           <a href="https://www.youtube.com/1nn3rst0rm" target="_blank" className="icon tooltip youtube icon-small">
-            <div className="tooltip-content">Check out my Youtube channel!</div>
+            <div className="tooltip-content">Youtube</div>
             <Youtube />
           </a>
 
@@ -39,14 +39,14 @@ const Home = () => {
           </a>
 
           <a href="https://www.facebook.com/1nn3rst0rm" target="_blank" className="icon tooltip sfacebook icon-small">
-            <div className="tooltip-content">Follow me on Facebook!</div>
+            <div className="tooltip-content">Facebook</div>
             <Facebook />
           </a>
           <a
             href="https://www.instagram.com/innerstormmusic/"
             target="_blank"
             className="icon tooltip instagram icon-small">
-            <div className="tooltip-content">Follow me on Instagram!</div>
+            <div className="tooltip-content">Instagram</div>
             <Instagram />
           </a>
         </div>

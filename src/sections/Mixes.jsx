@@ -12,8 +12,8 @@ const Mixes = () => {
           <Accordion>
             <div className="flex flex-col xl:max-w-2xl lg:text-lg">
               <p>
-                Here are some of the mixes I've created. I really like seamless mixing, going around the Camelot wheel
-                while crafting together a canvas of sounds. Two of my favourite styles are breaks and liquid dnb.
+                Here are some of the mixes I've created. I really like seamless mixing, going around the Camelot wheel,
+                painting on a canvas of sounds. I prefer playing around mostly with breaks and liquid dnb.
               </p>
               <p>
                 <strong
@@ -21,26 +21,26 @@ const Mixes = () => {
                   title="Endorphins are neurotransmitters released by the pituitary gland and hypothalamus in the brain. As natural hormones, they can alleviate pain, lower stress, improve mood, and enhance your sense of well-being. The body releases endorphins when you do pleasurable activities such as eating, exercise, and sex, etc.">
                   Endorfine
                 </strong>{" "}
-                (as in end-or-fine) is a series of house/breaks mixes with some tracks that i really like.{" "}
+                (as in end-or-fine) is a series of house/breaks mixes with some tracks that I really like.{" "}
                 <strong
                   className="cursor-help"
                   title="Dopamine is a type of neurotransmitter and hormone. It plays a role in many important body functions, including movement, memory and pleasurable reward and motivation.">
                   Dopamine
                 </strong>
-                , the sister hormone of endorfine, is a pair of liquid d'n'b mixes. They are numbered, in the hope that
-                there are some more to come.
+                , the sister hormone of endorfine, is a pair of liquid d'n'b mixes. They are numbered, with (hopefully)
+                more to come.
               </p>
               <p>
-                There's always a theme. <strong>Midnight Express</strong> for example is meant to be listened on a night
-                train while almost asleep... at least in my head. Breaking the clouds is crafted around the fantastic
-                track "A break in the clouds" by James Holden, and{" "}
+                I tend to create around themes. <strong>Midnight Express</strong> for example is meant to be listened on
+                a night train while almost asleep... at least it's like it in my head. Breaking the clouds is crafted
+                around the fantastic track "A break in the clouds" by James Holden, and{" "}
                 <strong
                   title="“Waldeinsamkeit” is a German word without a direct English translation. It can best be translated to “the feeling of being alone in the woods.”"
                   className="cursor-help">
                   Waldeinsamkeit
                 </strong>
-                , while its title tries to break your tongues, is the spiritual feeling one has while being alone in a
-                forest.
+                , while its title tries to break your tongues, its sound explores the spiritual feeling one has while
+                being alone in a forest.
               </p>
             </div>
           </Accordion>

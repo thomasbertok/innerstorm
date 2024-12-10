@@ -13,12 +13,12 @@ const CalendarMixes = () => {
             <Accordion className="w-full hidden lg:flex">
               <div className="flex flex-col 2xl:max-w-2xl 2xl:text-lg">
                 <p>
-                  The twelve months project I've began in 2021. September was the first with some nice breaks tunes,
-                  after that the all time favourite, liquid drum and bass, and so on.
+                  The twelve months project began in 2021. The first one was September with some nice breaks tunes, then
+                  the all time favourite, liquid drum and bass, and so on.
                 </p>
                 <p>
-                  Each month I've tried to bring a different theme, however staying in the styles I prefer. One can say
-                  it's a diorama of the music I like.
+                  Each month I've tried to bring a different theme, however while staying in my prefered styles. One can
+                  say it's a diorama of the music I like.
                 </p>
                 <p>
                   These mixes are up on{" "}
