@@ -12,7 +12,19 @@ const Tracks = () => {
           <h1 className="">innerstorm's tracks</h1>
           <Accordion>
             <div className="flex flex-col xl:max-w-2xl lg:text-lg">
-              <p>Here are some of the tracks I've made over the years.</p>
+              <p>
+                Oh man, it's easier to program this whole website than writing down some thoughts about the music. How
+                do they say? Writing about music is like dancing about architecture.
+              </p>
+              <p>
+                Ok, I'm not a musician, I just wanted to write down some thoughts, feelings, colours, glimpses. Moments
+                that deserved to be captured.
+              </p>
+              <p>
+                Here are some of these tracks, in chronologic order, latest first. The player goes round the clock,
+                check it out.
+              </p>
+              <p>Click the cover in the player for details...</p>
             </div>
           </Accordion>
         </div>

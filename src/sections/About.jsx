@@ -19,6 +19,8 @@ const About = () => {
         <br />
         <br />
         &gt; &hellip;
+        <br />
+        &gt; Nothing is more permanent than a temporary solution.
       </p>
     </Section>
   );
