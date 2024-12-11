@@ -1,118 +1,12 @@
 @import "./colors.css";
 @import "./index.css";
+@import "./general.css";
 @import "./sections.css";
 @import "./icons.css";
 @import "./fullpage.css";
 @import "./player.css";
+@import "./playlist.css";
 @import "./waveform.css";
-
-.glass {
-  backdrop-filter: blur(0px);
-}
-
-@media screen and (min-width: 800px) {
-  .dark .glass,
-  .glass-dark {
-    border-radius: 16px;
-    background-color: rgba(30, 20, 10, 0.33);
-    border: 1px solid rgba(30, 30, 30, 0.1);
-    box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.5), inset 0 2px 0px -1px rgba(100, 100, 100, 0.33);
-    backdrop-filter: blur(30px);
-  }
-
-  .light .glass,
-  .glass-light {
-    border-radius: 16px;
-    background-color: rgba(200, 200, 200, 0.33);
-    border: 1px solid rgba(200, 200, 200, 0.25);
-    box-shadow: 0 0 20px -10px rgba(200, 200, 200, 0.9), inset 0 -1px 0px -1px rgba(100, 100, 100, 0.9);
-    border: 1px solid rgba(200, 200, 200, 0.25);
-    backdrop-filter: blur(20px);
-  }
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 200;
-}
-
-h1 {
-  font-size: 3.815rem;
-}
-
-h2 {
-  font-size: 3.052rem;
-}
-
-h3 {
-  font-size: 2.441rem;
-}
-
-h4 {
-  font-size: 1.953rem;
-}
-
-h5 {
-  font-size: 1.563rem;
-}
-
-h6 {
-  font-size: 1.25rem;
-}
-
-p {
-  @apply mb-4;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 2px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: theme("colors.zinc.700");
-  border-radius: 4px;
-}
-
-.tooltip .tooltip-content {
-  position: absolute;
-  z-index: 1000;
-  z-index: 1000;
-  border-radius: 12px;
-  left: 50%;
-  top: 110%;
-  transform: translateX(-50%);
-  text-align: center;
-  transition: all 0.25s ease;
-  transition-delay: 0.125s;
-  user-select: none;
-  color: theme("colors.zinc.300");
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 300;
-  max-width: 300px;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.tooltip:hover .tooltip-content {
-  visibility: visible;
-  opacity: 1;
-}
-
-.section-home {
-  gap: clamp(1rem, 5vw, 3rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+@import "./main-player.css";
+@import "./calendar.css";
+@import "./accordion.css";

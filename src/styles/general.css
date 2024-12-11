@@ -1,0 +1,168 @@
+.glass {
+  backdrop-filter: blur(0px);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 200;
+  background: -webkit-linear-gradient(theme("colors.zinc.100"), theme("colors.zinc.300"));
+  background-clip: text;
+  letter-spacing: -0.01em;
+  -webkit-text-fill-color: transparent;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw + 1rem, 3.815rem);
+  line-height: 1em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 5vw + 1rem, 3.052rem);
+}
+
+h3 {
+  font-size: 2.441rem;
+}
+
+h4 {
+  font-size: 1.953rem;
+}
+
+h5 {
+  font-size: 1.563rem;
+}
+
+h6 {
+  font-size: 1.25rem;
+}
+
+p {
+  @apply mb-4;
+}
+
+p:last-child {
+  @apply mb-0;
+}
+
+.theme-switcher {
+  position: fixed;
+  z-index: 100;
+  right: 1.25rem;
+  top: 2rem;
+  transition: top 0.5s ease;
+}
+
+.active-slide-0 .theme-switcher {
+  top: -10rem;
+}
+/* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: theme("colors.zinc.700");
+  border-radius: 8px;
+}
+
+/* TOOLTIP */
+.tooltip .tooltip-content {
+  position: absolute;
+  z-index: 1000;
+  z-index: 1000;
+  border-radius: 12px;
+  left: 50%;
+  top: 110%;
+  transform: translateX(-50%);
+  text-align: center;
+  transition: all 0.25s ease;
+  transition-delay: 0.125s;
+  user-select: none;
+  color: theme("colors.zinc.300");
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 300;
+  max-width: 300px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tooltip:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.scroll-down {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  visibility: hidden;
+  animation: comeIn 1s ease-in-out 4s 1 forwards;
+}
+
+@keyframes comeIn {
+  0% {
+    bottom: -100px;
+  }
+  100% {
+    bottom: 1rem;
+    visibility: visible;
+  }
+}
+
+.scroll-down img {
+  width: 60px;
+  height: 60px;
+  filter: invert(0.125);
+}
+
+/* MOBILE */
+@media screen and (max-width: 799px) {
+  .fade-top {
+    mask-image: linear-gradient(180deg, transparent 0%, #000 50px);
+  }
+
+  h1,
+  .title {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+
+  .theme-switcher {
+    display: none;
+  }
+}
+
+/* DESKTOP */
+@media screen and (min-width: 800px) {
+  .dark .glass,
+  .glass-dark {
+    border-radius: 0.75rem;
+    background-color: rgba(20, 15, 15, 0.5);
+    border: 1px solid rgba(30, 30, 30, 0.5);
+    box-shadow: 0 0 20px -5px rgba(10, 10, 10, 0.66), inset 0 2px 0px -1px rgba(100, 100, 100, 0.2);
+    backdrop-filter: blur(30px);
+  }
+
+  .light .glass,
+  .glass-light {
+    border-radius: 0.75rem;
+    background-color: rgba(200, 200, 200, 0.25);
+    border: 1px solid rgba(200, 200, 200, 0.25);
+    box-shadow: 0 0 20px -10px rgba(200, 200, 200, 0.7), inset 0 -1px 0px -1px rgba(170, 160, 160, 1);
+    border: 1px solid rgba(200, 200, 200, 0.25);
+    backdrop-filter: blur(20px);
+  }
+}

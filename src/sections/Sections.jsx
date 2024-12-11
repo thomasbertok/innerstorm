@@ -1,33 +1,50 @@
-import FullPage from "@/components/fullpage/FullPage";
-import Slide from "@/components/fullpage/Slide";
+import FullPage from "@/components/FullPage/FullPage";
+import Slide from "@/components/FullPage/Slide";
 import { useAppContext } from "@/context/AppContext";
 
 import Home from "@/sections/Home";
-import Player from "@/sections/Player";
+import Tracks from "@/sections/Tracks";
+import Mixes from "@/sections/Mixes";
+import CalendarMixes from "@/sections/Calendar";
 import About from "@/sections/About";
+
+import MainPlayer from "@/components/MainPlayer";
+// import ThemeSwitcher from "@/components/ThemeSwitcher";
+import CoverImageModal from "@/components/CoverImageModal";
 
 const Sections = () => {
   const { colorScheme, activePage, setActivePage, isActivePage, menuOpen, setMenuOpen } = useAppContext();
 
   return (
-    <main className={`app ${colorScheme}`}>
+    <main className={`app ${colorScheme} active-slide-${activePage}`}>
       <FullPage
         controls
-        duration={400}
+        duration={350}
         activePage={activePage}
         setActivePage={setActivePage}
         open={menuOpen}
-        setOpen={setMenuOpen}>
+        setOpen={setMenuOpen}
+        noScrollClass=".no-scroll">
         <Slide title="Home" activestate={isActivePage(0)}>
           <Home />
         </Slide>
         <Slide title="Tracks" activestate={isActivePage(1)}>
-          <Player />
+          <Tracks />
         </Slide>
-        <Slide title="About" activestate={isActivePage(2)}>
+        <Slide title="DJ Mixes" activestate={isActivePage(2)}>
+          <Mixes />
+        </Slide>
+        <Slide title="Calendar Mixes" activestate={isActivePage(3)}>
+          <CalendarMixes />
+        </Slide>
+        <Slide title="About" activestate={isActivePage(4)}>
           <About />
         </Slide>
       </FullPage>
+
+      {/* <ThemeSwitcher /> */}
+      <MainPlayer />
+      <CoverImageModal />
     </main>
   );
 };

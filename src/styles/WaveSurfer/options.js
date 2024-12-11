@@ -15,11 +15,11 @@ progressGradient.addColorStop(1, "rgba(160, 160, 180, 0.5)");
  */
 export const waveSurferOptions = {
   backgroundColor: "transparent",
-  barAlign: "bottom",
+  barAlign: "center",
   barHeight: 1,
-  barGap: 2,
-  barRadius: 2,
-  barWidth: 2,
+  barGap: 1,
+  barRadius: 3,
+  barWidth: 3,
   cursorColor: "transparent",
   cursorWidth: 1,
   height: "auto",

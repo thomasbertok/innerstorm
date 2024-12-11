@@ -1,19 +1,28 @@
-/* screen = slide content */
+/* section = slide content */
 .section {
   width: 100%;
-  height: 100svh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 80px;
+  padding-bottom: 120px;
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   z-index: 1;
-  transition: all 0.5s ease;
+  transition: all 0.33s ease;
 }
 
+.fullpage .section {
+  height: 100svh;
+}
+
+/* section background effects overlaying the section background image */
+/* for blurring and darkening the background */
 .section:before {
   content: "";
   position: absolute;
@@ -24,41 +33,143 @@
   height: 100%;
 }
 
-.section-content {
-  position: relative;
-  z-index: 1;
-}
-
-@media screen and (max-width: 799px) and (orientation: portrait) {
-  .section {
-    justify-content: end;
-  }
-
-  .section-content {
-    width: 100vw;
-    height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-/* topleft section logo | not visible on mobile */
+/* section logo: top left */
 .section .section-logo {
-  /* display: none; */
   position: fixed;
   z-index: 1000;
-  top: 1.5rem;
+  top: 2rem;
   left: 1rem;
   width: clamp(100px, 33vw, 160px);
-
   z-index: 10;
   opacity: 0.33;
   cursor: pointer;
 }
 
-@media screen and (min-width: 800px) {
+/* section sidebar = text content on the left */
+.section .sidebar {
+  container: sidebar / inline-size;
+}
+/* sidebar container size related */
+@container sidebar (max-width: 400px) {
+  .sidebar h1 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.section .section-article {
+  width: 100%;
+  /* height: auto; */
+}
+
+.fullpage .section .section-article {
+  /* height: 100%; */
+  overflow: auto;
+}
+
+/* GENERAL SETTINGS FOR SECTION BACKGROUNDS */
+
+/* FRONT SECTION */
+.section-home {
+  gap: clamp(1rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-size: cover;
+  background-position: 50% center; */
+  height: 100svh;
+}
+
+.section-home:before {
+  backdrop-filter: saturate(0.5) brightness(0.8) blur(0px) contrast(1.1) hue-rotate(0deg);
+}
+
+/* TRACKS SECTION */
+.section-tracks {
+  background-size: cover;
+  background-position: 33% center;
+}
+.section-tracks:before {
+  backdrop-filter: saturate(1) brightness(0.5) blur(10px);
+  box-shadow: inset 0 0 50px 50px rgba(0, 0, 0, 0.66);
+}
+
+/* MIXES SECTION */
+.section-mixes {
+  background-size: 120%;
+  background-position: 25% center;
+}
+.section-mixes:before {
+  backdrop-filter: saturate(1) brightness(0.5) blur(10px);
+  box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.66);
+}
+
+/* CALENDAR SECTION */
+.section-calendar:before {
+  backdrop-filter: saturate(1) brightness(0.66) blur(10px);
+  box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.66);
+}
+
+/* ABOUT SECTION */
+.section-about:before {
+  backdrop-filter: saturate(1) brightness(0.6) blur(10px);
+  box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.33);
+}
+
+/* MOBILE */
+@media screen and (max-width: 799px) and (orientation: portrait) {
+  .section {
+    padding-top: 48px; /* header */
+    padding-bottom: 0;
+    background-size: cover;
+    background-attachment: scroll;
+  }
+
+  .section .section-logo {
+    top: 1.125rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: none;
+  }
+
+  .section-content {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .section-mixes {
+    background-size: cover;
+    background-position: 25% center;
+  }
+
+  .section-tracks .playlist {
+    padding-bottom: 120px;
+  }
+}
+
+/* DESKTOP & LANDSCAPE */
+@media screen and (min-width: 800px) and (orientation: landscape) {
+  /* wrapper for everything in a section */
+  .section-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* inactive sections */
+  .fullpage .inactive .section {
+    filter: brightness(0.5);
+  }
+
+  .inactive .section-logo {
+    display: none;
+  }
+
   /* topleft small Logo */
   .section .section-logo {
     display: block;
@@ -68,39 +179,148 @@
     width: 10rem;
     z-index: 10;
     opacity: 0;
-    animation: fallDown 1s ease-in-out forwards;
-    animation-delay: 1s;
     cursor: pointer;
+    animation: fallDownLogo 1s ease-in-out forwards;
+    animation-delay: 1s;
   }
 
-  @keyframes fallDown {
+  @keyframes fallDownLogo {
     from {
       top: 0;
       opacity: 0;
     }
     to {
-      top: 20px;
+      top: 2rem;
       opacity: 0.33;
     }
   }
-}
 
-.inactive .section-logo {
-  display: none;
-}
+  /* TRACKS SECTION */
+  .section-tracks {
+    background-size: 150%;
+    background-position: center top;
+    animation: animaTracksBg 60s ease-in-out infinite;
+    animation-delay: 1s;
+  }
 
-/*
-  section background effects
-*/
-.section-1:before {
-  backdrop-filter: saturate(0.5) brightness(0.8) blur(0px) contrast(1.1);
-}
+  .section-tracks:before {
+    animation: morphTrackBg 15s ease-in-out infinite alternate;
+  }
 
-.section-2:before {
-  backdrop-filter: saturate(0.9) brightness(1) blur(8px);
-}
+  @keyframes animaTracksBg {
+    0% {
+      background-position: center top;
+      background-size: 150%;
+    }
 
-.section-about:before {
-  backdrop-filter: saturate(1) brightness(0.6) blur(10px);
-  box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.33);
+    25% {
+      background-position: right center;
+      background-size: 100%;
+    }
+
+    50% {
+      background-position: center bottom;
+      background-size: 150%;
+    }
+
+    75% {
+      background-position: left center;
+      background-size: 100%;
+    }
+
+    100% {
+      background-position: center top;
+      background-size: 150%;
+    }
+  }
+
+  @keyframes morphTrackBg {
+    0% {
+      backdrop-filter: saturate(1) brightness(0.4) blur(5px);
+    }
+    100% {
+      backdrop-filter: saturate(1.1) brightness(0.5) blur(10px);
+    }
+  }
+
+  /* MIXES SECTION */
+  .section-mixes {
+    background-position: left center;
+  }
+
+  .active .section-mixes {
+    animation: animaMixesBg 6s ease-in-out 1;
+  }
+
+  .section-mixes:before {
+    backdrop-filter: saturate(1) brightness(0.5) blur(10px);
+    animation: morphMixesBg 30s cubic-bezier(0, 0.4, 0.77, 0.94) infinite alternate;
+  }
+
+  @keyframes animaMixesBg {
+    0% {
+      background-position: center center;
+      background-size: 500%;
+    }
+
+    100% {
+      background-position: left center;
+      background-size: 120%;
+    }
+  }
+
+  @keyframes morphMixesBg {
+    0% {
+      backdrop-filter: saturate(1) brightness(0.7) blur(2px);
+    }
+    100% {
+      backdrop-filter: saturate(1.21) brightness(0.5) blur(10px);
+    }
+  }
+
+  /* CALENDAR SECTION */
+  .active .section-calendar {
+    background-color: rgba(0, 0, 0, 1);
+    background-size: 100%;
+    animation: animaCalendar 12s ease-in-out infinite alternate;
+    animation-delay: 2s;
+  }
+
+  .section-calendar::before {
+    backdrop-filter: brightness(0.66) blur(5px);
+    box-shadow: inset 0 0 150px 50px rgba(0, 0, 0, 0.5);
+    animation: animaCalendarBefore 120s ease-in-out infinite alternate;
+  }
+
+  @keyframes animaCalendar {
+    0% {
+      background-size: 100%;
+    }
+    100% {
+      background-size: 500%;
+    }
+  }
+  @keyframes animaCalendarBefore {
+    0% {
+      backdrop-filter: brightness(0.66) blur(10px);
+    }
+    100% {
+      backdrop-filter: brightness(0.33) blur(30px);
+    }
+  }
+
+  /* ABOUT SECTION */
+  .active .section-about {
+    background-size: 150%;
+    animation: animaAboutBg 240s ease-in-out infinite alternate;
+  }
+
+  @keyframes animaAboutBg {
+    0% {
+      background-size: 150%;
+    }
+    100% {
+      background-size: 600%;
+    }
+  }
 }

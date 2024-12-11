@@ -1,226 +1,215 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import Slide from "./Slide";
-import animatedScrollTo from "./utils/animated-scroll-to";
-import isMobileDevice from "./utils/is-mobile";
-import { getObjectValues } from "./utils/helpers";
-import Controls from "./Controls";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { debounce } from "@/utils";
 import { ControlMenu } from "./ControlMenu";
+import isMobileDevice from "./utils/is-mobile";
+import animatedScrollTo from "./utils/animated-scroll-to";
+import Slide from "./Slide";
 
-export default class FullPage extends React.Component {
-  static getChildrenCount = (children) => {
+/**
+ * The FullPage component is a full-page slider that allows for smooth transitions between pages.
+ * It is designed to be highly customizable, with options for controlling the duration of transitions,
+ * displaying controls for navigation, and dynamically setting the active page.
+ *
+ * @param {ReactElement} children - The content of the pages to be displayed.
+ * @param {number} duration - The duration of the transition between pages in milliseconds.
+ * @param {boolean} controls - A boolean indicating whether navigation controls should be displayed.
+ * @param {boolean} open - A boolean indicating whether the slider is currently open.
+ * @param {function} setOpen - A function to set the open state of the slider.
+ * @param {number} activePage - The index of the currently active page.
+ * @param {function} setActivePage - A function to set the active page.
+ * @param {string} noScrollClass - The class name to apply to elements that should not be scrollable.
+ *
+ * @returns A full-page slider component with customizable transitions and navigation controls.
+ */
+
+const FullPage = ({
+  children,
+  duration = 400,
+  desktopOnly = true,
+  controls,
+  open,
+  setOpen,
+  activePage,
+  setActivePage,
+  noScrollClass = ".no-scroll",
+}) => {
+  const [slideCount, setSlideCount] = useState(getChildrenCount(children));
+  const [activeSlide, setActiveSlide] = useState(activePage);
+
+  const slidePositions = useRef([]);
+  const isScrolling = useRef(false);
+  const isMobile = useRef(null);
+  const touchStart = useRef(0);
+  const touchSensitivity = useRef(100);
+
+  // get slides' names from children
+  const getSlidesNames = () => {
+    return React.Children.map(children, (child) => child.props.title);
+  };
+
+  // count slides
+  function getChildrenCount(children) {
     const childrenArr = React.Children.toArray(children);
-    const slides = childrenArr.filter(({ type }) => type === Slide);
+    const slides = childrenArr.filter(
+      ({ type }) => type === Slide || type?.displayName === "Slide" || type?.name === "Slide"
+    );
     return slides.length;
-  };
+  }
 
-  constructor(props) {
-    super(props);
+  // setup and update slide coordinates
+  const updateSlidePositions = useCallback(() => {
+    slidePositions.current = [];
+    let slideHeight = window.innerHeight;
 
-    this._isScrollPending = false;
-    this._isScrolledAlready = false;
-    this._slidePositions = [];
+    for (let i = 0; i < slideCount; i++) {
+      slidePositions.current[i] = slideHeight * i;
+    }
+  }, [slideCount]);
 
-    this._touchSensitivity = 100;
-    this._touchStart = 0;
-    this._isMobile = null;
+  useEffect(() => {
+    isMobile.current = isMobileDevice();
+    if (desktopOnly && isMobile.current) {
+      document.body.classList.remove("fullpage");
+      return;
+    } else {
+      document.body.classList.add("fullpage");
+    }
+    updateSlidePositions();
+    scrollToSlide(activePage);
+  }, []);
 
-    this.state = {
-      activeSlide: props.activePage,
-      slidesCount: FullPage.getChildrenCount(this.props.children),
+  // first load
+  useEffect(() => {
+    scrollToSlide(activePage);
+    window.addEventListener("resize", debounce(handleResize, 100), { passive: false });
+
+    if (isMobile.current && !desktopOnly) {
+      document.addEventListener("touchmove", handleTouchMove, { passive: false });
+      document.addEventListener("touchstart", handleTouchStart);
+    } else {
+      document.addEventListener("wheel", handleScroll, { passive: false });
+      document.addEventListener("keydown", handleKeyUp, { passive: false });
+    }
+
+    return () => {
+      if (isMobile.current && !desktopOnly) {
+        document.removeEventListener("touchstart", handleTouchStart);
+        document.removeEventListener("touchmove", handleTouchMove, { passive: false });
+      } else {
+        document.removeEventListener("wheel", handleScroll);
+        document.removeEventListener("keydown", handleKeyUp);
+      }
+      window.removeEventListener("resize", handleResize);
     };
-  }
+  }, [activePage, activeSlide]);
 
-  componentDidMount() {
-    this._isMobile = isMobileDevice();
-    if (this._isMobile) {
-      document.addEventListener("touchmove", this.onTouchMove, { passive: false });
-      document.addEventListener("touchstart", this.onTouchStart);
-    } else {
-      document.addEventListener("wheel", this.onScroll, { passive: false });
+  const canScroll = (event) => {
+    return !event.target.closest(noScrollClass);
+  };
+
+  // on resize
+  const handleResize = () => {
+    if (desktopOnly) {
+      return;
     }
-    window.addEventListener("resize", this.onResize);
+    // update slide positions
+    updateSlidePositions();
+    // update active slide
+    scrollToSlide(activePage);
+  };
 
-    this.onResize();
-    this.scrollToSlide(this.props.activePage);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.activePage !== this.props.activePage) {
-      //console.log('notify!');
-      this.setState({
-        activeSlide: this.props.activePage,
-      });
-      this.scrollToSlide(this.props.activePage);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this._isMobile) {
-      document.removeEventListener("touchmove", this.onTouchMove);
-      document.removeEventListener("touchstart", this.onTouchStart);
-    } else {
-      document.removeEventListener("wheel", this.onScroll);
-    }
-    window.removeEventListener("resize", this.onResize);
-  }
-
-  updateSlides = () => {
-    this._slidePositions = [];
-    for (let i = 0; i < this.state.slidesCount; i++) {
-      this._slidePositions.push(window.innerHeight * i);
+  // on key up
+  const handleKeyUp = (event) => {
+    if (event.key === "ArrowDown") {
+      scrollToSlide(activeSlide + 1);
+    } else if (event.key === "ArrowUp") {
+      scrollToSlide(activeSlide - 1);
     }
   };
 
-  onResize = () => {
-    this.updateSlides();
-    this.setState({
-      height: window.innerHeight,
-    });
-    this.setState({
-      fullHeight: window.innerHeight * this.state.slidesCount,
-    });
+  // on touch start
+  const handleTouchStart = (event) => {
+    // isScrolling.current = true;
+    if (!isMobile.current) return;
+    touchStart.current = event.touches[0].clientY;
   };
 
-  onTouchStart = (evt) => {
-    this._touchStart = evt.touches[0].clientY;
-    this._isScrolledAlready = false;
-  };
+  // on mobile touch move event
+  const handleTouchMove = (event) => {
+    if (canScroll(event) && isMobile.current) {
+      event.preventDefault();
+      const touchEnd = event.touches[0].clientY;
+      if (!isScrolling.current) {
+        const isScrollingDown = touchStart.current > touchEnd + touchSensitivity.current;
+        const isScrollingUp = touchStart.current < touchEnd - touchSensitivity.current;
 
-  onTouchMove = (evt) => {
-    // if (this.props.scrollMode !== scrollMode.FULL_PAGE) {
-    //   return;
-    // }
-
-    if (this.canScroll(evt)) {
-      evt.preventDefault();
-      const touchEnd = evt.changedTouches[0].clientY;
-
-      if (!this._isScrollPending && !this._isScrolledAlready) {
-        if (this._touchStart > touchEnd + this._touchSensitivity) {
-          this.scrollToSlide(this.state.activeSlide + 1);
-        } else if (this._touchStart < touchEnd - this._touchSensitivity) {
-          this.scrollToSlide(this.state.activeSlide - 1);
+        if (isScrollingDown) {
+          scrollToSlide(activeSlide + 1);
+        } else if (isScrollingUp) {
+          scrollToSlide(activeSlide - 1);
         }
       }
     }
   };
 
-  onScroll = (evt) => {
-    if (this._isScrollPending) {
-      return;
-    }
+  // on scroll event handler
+  const handleScroll = (evt) => {
+    if (isMobile.current) return;
+    if (isScrolling.current) return;
 
-    if (this.canScroll(evt)) {
+    if (canScroll(evt)) {
       evt.preventDefault();
-      const scrollDown = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
-      let { activeSlide } = this.state;
+      const scrollDelta = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
+      const newActiveSlide = scrollDelta ? activeSlide + 1 : activeSlide - 1;
+      scrollToSlide(newActiveSlide);
+    }
+  };
 
-      if (scrollDown) {
-        activeSlide++;
-      } else {
-        activeSlide--;
+  // Scroll to a certain slide
+  const scrollToSlide = useCallback(
+    (slide) => {
+      if (!isScrolling.current && slide >= 0 && slide < slideCount) {
+        isScrolling.current = true;
+        setActiveSlide(slide);
+        setActivePage(slide);
+
+        animatedScrollTo(slidePositions.current[slide], duration, () => {
+          isScrolling.current = false;
+        });
       }
+    },
+    [activePage]
+  );
 
-      this.scrollToSlide(activeSlide);
-    }
-  };
+  const renderControls = () => {
+    if (!controls) return null;
 
-  getSlidesCount = () => this.state.slidesCount;
-
-  getSlidesNames = () => {
-    let slideNames = [];
-    for (let i = 0; i < this.state.slidesCount; i++) {
-      slideNames.push(this.props.children[i].props.title);
-    }
-    return slideNames;
-  };
-
-  getCurrentSlideIndex = () => this.state.activeSlide;
-
-  scrollNext = () => {
-    this.scrollToSlide(this.state.activeSlide + 1);
-  };
-
-  scrollPrev = () => {
-    this.scrollToSlide(this.state.activeSlide - 1);
-  };
-
-  scrollToSlide = (slide) => {
-    if (!this._isScrollPending && slide >= 0 && slide < this.state.slidesCount) {
-      const currentSlide = this.state.activeSlide;
-      this.props.beforeChange({ from: currentSlide, to: slide });
-
-      // set global active page value to current slide
-      this.props.setActivePage(slide);
-
-      this.setState({
-        activeSlide: slide,
-      });
-
-      this._isScrollPending = true;
-      animatedScrollTo(this._slidePositions[slide], this.props.duration, () => {
-        this._isScrollPending = false;
-        this._isScrolledAlready = true;
-        this.props.afterChange({ from: currentSlide, to: slide });
-      });
-    }
-  };
-
-  canScroll = (event) => {
-    return event.target.closest(".no-scroll") === null;
-  };
-
-  renderControls() {
-    const { controls, controlsProps } = this.props;
-    if (!controls) {
-      return null;
-    }
-
-    const controlsBasicProps = {
-      open: this.props.open,
-      setOpen: this.props.setOpen,
-      getCurrentSlideIndex: this.getCurrentSlideIndex,
-      //onNext: this.scrollNext,
-      //onPrev: this.scrollPrev,
-      scrollToSlide: this.scrollToSlide,
-      slidesCount: this.getSlidesCount(),
-      slidesNames: this.getSlidesNames(),
+    const controlMenuProps = {
+      open,
+      setOpen,
+      scrollToSlide,
+      slidesCount: slideCount,
+      currentSlideIndex: activeSlide,
+      slidesNames: getSlidesNames(),
     };
 
     if (controls === true) {
-      return <ControlMenu className="full-page-controls" {...controlsBasicProps} {...controlsProps} />;
+      return <ControlMenu className="full-page-controls" {...controlMenuProps} />;
     }
+  };
 
-    const CustomControls = controls;
-    return <CustomControls {...controlsBasicProps} {...controlsProps} />;
-  }
-
-  render() {
-    return (
-      <div id="full-page" className="full-page" style={{ height: this.state.height }}>
-        {this.renderControls()}
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
-FullPage.propTypes = {
-  afterChange: PropTypes.func,
-  beforeChange: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  controls: PropTypes.oneOfType([PropTypes.bool, PropTypes.element, PropTypes.func]),
-  controlsProps: PropTypes.object,
-  duration: PropTypes.number,
-  initialSlide: PropTypes.number,
+  // render
+  return (
+    <div className="full-page" id="full-page">
+      {renderControls()}
+      {React.Children.toArray(children).map((child, index) => {
+        return React.cloneElement(child, {
+          className: `full-page-slide ${activeSlide === index ? "active" : "inactive"}`,
+          key: index,
+        });
+      })}
+    </div>
+  );
 };
 
-FullPage.defaultProps = {
-  afterChange: () => {},
-  beforeChange: () => {},
-  controls: false,
-  controlsProps: {},
-  duration: 400,
-  initialSlide: 0,
-};
+export default FullPage;

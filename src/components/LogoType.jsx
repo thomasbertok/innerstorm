@@ -2,6 +2,10 @@ import { useMemo } from "react";
 import ReactVivus from "react-vivus";
 const filePath = `${import.meta.env.VITE_PUBLIC_URL}/assets/logo-type.svg`;
 
+/**
+ * Logo Component
+ * @returns
+ */
 const LogoType = () => {
   const random = useMemo(() => Math.random(), []);
 
