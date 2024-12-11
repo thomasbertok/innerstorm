@@ -54,14 +54,14 @@
   .main-player {
     bottom: 0;
     width: 100%;
-    grid-template-columns: 3fr;
+    grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 32px 40px 50px;
     grid-template-areas:
-      "titles titles  titles"
-      "waveSurfer waveSurfer waveSurfer "
-      "controls controls controls";
+      "titles titles titles"
+      "waveSurfer waveSurfer waveSurfer"
+      "cover controls duration";
 
-    grid-column-gap: 0rem;
+    grid-column-gap: 5px;
     grid-row-gap: 5px;
 
     background-color: rgba(255, 255, 255, 0.1);
@@ -71,11 +71,6 @@
 
   .main-player.out-of-screen {
     bottom: -130px;
-  }
-
-  .player-duration,
-  .player-cover {
-    display: none;
   }
 
   .player-titles {
@@ -98,6 +93,26 @@
 
   .player-waveSurfer .waveform {
     height: 80px;
+  }
+
+  .player-cover {
+    overflow: hidden;
+    padding-bottom: 10px;
+  }
+  .player-cover img {
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+
+  .player-duration {
+    padding-bottom: 10px;
   }
 }
 

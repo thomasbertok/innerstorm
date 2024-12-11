@@ -19,12 +19,6 @@
     margin-bottom: 1rem;
   }
 
-  .accordion.open .accordion-content {
-    /* height: auto; */
-    /* full height on mobile??? */
-    /* height: calc(100svh - 320px); */
-  }
-
   .accordion-button {
     cursor: pointer;
     cursor: pointer;

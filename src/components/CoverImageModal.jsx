@@ -8,9 +8,9 @@ const CoverImageModal = () => {
   const currentSlug = `${import.meta.env.VITE_PUBLIC_URL}${import.meta.env.VITE_COVERS_PATH}${currentTrack.slug}`;
   return (
     <div className="cover-image-modal" onClick={() => setShowCover(false)}>
-      <div className="flex gap-0 w-10/12 xl:w-8/12 4xl:w-1/2 items-center justify-center">
-        <Image src={`${currentSlug}.jpg`} alt="" className="w-1/2" />
-        <Image src={`${currentSlug}_text.jpg`} alt="" className="w-1/2" />
+      <div className="flex flex-col xl:flex-row gap-0 w-11/12 lg:w-9/12 xl:w-8/12 items-center justify-center">
+        <Image src={`${currentSlug}.jpg`} alt="" className="flex-1 xl:max-h-[800px] xl:max-w-[800px]" />
+        <Image src={`${currentSlug}_text.jpg`} alt="" className="flex-1 xl:max-h-[800px] xl:max-w-[800px]" />
       </div>
       <button className="absolute top-8 right-8">
         <X size={24} />

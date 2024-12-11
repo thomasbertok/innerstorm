@@ -109,7 +109,8 @@
 
 /* MAIN NAV TOGGLE */
 .main-nav-toggle {
-  display: block;
+  /* display: block; */
+  display: none;
   cursor: pointer;
   position: fixed;
   z-index: 1000;

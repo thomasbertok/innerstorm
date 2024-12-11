@@ -5,7 +5,7 @@ const PlayerCover = ({ cover }) => {
 
   return (
     <img
-      className="rounded-lg w-16 h-16 cursor-pointer"
+      className="rounded lg:rounded-lg lg:w-16 lg:h-16 cursor-pointer"
       onClick={() => setShowCover(true)}
       src={cover}
       alt=""

@@ -155,8 +155,8 @@ const FullPage = ({
   // on scroll event handler
   const handleScroll = (evt) => {
     if (isMobile.current) return;
-
     if (isScrolling.current) return;
+
     if (canScroll(evt)) {
       evt.preventDefault();
       const scrollDelta = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
