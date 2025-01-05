@@ -21,4 +21,9 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  build: {
+    outDir: "dist",
+    cssMinify: true,
+    minify: true,
+  },
 });

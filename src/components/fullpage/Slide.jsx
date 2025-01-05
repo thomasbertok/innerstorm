@@ -1,4 +1,4 @@
-const Slide = ({ title, activestate, children, style, ...rest }) => {
+const Slide = ({ activestate, children, style, ...rest }) => {
   return (
     <div {...rest} style={{ ...style }}>
       {children}

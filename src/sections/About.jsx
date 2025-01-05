@@ -12,10 +12,10 @@ const About = () => {
       <h1 className="mb-6">innerstorm</h1>
 
       <p className="font-mono text-sm md:text-lg">
-        &gt; Help me write an introduction for an enthusiastic music producer and DJ's website. The text should focus on
-        the exploration of new sounds, expressing emotions through music, and breaking free from the limitations of
-        specific genres, allowing the music to evolve naturally. Please avoid making it sound like an action movie
-        trailer.
+        &gt; Help me write an introduction for an enthusiastic music producer and DJ&apos;s website. The text should
+        focus on the exploration of new sounds, expressing emotions through music, and breaking free from the
+        limitations of specific genres, allowing the music to evolve naturally. Please avoid making it sound like an
+        action movie trailer.
         <br />
         <br />
         &gt; &hellip;

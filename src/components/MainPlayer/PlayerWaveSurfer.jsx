@@ -7,23 +7,7 @@ import { formatTime } from "@/utils";
 import { CircleAlert } from "lucide-react";
 
 const PlayerWaveSurfer = () => {
-  const {
-    currentTrack,
-    setCurrentTrack,
-    currentTrackCover,
-    playlist,
-    isPlaying,
-    setIsPlaying,
-    setNextTrack,
-    isRepeat,
-    setIsRepeat,
-    isShuffled,
-    setIsShuffled,
-    clickPrevTrack,
-    clickNextTrack,
-    volume,
-    setVolume,
-  } = usePlayerContext();
+  const { currentTrack, isPlaying, setIsPlaying, setNextTrack, volume } = usePlayerContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -54,40 +38,17 @@ const PlayerWaveSurfer = () => {
     setWavesurfer(ws);
 
     // show progress while loading sound
-    ws.on("loading", function (X, evt) {
-      console.log("Loading: ", X);
-    });
+    // ws.on("loading", function (X, evt) {
+    //   console.log("Loading: ", X);
+    // });
 
     // add key event listener
-    document.addEventListener("keyup", onKeyUp);
+    // document.addEventListener("keyup", onKeyUp);
     return () => {
       ws.destroy();
-      document.removeEventListener("keyup", onKeyUp);
+      // document.removeEventListener("keyup", onKeyUp);
     };
   }, []);
-
-  const onKeyUp = (event) => {
-    // if (event.key === " ") {
-    //   setIsPlaying(!isPlaying);
-    // }
-    // if (event.key === "ArrowLeft") {
-    //   clickPrevTrack();
-    // }
-    // if (event.key === "ArrowRight") {
-    //   clickNextTrack();
-    // }
-  };
-
-  /**
-   * when playlist is ready
-   * set current track to first track in playlist
-   * if current track is null
-   */
-  // useEffect(() => {
-  //   if (playlist && currentTrack === null) {
-  //     setCurrentTrack(playlist[0]);
-  //   }
-  // }, [playlist, currentTrack]);
 
   /**
    * update wavesurfer play/pause
@@ -97,7 +58,7 @@ const PlayerWaveSurfer = () => {
       if (isPlaying) wavesurfer.play();
       else wavesurfer.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, wavesurfer]);
 
   /**
    * set track duration
@@ -128,7 +89,7 @@ const PlayerWaveSurfer = () => {
         setTrackPosition(formatTime(wavesurfer.getCurrentTime()));
       });
 
-      wavesurfer.on("error", (error) => {
+      wavesurfer.on("error", () => {
         setIsError(true);
         setIsLoading(false);
         console.error("!!! Wavesurfer Track Load Error");

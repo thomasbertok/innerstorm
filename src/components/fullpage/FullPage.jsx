@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { debounce } from "@/utils";
 import { ControlMenu } from "./ControlMenu";
 import isMobileDevice from "./utils/is-mobile";
-import animatedScrollTo from "./utils/animated-scroll-to";
 import Slide from "./Slide";
 
 /**
@@ -24,7 +23,7 @@ import Slide from "./Slide";
 
 const FullPage = ({
   children,
-  duration = 400,
+  // duration = 400,
   desktopOnly = true,
   controls,
   open,
@@ -38,9 +37,14 @@ const FullPage = ({
 
   const slidePositions = useRef([]);
   const isScrolling = useRef(false);
+  const isAlreadyScrolled = useRef(false);
   const isMobile = useRef(null);
   const touchStart = useRef(0);
   const touchSensitivity = useRef(100);
+  let wheelIntervalTimer;
+  let lastWheelNavigationAt = 0;
+  let lastWheelDelta = 0;
+  const INTERVAL = 1000;
 
   // get slides' names from children
   const getSlidesNames = () => {
@@ -125,6 +129,7 @@ const FullPage = ({
     } else if (event.key === "ArrowUp") {
       scrollToSlide(activeSlide - 1);
     }
+    //debounce(() => {}, 250);
   };
 
   // on touch start
@@ -157,10 +162,26 @@ const FullPage = ({
     if (isMobile.current) return;
     if (isScrolling.current) return;
 
+    if (wheelIntervalTimer) clearTimeout(wheelIntervalTimer);
+
+    wheelIntervalTimer = setTimeout(() => {
+      lastWheelDelta = 0;
+    }, INTERVAL);
+
     if (canScroll(evt)) {
       evt.preventDefault();
-      const scrollDelta = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
-      const newActiveSlide = scrollDelta ? activeSlide + 1 : activeSlide - 1;
+      const debounce = Date.now() - lastWheelNavigationAt < INTERVAL;
+      const currentWheelDelta = evt.wheelDelta || -evt.deltaY || -evt.detail;
+      const attenuated = Math.abs(currentWheelDelta) < Math.abs(lastWheelDelta);
+      if (debounce || attenuated) return;
+      lastWheelDelta = currentWheelDelta;
+      if (Math.abs(currentWheelDelta) < 10) {
+        isScrolling.current = false;
+        return;
+      }
+
+      const direction = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
+      const newActiveSlide = direction ? activeSlide + 1 : activeSlide - 1;
       scrollToSlide(newActiveSlide);
     }
   };
@@ -168,14 +189,13 @@ const FullPage = ({
   // Scroll to a certain slide
   const scrollToSlide = useCallback(
     (slide) => {
-      if (!isScrolling.current && slide >= 0 && slide < slideCount) {
+      if (!isScrolling.current && slide >= 0 && slide < slideCount && !isAlreadyScrolled.current) {
         isScrolling.current = true;
         setActiveSlide(slide);
         setActivePage(slide);
+        isScrolling.current = false;
 
-        animatedScrollTo(slidePositions.current[slide], duration, () => {
-          isScrolling.current = false;
-        });
+        lastWheelNavigationAt = Date.now();
       }
     },
     [activePage]

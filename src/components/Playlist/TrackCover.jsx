@@ -1,5 +1,3 @@
-import React from "react";
-
 const TrackCover = ({ trackData }) => {
   // TODO: needs refactoring, no ON ERROR... it shows up in console!!!
   return (

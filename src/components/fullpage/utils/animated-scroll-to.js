@@ -1,4 +1,4 @@
-import { easeInOutCubic, easeOutCubic, easeInCubic } from "./ease";
+import { easeInOutCubic } from "./ease";
 
 export default function animatedScrollTo(scrollTo, duration, callback) {
   const scrollFrom = window.scrollY || window.pageYOffset || 0;

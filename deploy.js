@@ -1,5 +1,6 @@
 import path from "path";
 import FtpDeploy from "ftp-deploy";
+import process from "process";
 
 const ftp_user = import.meta.env.VITE_FTP_USER;
 const ftp_host = import.meta.env.VITE_FTP_HOST;

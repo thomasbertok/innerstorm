@@ -17,11 +17,19 @@ const Home = () => {
       <div className="section-content section-home">
         <LogoType />
         <div className="homepage-social-links flex gap-6 items-center no-scroll">
-          <a href="https://soundcloud.com/innerstorm" target="_blank" className="icon tooltip soundcloud icon-small">
+          <a
+            href="https://soundcloud.com/innerstorm"
+            target="_blank"
+            className="icon tooltip soundcloud icon-small"
+            aria-label="Soundcloud">
             <div className="tooltip-content">Soundcloud</div>
             <SoundCloud />
           </a>
-          <a href="https://www.youtube.com/1nn3rst0rm" target="_blank" className="icon tooltip youtube icon-small">
+          <a
+            href="https://www.youtube.com/1nn3rst0rm"
+            target="_blank"
+            className="icon tooltip youtube icon-small"
+            aria-label="Youtube">
             <div className="tooltip-content">Youtube</div>
             <Youtube />
           </a>
@@ -29,6 +37,7 @@ const Home = () => {
           <a
             href="#"
             target="_blank"
+            aria-label="Click to listen to some music!"
             className="icon tooltip smusic icon-big"
             title="Click to listen to some music!"
             onClick={(ev) => handlePageClick(ev, 1)}>
@@ -38,19 +47,24 @@ const Home = () => {
             <Music />
           </a>
 
-          <a href="https://www.facebook.com/1nn3rst0rm" target="_blank" className="icon tooltip sfacebook icon-small">
+          <a
+            href="https://www.facebook.com/1nn3rst0rm"
+            target="_blank"
+            className="icon tooltip sfacebook icon-small"
+            aria-label="Facebook">
             <div className="tooltip-content">Facebook</div>
             <Facebook />
           </a>
           <a
             href="https://www.instagram.com/innerstormmusic/"
             target="_blank"
+            aria-label="Instagram"
             className="icon tooltip instagram icon-small">
             <div className="tooltip-content">Instagram</div>
             <Instagram />
           </a>
         </div>
-        <button className="flex scroll-down btn flex items-center" onClick={(ev) => handlePageClick(ev, 1)}>
+        <button className="flex scroll-down btn items-center" onClick={(ev) => handlePageClick(ev, 1)}>
           <img src="assets/scroll.gif" alt="" className="scroll-down-gif" />
         </button>
       </div>

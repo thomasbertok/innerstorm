@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { formatTime } from "@/utils";
 import { usePlayerContext } from "@/context/PlayerContext";
 import { Play, Pause, CloudDownload } from "lucide-react";
@@ -15,7 +14,7 @@ import TrackCover from "./TrackCover";
 
 const Track = ({ trackData, index, playlist, columns }) => {
   const { playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /**
    * if the clicked track is playing, pause it,
@@ -25,9 +24,9 @@ const Track = ({ trackData, index, playlist, columns }) => {
     trackIsPlaying(track.id) ? pauseTrack() : playTrack(playlist, track);
   };
 
-  const handleContextMenuClick = (e) => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  // const handleContextMenuClick = (e) => {
+  //   setIsMenuOpen((prev) => !prev);
+  // };
 
   return (
     <div className={`playlist-track group ${trackIsPlaying(trackData.id) ? "track-is-playing" : ""}`}>

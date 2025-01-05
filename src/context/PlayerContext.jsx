@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 const PlayerContext = createContext();
 
 export const PlayerContextProvider = ({ children }) => {
@@ -16,7 +16,7 @@ export const PlayerContextProvider = ({ children }) => {
   const [isRepeat, setIsRepeat] = useState(2);
 
   const [currentPlaylist, setCurrentPlaylist] = useState(null);
-  const [loadingPlaylist, setLoadingPlaylist] = useState(false);
+  // const [loadingPlaylist, setLoadingPlaylist] = useState(false);
 
   /**
    * Set the given track as the current track without playing it
@@ -177,7 +177,7 @@ export const PlayerContextProvider = ({ children }) => {
         currentTrackCover,
         isPlaying,
         setIsPlaying,
-        loadingPlaylist,
+        // loadingPlaylist,
         playTrack,
         pauseTrack,
         trackIsPlaying,

@@ -1,4 +1,3 @@
-import React from "react";
 import PlayerCover from "./PlayerCover";
 import { usePlayerContext } from "@/context/PlayerContext";
 

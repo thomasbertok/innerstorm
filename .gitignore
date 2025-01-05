@@ -132,4 +132,5 @@ dist
 .pnp.*
 
 public/music/*
-server/music/*
+/music/*
+/server/music/*

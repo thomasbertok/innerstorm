@@ -28,6 +28,18 @@ export const debounce = (func, time) => {
   };
 };
 
+export const throttle = (func, time) => {
+  time = time || 100;
+  let timer;
+  return (...args) => {
+    if (timer) return;
+    timer = setTimeout(() => {
+      func.apply(this, args);
+      timer = null;
+    }, time);
+  };
+};
+
 /**
  * fetch the json for the playlistname and order it by dat or title
  * @returns playlist
