@@ -1,6 +1,6 @@
 <?php
 // Base directory where audio files are stored
-$baseDir = __DIR__ . '/music/';
+$baseDir = __DIR__ . '/media/';
 
 // Get the requested relative file path
 $relativePath = $_GET['file'];
