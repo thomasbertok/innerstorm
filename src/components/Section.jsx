@@ -1,4 +1,6 @@
+import PropTypes from "prop-types";
 import Logo from "@/components/Logo";
+
 /**
  * wrapper component for each fullpage section
  * sectionName - name of the section
@@ -7,6 +9,7 @@ import Logo from "@/components/Logo";
  * className - additional class names
  * wallpaper - background image
  */
+
 const Section = ({ children, sectionName, withLogo = false, glass = false, className = "", wallpaper }) => {
   return (
     <div
@@ -17,6 +20,15 @@ const Section = ({ children, sectionName, withLogo = false, glass = false, class
       {!glass && children}
     </div>
   );
+};
+
+Section.propTypes = {
+  children: PropTypes.node.isRequired,
+  sectionName: PropTypes.string.isRequired,
+  withLogo: PropTypes.bool,
+  glass: PropTypes.bool,
+  className: PropTypes.string,
+  wallpaper: PropTypes.string,
 };
 
 export default Section;

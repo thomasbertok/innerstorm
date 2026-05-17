@@ -1,16 +1,39 @@
 <?php
 // Base directory where audio files are stored
-$baseDir = __DIR__ . '/media/';
+$baseDir = realpath(__DIR__ . '/media/');
 
-// Get the requested relative file path
-$relativePath = $_GET['file'];
+if ($baseDir === false) {
+    header("HTTP/1.1 500 Internal Server Error");
+    exit;
+}
 
-// Resolve the full path using the base directory and the relative path
-$realFilePath = realpath($baseDir . $relativePath);
+// Allowed audio extensions
+$allowedExtensions = ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a', 'wma', 'opus'];
 
-// Validate the resolved path
-if ($realFilePath === false || strpos($realFilePath, $baseDir) !== 0 || !file_exists($realFilePath)) {
+// Get and sanitize the requested file path
+$relativePath = isset($_GET['file']) ? trim($_GET['file']) : '';
+
+// Reject empty, absolute, or traversal-containing paths
+if ($relativePath === '' || $relativePath[0] === '/' || strpos($relativePath, '..') !== false) {
+    header("HTTP/1.1 400 Bad Request");
+    exit;
+}
+
+// Normalize the path and resolve the full path
+$normalizedPath = str_replace(['\\', '//'], '/', $relativePath);
+$fullPath = $baseDir . '/' . $normalizedPath;
+$realFilePath = realpath($fullPath);
+
+// Validate the resolved path: must exist, be a file, and be strictly inside $baseDir
+if ($realFilePath === false || !is_file($realFilePath) || strpos($realFilePath, $baseDir . '/') !== 0) {
     header("HTTP/1.1 404 Not Found");
+    exit;
+}
+
+// Validate file extension
+$extension = strtolower(pathinfo($realFilePath, PATHINFO_EXTENSION));
+if (!in_array($extension, $allowedExtensions, true)) {
+    header("HTTP/1.1 403 Forbidden");
     exit;
 }
 

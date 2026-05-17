@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import PropTypes from "prop-types";
 import { debounce } from "@/utils";
 import { ControlMenu } from "./ControlMenu";
 import isMobileDevice from "./utils/is-mobile";
@@ -33,7 +34,15 @@ const FullPage = ({
   setActivePage,
   noScrollClass = ".no-scroll",
 }) => {
-  const [slideCount, setSlideCount] = useState(getChildrenCount(children));
+  // count slides
+  const getChildrenCount = useCallback((children) => {
+    const childrenArr = React.Children.toArray(children);
+    const slides = childrenArr.filter(
+      ({ type }) => type === Slide || type?.displayName === "Slide" || type?.name === "Slide",
+    );
+    return slides.length;
+  }, []);
+
   const [activeSlide, setActiveSlide] = useState(activePage);
 
   const slidePositions = useRef([]);
@@ -42,19 +51,12 @@ const FullPage = ({
   const touchStart = useRef(0);
   const touchSensitivity = useRef(100);
 
-  // get slides' names from children
-  const getSlidesNames = () => {
-    return React.Children.map(children, (child) => child.props.title);
-  };
+  const slideCount = useMemo(() => getChildrenCount(children), [children, getChildrenCount]);
 
-  // count slides
-  function getChildrenCount(children) {
-    const childrenArr = React.Children.toArray(children);
-    const slides = childrenArr.filter(
-      ({ type }) => type === Slide || type?.displayName === "Slide" || type?.name === "Slide"
-    );
-    return slides.length;
-  }
+  // get slides' names from children
+  const getSlidesNames = useCallback(() => {
+    return React.Children.map(children, (child) => child.props.title);
+  }, [children]);
 
   // setup and update slide coordinates
   const updateSlidePositions = useCallback(() => {
@@ -65,6 +67,22 @@ const FullPage = ({
       slidePositions.current[i] = slideHeight * i;
     }
   }, [slideCount]);
+
+  // Scroll to a certain slide
+  const scrollToSlide = useCallback(
+    (slide) => {
+      if (!isScrolling.current && slide >= 0 && slide < slideCount) {
+        isScrolling.current = true;
+        setActiveSlide(slide);
+        setActivePage(slide);
+
+        animatedScrollTo(slidePositions.current[slide], duration, () => {
+          isScrolling.current = false;
+        });
+      }
+    },
+    [duration, slideCount, setActivePage],
+  );
 
   useEffect(() => {
     isMobile.current = isMobileDevice();
@@ -78,10 +96,13 @@ const FullPage = ({
     scrollToSlide(activePage);
   }, []);
 
+  const debouncedResizeRef = useRef(null);
+
   // first load
   useEffect(() => {
+    debouncedResizeRef.current = debounce(handleResize, 100);
     scrollToSlide(activePage);
-    window.addEventListener("resize", debounce(handleResize, 100), { passive: false });
+    window.addEventListener("resize", debouncedResizeRef.current, { passive: false });
 
     if (isMobile.current && !desktopOnly) {
       document.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -99,7 +120,7 @@ const FullPage = ({
         document.removeEventListener("wheel", handleScroll);
         document.removeEventListener("keydown", handleKeyUp);
       }
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", debouncedResizeRef.current);
     };
   }, [activePage, activeSlide]);
 
@@ -108,7 +129,7 @@ const FullPage = ({
   };
 
   // on resize
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     if (desktopOnly) {
       return;
     }
@@ -116,69 +137,64 @@ const FullPage = ({
     updateSlidePositions();
     // update active slide
     scrollToSlide(activePage);
-  };
+  }, [desktopOnly, updateSlidePositions, scrollToSlide, activePage]);
 
   // on key up
-  const handleKeyUp = (event) => {
-    if (event.key === "ArrowDown") {
-      scrollToSlide(activeSlide + 1);
-    } else if (event.key === "ArrowUp") {
-      scrollToSlide(activeSlide - 1);
-    }
-  };
-
-  // on touch start
-  const handleTouchStart = (event) => {
-    // isScrolling.current = true;
-    if (!isMobile.current) return;
-    touchStart.current = event.touches[0].clientY;
-  };
-
-  // on mobile touch move event
-  const handleTouchMove = (event) => {
-    if (canScroll(event) && isMobile.current) {
-      event.preventDefault();
-      const touchEnd = event.touches[0].clientY;
-      if (!isScrolling.current) {
-        const isScrollingDown = touchStart.current > touchEnd + touchSensitivity.current;
-        const isScrollingUp = touchStart.current < touchEnd - touchSensitivity.current;
-
-        if (isScrollingDown) {
-          scrollToSlide(activeSlide + 1);
-        } else if (isScrollingUp) {
-          scrollToSlide(activeSlide - 1);
-        }
-      }
-    }
-  };
-
-  // on scroll event handler
-  const handleScroll = (evt) => {
-    if (isMobile.current) return;
-    if (isScrolling.current) return;
-
-    if (canScroll(evt)) {
-      evt.preventDefault();
-      const scrollDelta = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
-      const newActiveSlide = scrollDelta ? activeSlide + 1 : activeSlide - 1;
-      scrollToSlide(newActiveSlide);
-    }
-  };
-
-  // Scroll to a certain slide
-  const scrollToSlide = useCallback(
-    (slide) => {
-      if (!isScrolling.current && slide >= 0 && slide < slideCount) {
-        isScrolling.current = true;
-        setActiveSlide(slide);
-        setActivePage(slide);
-
-        animatedScrollTo(slidePositions.current[slide], duration, () => {
-          isScrolling.current = false;
-        });
+  const handleKeyUp = useCallback(
+    (event) => {
+      if (event.key === "ArrowDown") {
+        scrollToSlide(activeSlide + 1);
+      } else if (event.key === "ArrowUp") {
+        scrollToSlide(activeSlide - 1);
       }
     },
-    [activePage]
+    [activeSlide, scrollToSlide],
+  );
+
+  // on touch start
+  const handleTouchStart = useCallback(
+    (event) => {
+      // isScrolling.current = true;
+      if (!isMobile.current) return;
+      touchStart.current = event.touches[0].clientY;
+    },
+    [isMobile],
+  );
+
+  // on mobile touch move event
+  const handleTouchMove = useCallback(
+    (event) => {
+      if (canScroll(event) && isMobile.current) {
+        event.preventDefault();
+        const touchEnd = event.touches[0].clientY;
+        if (!isScrolling.current) {
+          const isScrollingDown = touchStart.current > touchEnd + touchSensitivity.current;
+          const isScrollingUp = touchStart.current < touchEnd - touchSensitivity.current;
+
+          if (isScrollingDown) {
+            scrollToSlide(activeSlide + 1);
+          } else if (isScrollingUp) {
+            scrollToSlide(activeSlide - 1);
+          }
+        }
+      }
+    },
+    [activeSlide, scrollToSlide],
+  );
+
+  // on scroll event handler
+  const handleScroll = useCallback(
+    (evt) => {
+      if (isMobile.current || isScrolling.current) return;
+
+      if (canScroll(evt)) {
+        evt.preventDefault();
+        const scrollDelta = (evt.wheelDelta || -evt.deltaY || -evt.detail) < 0;
+        const newActiveSlide = scrollDelta ? activeSlide + 1 : activeSlide - 1;
+        scrollToSlide(newActiveSlide);
+      }
+    },
+    [activeSlide, scrollToSlide],
   );
 
   const renderControls = () => {
@@ -210,6 +226,29 @@ const FullPage = ({
       })}
     </div>
   );
+};
+
+FullPage.propTypes = {
+  children: PropTypes.node.isRequired,
+  duration: PropTypes.number,
+  desktopOnly: PropTypes.bool,
+  controls: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+  activePage: PropTypes.number,
+  setActivePage: PropTypes.func,
+  noScrollClass: PropTypes.string,
+};
+
+FullPage.defaultProps = {
+  duration: 400,
+  desktopOnly: true,
+  controls: false,
+  open: false,
+  setOpen: () => {},
+  activePage: 0,
+  setActivePage: () => {},
+  noScrollClass: ".no-scroll",
 };
 
 export default FullPage;

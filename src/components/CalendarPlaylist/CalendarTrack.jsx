@@ -1,11 +1,13 @@
 import { Play, Pause } from "lucide-react";
 import { usePlayerContext } from "@/context/PlayerContext";
+import PropTypes from "prop-types";
 
 const CalendarTrack = ({ track }) => {
-  const { playlist, playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
+  const { currentPlaylist, playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
 
   const handlePlayPauseTrack = (track) => {
-    trackIsPlaying(track.id) ? pauseTrack() : playTrack(playlist, track);
+    if (!currentPlaylist) return;
+    trackIsPlaying(track.id) ? pauseTrack() : playTrack(currentPlaylist, track);
   };
 
   return (
@@ -31,6 +33,15 @@ const CalendarTrack = ({ track }) => {
       </div>
     </div>
   );
+};
+
+CalendarTrack.propTypes = {
+  track: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default CalendarTrack;

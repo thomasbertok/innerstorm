@@ -7,23 +7,7 @@ import { formatTime } from "@/utils";
 import { CircleAlert } from "lucide-react";
 
 const PlayerWaveSurfer = () => {
-  const {
-    currentTrack,
-    setCurrentTrack,
-    currentTrackCover,
-    playlist,
-    isPlaying,
-    setIsPlaying,
-    setNextTrack,
-    isRepeat,
-    setIsRepeat,
-    isShuffled,
-    setIsShuffled,
-    clickPrevTrack,
-    clickNextTrack,
-    volume,
-    setVolume,
-  } = usePlayerContext();
+  const { currentTrack, isPlaying, setIsPlaying, setNextTrack, volume } = usePlayerContext();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -55,39 +39,16 @@ const PlayerWaveSurfer = () => {
 
     // show progress while loading sound
     ws.on("loading", function (X, evt) {
-      console.log("Loading: ", X);
+      // console.log("Loading: ", X);
     });
 
     // add key event listener
-    document.addEventListener("keyup", onKeyUp);
+    //document.addEventListener("keyup", onKeyUp);
     return () => {
       ws.destroy();
-      document.removeEventListener("keyup", onKeyUp);
+      //document.removeEventListener("keyup", onKeyUp);
     };
   }, []);
-
-  const onKeyUp = (event) => {
-    // if (event.key === " ") {
-    //   setIsPlaying(!isPlaying);
-    // }
-    // if (event.key === "ArrowLeft") {
-    //   clickPrevTrack();
-    // }
-    // if (event.key === "ArrowRight") {
-    //   clickNextTrack();
-    // }
-  };
-
-  /**
-   * when playlist is ready
-   * set current track to first track in playlist
-   * if current track is null
-   */
-  // useEffect(() => {
-  //   if (playlist && currentTrack === null) {
-  //     setCurrentTrack(playlist[0]);
-  //   }
-  // }, [playlist, currentTrack]);
 
   /**
    * update wavesurfer play/pause
@@ -111,6 +72,12 @@ const PlayerWaveSurfer = () => {
       wavesurfer.load(`${import.meta.env.VITE_API_URL}${currentTrack.filename}`, currentTrack.peaks);
       if (isPlaying) wavesurfer.play();
 
+      // remove any existing listeners before adding new ones
+      wavesurfer.un("ready");
+      wavesurfer.un("finish");
+      wavesurfer.un("audioprocess");
+      wavesurfer.un("error");
+
       // set track duration when wavesurfer is ready
       wavesurfer.on("ready", () => {
         setIsLoading(false);
@@ -131,7 +98,7 @@ const PlayerWaveSurfer = () => {
       wavesurfer.on("error", (error) => {
         setIsError(true);
         setIsLoading(false);
-        console.error("!!! Wavesurfer Track Load Error");
+        // console.error("!!! Wavesurfer Track Load Error");
         setIsPlaying(false);
       });
     }
@@ -161,7 +128,7 @@ const PlayerWaveSurfer = () => {
           ref={waveformRef}></div>
       </div>
       <div className="player-duration time time-current text-zinc-300 dark:text-zinc-400 flex-0 text-right">
-        {isPlaying && currentTrack ? trackPosition : formatTime(currentTrack?.length) || 0}
+        {currentTrack ? (isPlaying ? trackPosition : formatTime(currentTrack.length)) : "0:00"}
       </div>
     </>
   );

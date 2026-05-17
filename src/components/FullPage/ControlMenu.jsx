@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 export const ControlMenu = ({
   className,
   currentSlideIndex,
@@ -19,7 +22,7 @@ export const ControlMenu = ({
       sideLinks.push(
         <li key={i} {...linkProps}>
           <span>{slidesNames[i]}</span>
-        </li>
+        </li>,
       );
     }
     return sideLinks;
@@ -37,7 +40,7 @@ export const ControlMenu = ({
       menuLinks.push(
         <li key={i} {...linkProps}>
           <span className="nav-item">{slidesNames[i]}</span>
-        </li>
+        </li>,
       );
     }
 
@@ -72,4 +75,18 @@ export const ControlMenu = ({
       </div>
     </>
   );
+};
+
+ControlMenu.propTypes = {
+  className: PropTypes.string,
+  currentSlideIndex: PropTypes.number.isRequired,
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  slidesCount: PropTypes.number.isRequired,
+  scrollToSlide: PropTypes.func.isRequired,
+  slidesNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+ControlMenu.defaultProps = {
+  className: "",
 };

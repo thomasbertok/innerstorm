@@ -17,15 +17,16 @@ const CalendarMixes = () => {
                   the all time favourite, liquid drum and bass, and so on.
                 </p>
                 <p>
-                  Each month I've tried to bring a different theme, however while staying in my prefered styles. One can
-                  say it's a diorama of the music I like.
+                  Each month I&apos;ve tried to bring a different theme, however while staying in my prefered styles.
+                  One can say it&apos;s a diorama of the music I like.
                 </p>
                 <p>
                   These mixes are up on{" "}
                   <a
                     className="text-red-600"
                     href="https://www.youtube.com/watch?v=OHdwKc5hHCY&list=PL2Vmf-tMeSp7L-Ote7g9wkgcaeGOVdLyP"
-                    target="_blank">
+                    target="_blank"
+                    rel="noopener noreferrer">
                     Youtube
                   </a>
                   , so you can enjoy them there too.

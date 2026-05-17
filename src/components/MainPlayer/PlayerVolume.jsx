@@ -1,5 +1,5 @@
-import { VolumeX, Volume1, Volume2, Volume } from "lucide-react";
 import { useState } from "react";
+import { VolumeX, Volume1, Volume2, Volume } from "lucide-react";
 import { usePlayerContext } from "@/context/PlayerContext";
 
 const Speaker = ({ value }) => {
@@ -8,13 +8,13 @@ const Speaker = ({ value }) => {
     size: 24,
   };
 
-  let speaker = <VolumeX {...options} />;
+  let Icon = VolumeX;
 
-  if (value > 0.05 && value <= 0.33) speaker = <Volume {...options} />;
-  if (value > 0.33) speaker = <Volume1 {...options} />;
-  if (value > 0.66) speaker = <Volume2 {...options} />;
+  if (value > 0.66) Icon = Volume2;
+  else if (value > 0.33) Icon = Volume1;
+  else if (value > 0.05) Icon = Volume;
 
-  return speaker;
+  return <Icon {...options} />;
 };
 
 const PlayerVolume = () => {
@@ -35,7 +35,7 @@ const PlayerVolume = () => {
           max="1"
           step="0.01"
           value={volume}
-          onChange={(e) => setVolume(e.target.value)}
+          onChange={(e) => setVolume(Number(e.target.value))}
           onMouseUp={() => setIsVisible(false)}
         />
       </div>

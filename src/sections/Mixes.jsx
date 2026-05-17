@@ -12,8 +12,8 @@ const Mixes = () => {
           <Accordion>
             <div className="flex flex-col xl:max-w-2xl lg:text-lg">
               <p>
-                Here are some of the mixes I've created. I really like seamless mixing, going around the Camelot wheel,
-                painting on a canvas of sounds. I prefer playing around mostly with breaks and liquid dnb.
+                Here are some of the mixes I&apos;ve created. I really like seamless mixing, going around the Camelot
+                wheel, painting on a canvas of sounds. I prefer playing around mostly with breaks and liquid dnb.
               </p>
               <p>
                 <strong
@@ -27,13 +27,13 @@ const Mixes = () => {
                   title="Dopamine is a type of neurotransmitter and hormone. It plays a role in many important body functions, including movement, memory and pleasurable reward and motivation.">
                   Dopamine
                 </strong>
-                , the sister hormone of endorfine, is a pair of liquid d'n'b mixes. They are numbered, with (hopefully)
-                more to come.
+                , the sister hormone of endorfine, is a pair of liquid d&apos;n&apos;b mixes. They are numbered, with
+                (hopefully) more to come.
               </p>
               <p>
                 I tend to create around themes. <strong>Midnight Express</strong> for example is meant to be listened on
-                a night train while almost asleep... at least it's like it in my head. Breaking the clouds is crafted
-                around the fantastic track "A break in the clouds" by James Holden, and{" "}
+                a night train while almost asleep... at least it&apos;s like it in my head. Breaking the clouds is
+                crafted around the fantastic track "A break in the clouds" by James Holden, and&nbsp;
                 <strong
                   title="“Waldeinsamkeit” is a German word without a direct English translation. It can best be translated to “the feeling of being alone in the woods.”"
                   className="cursor-help">

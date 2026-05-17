@@ -1,4 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
+
 const PlayerContext = createContext();
 
 export const PlayerContextProvider = ({ children }) => {
@@ -16,7 +18,6 @@ export const PlayerContextProvider = ({ children }) => {
   const [isRepeat, setIsRepeat] = useState(2);
 
   const [currentPlaylist, setCurrentPlaylist] = useState(null);
-  const [loadingPlaylist, setLoadingPlaylist] = useState(false);
 
   /**
    * Set the given track as the current track without playing it
@@ -44,12 +45,10 @@ export const PlayerContextProvider = ({ children }) => {
     setCurrentTrack(playlist, track);
     // start playing
     setIsPlaying(true);
-    console.log("▶ Playing Track:", track.title);
   };
 
   const pauseTrack = () => {
     setIsPlaying(false);
-    console.log("⏸️  Pausing Track");
   };
 
   /**
@@ -75,25 +74,6 @@ export const PlayerContextProvider = ({ children }) => {
 
     const currentIndex = currentPlaylist.indexOf(currentTrack);
 
-    // SHUFFLE AND REPEAT SETTINGS DISABLED
-    // if (isShuffled) {
-    //   nextTrack = currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
-    // } else {
-    //   switch (isRepeat) {
-    //     case 2: // repeat all | circle playlist
-    //       nextTrack = (currentIndex + 1) % currentPlaylist.length;
-    //       break;
-    //     default: // repeat off | go to next track if not last
-    //       if (currentIndex < currentPlaylist.length - 1) {
-    //         nextTrack = currentPlaylist[currentIndex + 1];
-    //       } else {
-    //         // last track, no repeat is on
-    //         wasPlaying = false;
-    //       }
-    //       break;
-    //   }
-    // }
-
     // circle playlist
     nextTrack = currentPlaylist[(currentIndex + 1) % currentPlaylist.length];
     // set current track to the new one
@@ -114,21 +94,6 @@ export const PlayerContextProvider = ({ children }) => {
 
     const currentIndex = currentPlaylist.indexOf(currentTrack);
 
-    // SHUFFLE AND REPEAT SETTINGS DISABLED
-    // if (isShuffled) {
-    //   nextTrack = currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
-    // } else {
-    //   if (isRepeat === 2) {
-    //     // circle playlist
-    //     nextTrack = currentPlaylist[(currentIndex + 1) % currentPlaylist.length];
-    //   } else {
-    //     // go to next track if not last
-    //     if (currentIndex < currentPlaylist.length - 1) {
-    //       nextTrack = currentPlaylist[currentIndex + 1];
-    //     }
-    //   }
-    // }
-
     nextTrack = currentPlaylist[(currentIndex + 1) % currentPlaylist.length];
     // set current track to the new one
     setCurrentTrack(currentPlaylist, nextTrack);
@@ -148,21 +113,6 @@ export const PlayerContextProvider = ({ children }) => {
 
     const currentIndex = currentPlaylist.indexOf(currentTrack);
 
-    // SHUFFLE AND REPEAT SETTINGS DISABLED
-    // if (isShuffled) {
-    //   prevTrack = currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
-    // } else {
-    //   if (isRepeat === 2) {
-    //     // circle playlist
-    //     prevTrack = currentPlaylist[(currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length];
-    //   } else {
-    //     // go to previous track if not first
-    //     if (currentIndex > 0) {
-    //       prevTrack = currentPlaylist[currentIndex - 1];
-    //     }
-    //   }
-    // }
-
     prevTrack = currentPlaylist[(currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length];
     // set currentTrack to the new one
     setCurrentTrack(currentPlaylist, prevTrack);
@@ -177,7 +127,7 @@ export const PlayerContextProvider = ({ children }) => {
         currentTrackCover,
         isPlaying,
         setIsPlaying,
-        loadingPlaylist,
+
         playTrack,
         pauseTrack,
         trackIsPlaying,
@@ -196,6 +146,10 @@ export const PlayerContextProvider = ({ children }) => {
       {children}
     </PlayerContext.Provider>
   );
+};
+
+PlayerContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const usePlayerContext = () => {

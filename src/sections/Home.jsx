@@ -1,7 +1,7 @@
 import Section from "@/components/Section";
+import LogoType from "@/components/LogoType";
 import { useAppContext } from "@/context/AppContext";
 import { Youtube, SoundCloud, Facebook, Instagram, Music } from "@/assets/icons";
-import LogoType from "@/components/LogoType";
 import Polygons from "@/assets/backgrounds/poly.jpg";
 
 const Home = () => {
@@ -17,18 +17,25 @@ const Home = () => {
       <div className="section-content section-home">
         <LogoType />
         <div className="homepage-social-links flex gap-6 items-center no-scroll">
-          <a href="https://soundcloud.com/innerstorm" target="_blank" className="icon tooltip soundcloud icon-small">
+          <a
+            href="https://soundcloud.com/innerstorm"
+            className="icon tooltip soundcloud icon-small"
+            target="_blank"
+            rel="noopener noreferrer">
             <div className="tooltip-content">Soundcloud</div>
             <SoundCloud />
           </a>
-          <a href="https://www.youtube.com/1nn3rst0rm" target="_blank" className="icon tooltip youtube icon-small">
+          <a
+            href="https://www.youtube.com/1nn3rst0rm"
+            className="icon tooltip youtube icon-small"
+            target="_blank"
+            rel="noopener noreferrer">
             <div className="tooltip-content">Youtube</div>
             <Youtube />
           </a>
 
           <a
             href="#"
-            target="_blank"
             className="icon tooltip smusic icon-big"
             title="Click to listen to some music!"
             onClick={(ev) => handlePageClick(ev, 1)}>
@@ -38,20 +45,25 @@ const Home = () => {
             <Music />
           </a>
 
-          <a href="https://www.facebook.com/1nn3rst0rm" target="_blank" className="icon tooltip sfacebook icon-small">
+          <a
+            href="https://www.facebook.com/1nn3rst0rm"
+            className="icon tooltip sfacebook icon-small"
+            target="_blank"
+            rel="noopener noreferrer">
             <div className="tooltip-content">Facebook</div>
             <Facebook />
           </a>
           <a
             href="https://www.instagram.com/innerstormmusic/"
+            className="icon tooltip instagram icon-small"
             target="_blank"
-            className="icon tooltip instagram icon-small">
+            rel="noopener noreferrer">
             <div className="tooltip-content">Instagram</div>
             <Instagram />
           </a>
         </div>
       </div>
-      <button className="flex scroll-down btn flex items-center" onClick={(ev) => handlePageClick(ev, 1)}>
+      <button className="flex scroll-down btn items-center" onClick={(ev) => handlePageClick(ev, 1)}>
         <img src="assets/scroll.gif" alt="" className="scroll-down-gif" />
       </button>
     </Section>

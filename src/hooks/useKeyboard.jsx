@@ -9,7 +9,7 @@ const useKeyboard = ({ key, onKeyPressed }) => {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [key, onKeyPressed]);
 };
 
 export default useKeyboard;

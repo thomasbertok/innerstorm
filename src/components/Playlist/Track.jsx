@@ -1,4 +1,4 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 import { formatTime } from "@/utils";
 import { usePlayerContext } from "@/context/PlayerContext";
 import { Play, Pause, CloudDownload } from "lucide-react";
@@ -15,7 +15,7 @@ import TrackCover from "./TrackCover";
 
 const Track = ({ trackData, index, playlist, columns }) => {
   const { playTrack, pauseTrack, trackIsPlaying } = usePlayerContext();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /**
    * if the clicked track is playing, pause it,
@@ -25,9 +25,9 @@ const Track = ({ trackData, index, playlist, columns }) => {
     trackIsPlaying(track.id) ? pauseTrack() : playTrack(playlist, track);
   };
 
-  const handleContextMenuClick = (e) => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  // const handleContextMenuClick = (e) => {
+  //   setIsMenuOpen((prev) => !prev);
+  // };
 
   return (
     <div className={`playlist-track group ${trackIsPlaying(trackData.id) ? "track-is-playing" : ""}`}>
@@ -60,6 +60,21 @@ const Track = ({ trackData, index, playlist, columns }) => {
       {columns.includes("length") && <div className="playlist-track-length">{formatTime(trackData.length)}</div>}
     </div>
   );
+};
+
+Track.propTypes = {
+  trackData: PropTypes.exact({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string.isRequired,
+    artist: PropTypes.string,
+    filename: PropTypes.string.isRequired,
+    genre: PropTypes.string,
+    year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    length: PropTypes.number.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  playlist: PropTypes.array.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Track;
