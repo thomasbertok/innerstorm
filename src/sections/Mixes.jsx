@@ -33,7 +33,7 @@ const Mixes = () => {
               <p>
                 I tend to create around themes. <strong>Midnight Express</strong> for example is meant to be listened on
                 a night train while almost asleep... at least it&apos;s like it in my head. Breaking the clouds is
-                crafted around the fantastic track "A break in the clouds" by James Holden, and&nbsp;
+                crafted around the fantastic track &quot;A break in the clouds&quot; by James Holden, and&nbsp;
                 <strong
                   title="“Waldeinsamkeit” is a German word without a direct English translation. It can best be translated to “the feeling of being alone in the woods.”"
                   className="cursor-help">

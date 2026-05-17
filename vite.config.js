@@ -22,4 +22,7 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  optimizeDeps: {
+    needsInterop: ["react-vivus", "vivus"],
+  },
 });

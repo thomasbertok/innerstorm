@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Image = ({ src, alt, className, fallbackImage = "true", ...rest }) => {
+const Image = ({ src, alt, className, fallbackImage = true, ...rest }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const fallback = `${import.meta.env.VITE_COVERS_PATH}/default.jpg`;

@@ -1,5 +1,7 @@
-import { useMemo } from "react";
-import ReactVivus from "react-vivus";
+import { useState } from "react";
+import { default as ReactVivusModule } from "react-vivus";
+
+const ReactVivus = ReactVivusModule.default;
 const filePath = `${import.meta.env.VITE_PUBLIC_URL}/assets/logo-type.svg`;
 
 /**
@@ -7,7 +9,7 @@ const filePath = `${import.meta.env.VITE_PUBLIC_URL}/assets/logo-type.svg`;
  * @returns
  */
 const LogoType = () => {
-  const random = useMemo(() => Math.random(), []);
+  const [random] = useState(Math.random);
 
   return (
     <ReactVivus
