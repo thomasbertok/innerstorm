@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "./colors.css";
 @import "./index.css";
 @import "./general.css";
@@ -10,3 +11,4 @@
 @import "./main-player.css";
 @import "./calendar.css";
 @import "./accordion.css";
+@import "tailwindcss";
